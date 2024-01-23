@@ -1,15 +1,8 @@
 import { component$ } from '@builder.io/qwik';
 import styles from './hero.module.css';
-/* import ImgThunder from '~/media/thunder.png?jsx';*/
-/* import ImgThunder from '~/media/hero.png?jsx'; */
-/* import ImgThunder from '~/media/pizza.png?jsx'; */
-
-/* import ImgThunder from '~/media/car.png?jsx'; */
-//import ImgThunder from '~/media/ricambi.png?jsx';
 
 import ImgThunder from '~/media/watch.png?jsx';
 
-//import ImgThunder from '~/media/cartoon.png?jsx';
 export default component$(() => {
   return (
     <div class={['container', styles.hero]}>
