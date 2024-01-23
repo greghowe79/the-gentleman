@@ -1,0 +1,49 @@
+.label:not([type='checkbox']) {
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.85;
+  letter-spacing: 1px;
+  color: var(--description-color);
+  position: relative;
+  height: 55px;
+  display: flex;
+  min-width: 0;
+  background: rgba(0, 0, 0, 0.04);
+  transition:
+    color 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+}
+
+.input {
+  background: transparent;
+  padding: 0 15px;
+  flex: 1;
+  font-size: var(--font-size-xs);
+  font-family: inherit;
+  font-weight: 100;
+  letter-spacing: inherit;
+  color: inherit;
+  height: 100%;
+  border: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  opacity: 0.4;
+}
+
+.input:focus {
+  outline: none;
+  opacity: 1;
+}
+
+.terms_privacy_disclaimer {
+  font-size: 0.7rem;
+}
+
+.standard {
+  color: var(--description-color);
+}

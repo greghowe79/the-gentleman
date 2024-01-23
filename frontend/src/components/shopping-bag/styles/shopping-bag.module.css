@@ -1,0 +1,109 @@
+/* .custom-wrapper {
+  display: grid;
+  place-content: center;
+  margin: 10px 0;
+}
+
+.download-container {
+  width: 300px;
+  height: 70px;
+  border-radius: 3.125rem;
+  display: grid;
+  place-content: center;
+  box-shadow: inset 0 3px 5px #444;
+}
+
+.subContainer {
+  width: 280px;
+  height: 48px;
+  background: linear-gradient(#ddd, #bbe);
+  display: grid;
+  place-content: center;
+  border-radius: 3.125rem;
+  box-shadow: 0 5px 3px #333;
+  transition: all 0.1s;
+}
+
+.button {
+  background: linear-gradient(#bbd, #fff);
+  width: 280px;
+  height: 45px;
+  border: none;
+  font-size: 20px;
+  font-family: 'Montserrat';
+  cursor: pointer;
+  place-content: center;
+  border-radius: 3.125rem;
+  display: grid;
+  transition: all 0.1s;
+} */
+
+.image-container {
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  height: 25.813rem;
+}
+
+.image-container-firstChild {
+  flex: 1;
+  backface-visibility: hidden;
+  min-width: 0;
+}
+
+.image-container-secondChild {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+}
+
+.text-container {
+  font-size: 20px;
+  font-weight: normal;
+  margin-top: 30px;
+}
+
+.currency-container {
+  border-top: 1px solid #efefef;
+  flex: 1;
+}
+
+.currency-container-firstChild {
+  margin: 30px 60px;
+  color: var(--description-color);
+  font-family: var(--font-family-secondary);
+  font-weight: 600;
+}
+
+.subtotal-container {
+  display: flex;
+  margin-top: 15px;
+  font-weight: 600;
+}
+
+.shipping-container {
+  display: flex;
+  margin-top: 30px;
+  font-weight: 600;
+}
+
+.total-container {
+  display: flex;
+  margin-top: 15px;
+  font-weight: 600;
+  padding-top: 30px;
+  font-size: 1.25rem;
+  height: 2.313rem;
+}
+.custom-button-container {
+  display: flex;
+  margin-top: 30px;
+  align-items: center;
+  justify-content: flex-end;
+}

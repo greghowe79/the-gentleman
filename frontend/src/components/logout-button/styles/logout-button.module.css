@@ -1,0 +1,14 @@
+.logout-button {
+  z-index: 40;
+  position: absolute;
+  display: flex;
+  right: 0;
+  transform: translateY(100%) translateY(40px) translateX(-60%);
+  max-width: 40vw;
+  background: rgba(241, 243, 244, 1);
+  padding: 15px;
+  font-family: var(--font-family-secondary);
+  font-weight: 600;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}

@@ -1,0 +1,81 @@
+.general-wrapper {
+  padding: 30px;
+  display: block;
+  /*  height: 100vh; */
+}
+
+.input-wrapper {
+  /*   transform: translateY(calc(7.07px * 50)) translateY(-50%); */
+  position: relative;
+  z-index: 1;
+  transition: transform 1s cubic-bezier(0.2, 1.4, 0.31, 0.92);
+  padding-bottom: 30px;
+}
+
+.search-title {
+  font-size: 1.25rem;
+  line-height: 1.85;
+  font-weight: normal;
+  letter-spacing: -0.15px;
+  display: inline-flex;
+}
+
+.label:not([type='checkbox']) {
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.85;
+  letter-spacing: 1px;
+  color: var(--description-color);
+  position: relative;
+  height: 55px;
+  display: flex;
+  min-width: 0;
+  background: rgba(0, 0, 0, 0.04);
+  transition:
+    color 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+}
+
+.scrollable::-webkit-scrollbar {
+  width: 10px;
+}
+.scrollable::-webkit-scrollbar-track {
+  background-color: transparent;
+
+  border-radius: 10px;
+}
+.scrollable::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.input {
+  background: transparent;
+  padding: 0 15px;
+  flex: 1;
+  font-size: var(--font-size-xs);
+  font-family: var(--font-family-primary);
+  font-weight: 100;
+  letter-spacing: inherit;
+  color: inherit;
+  height: 100%;
+  border: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  opacity: 1;
+}
+
+.input:focus {
+  outline: none;
+  box-shadow: 0 0 0 1.5px hsla(0, 0%, 47%);
+  border-radius: 8px;
+}
+
+input::placeholder {
+  opacity: 0.4;
+}
