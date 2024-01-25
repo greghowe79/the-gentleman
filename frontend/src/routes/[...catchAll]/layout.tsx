@@ -1,4 +1,4 @@
-import { component$, useContext } from '@builder.io/qwik';
+import { component$, useContext, useSignal } from '@builder.io/qwik';
 import {
   linkStyle,
   pointStyle,
@@ -32,6 +32,8 @@ import { BodyContext } from '~/root';
 import { calculateCategoryPath } from './utils';
 import { Image } from '@unpic/qwik';
 import ProductDetailImage from '~/components/product-detail-image/component/ProductDetailImage';
+import CustomSelect from '~/components/select-categories/component/customSelect';
+import { quantityOptions } from '~/components/select-categories/data/data';
 
 export interface Service {
   id: string;
@@ -58,6 +60,7 @@ const ShopDetailLayout = component$(() => {
   const service = useService();
 
   const categoryPath = calculateCategoryPath(loc.url.pathname);
+  const selectedOption = useSignal('1');
 
   return (
     <div class={shopArea}>
@@ -160,7 +163,9 @@ const ShopDetailLayout = component$(() => {
               <div class={spacer}>
                 <div class={quantityWrapper}>
                   <div class={label}>Choose the quantity</div>
-                  <div>Input</div>
+                  <div>
+                    <CustomSelect selectedOption={selectedOption} options={quantityOptions} exist={false} placeholder="" />
+                  </div>
                 </div>
               </div>
             </div>

@@ -1,11 +1,9 @@
 .general-wrapper {
   padding: 30px;
   display: block;
-  /*  height: 100vh; */
 }
 
 .input-wrapper {
-  /*   transform: translateY(calc(7.07px * 50)) translateY(-50%); */
   position: relative;
   z-index: 1;
   transition: transform 1s cubic-bezier(0.2, 1.4, 0.31, 0.92);
@@ -27,7 +25,7 @@
   letter-spacing: 1px;
   color: var(--description-color);
   position: relative;
-  height: 55px;
+  height: var(--input-height-md);
   display: flex;
   min-width: 0;
   background: rgba(0, 0, 0, 0.04);
@@ -54,8 +52,8 @@
   background: transparent;
   padding: 0 15px;
   flex: 1;
-  font-size: var(--font-size-xs);
-  font-family: var(--font-family-primary);
+  font-size: var(--font-size-sm);
+  font-family: var(--font-family-secondary);
   font-weight: 100;
   letter-spacing: inherit;
   color: inherit;

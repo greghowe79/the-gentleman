@@ -144,7 +144,13 @@ const UploadProducts = component$(() => {
         <div class={formContainer}>
           <div class={containerBlock}>
             <form class={[form, 'form']} onSubmit$={handleSubmit} preventdefault:submit>
-              <CustomSelect selectedOption={selectedOption} categorySlug={categorySlug} options={categoryOptions} />
+              <CustomSelect
+                selectedOption={selectedOption}
+                categorySlug={categorySlug}
+                options={categoryOptions}
+                exist={true}
+                placeholder={'Please choose a category'}
+              />
               <div class={prodNameInputWrap}>
                 <div class={flexWrapper}>
                   <div class={labelWrapper}>

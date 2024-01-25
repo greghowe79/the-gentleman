@@ -5,46 +5,67 @@ import { pointer, labelStyle, ulContainer, listStyle, listItem, customSelectStyl
 import { type SelectProps } from '../types/types';
 import CustomIcon from '~/components/custom-icon/component/customIcon';
 
-const CustomSelect = component$(({ selectedOption, categorySlug, options }: SelectProps) => {
+const CustomSelect = component$(({ selectedOption, categorySlug, options, exist, placeholder }: SelectProps) => {
   const rotation = useSignal(0);
   const open = useSignal(false);
-
-  // const rotateArrow = $(() => {
-  //   open.value = !open.value;
-  //   rotation.value = open.value ? rotation.value + 180 : 0;
-  // });
+  const shouldFormatCategory = useSignal(exist);
 
   const handleSelectChange = $((event: QwikMouseEvent<HTMLLIElement>) => {
     const target = event.target as HTMLElement;
     const newValue = target.childNodes[0].nodeValue!;
     selectedOption.value = newValue;
     rotateArrow(open, rotation);
-    formatCategory(selectedOption.value, categorySlug);
+    if (shouldFormatCategory.value) {
+      if (categorySlug) formatCategory(selectedOption.value, categorySlug);
+    }
+
     return selectedOption.value;
   });
   return (
     <div>
       <div>
-        <label for="categories" class={labelStyle}>
+        <label
+          for="categories"
+          class={labelStyle}
+          style={{ width: !exist ? 'var(--input-width-sm)' : '', marginLeft: !exist ? '1vw' : '' }}
+        >
           <input
             type="text"
             disabled
             id="categories"
             name="categories"
+            style={{ height: !exist ? 'var(--input-height-sm)' : '', padding: !exist ? '0 12px' : '' }}
             class={[customSelectStyle, 'select']}
-            value={selectedOption.value}
-            placeholder="Please choose a category"
+            bind:value={selectedOption}
+            placeholder={placeholder}
           />
-          <div onClick$={() => rotateArrow(open, rotation)} class={pointer}>
+          <div
+            onClick$={() => rotateArrow(open, rotation)}
+            class={pointer}
+            style={{ height: !exist ? 'var(--input-height-sm)' : '' }}
+          >
             <CustomIcon rotation={rotation} />
           </div>
         </label>
       </div>
       {open.value && (
-        <div class={ulContainer}>
+        <div
+          class={[ulContainer, 'ulContainer']}
+          style={{
+            width: !exist ? 'var(--input-width-sm)' : '',
+            marginLeft: !exist ? '1vw' : '',
+            height: !exist ? 'calc(var(--input-height-sm) * 4 + 4px)' : '',
+            overflowY: !exist ? 'auto' : 'hidden',
+          }}
+        >
           <ul class={listStyle}>
             {options.map((option) => (
-              <li key={option.value} onClick$={handleSelectChange} class={listItem}>
+              <li
+                key={option.value}
+                onClick$={handleSelectChange}
+                class={listItem}
+                style={{ height: !exist ? 'var(--input-height-sm)' : '' }}
+              >
                 {option.label}
               </li>
             ))}
