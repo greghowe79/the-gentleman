@@ -21,10 +21,12 @@ const CustomSelect = component$(({ selectedOption, categorySlug, options, exist,
 
     return selectedOption.value;
   });
+
   return (
     <div>
       <div>
         <label
+          onClick$={() => rotateArrow(open, rotation)}
           for="categories"
           class={labelStyle}
           style={{ width: !exist ? 'var(--input-width-sm)' : '', marginLeft: !exist ? '1vw' : '' }}
@@ -39,11 +41,7 @@ const CustomSelect = component$(({ selectedOption, categorySlug, options, exist,
             bind:value={selectedOption}
             placeholder={placeholder}
           />
-          <div
-            onClick$={() => rotateArrow(open, rotation)}
-            class={pointer}
-            style={{ height: !exist ? 'var(--input-height-sm)' : '' }}
-          >
+          <div class={pointer} style={{ height: !exist ? 'var(--input-height-sm)' : '' }}>
             <CustomIcon rotation={rotation} />
           </div>
         </label>
@@ -55,7 +53,6 @@ const CustomSelect = component$(({ selectedOption, categorySlug, options, exist,
             width: !exist ? 'var(--input-width-sm)' : '',
             marginLeft: !exist ? '1vw' : '',
             height: !exist ? 'calc(var(--input-height-sm) * 4 + 4px)' : '',
-            overflowY: !exist ? 'auto' : 'hidden',
           }}
         >
           <ul class={listStyle}>
