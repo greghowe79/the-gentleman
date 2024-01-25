@@ -46,15 +46,15 @@ export const slidingContainer = style({
 });
 
 export const previewContainer = style({
-  height: '55px',
+  height: 'var(--input-height-md)',
   display: 'flex',
   alignItems: 'center',
   background: 'rgba(0,0,0,.04)',
   borderRadius: '0 8px 8px 0',
   color: 'var(--description-color)',
   letterSpacing: '1px',
-  fontSize: 'var(--font-size-xs)',
-  fontFamily: 'var(--font-family-primary)',
+  fontSize: 'var(--font-size-sm)',
+  fontFamily: 'var(--font-family-secondary)',
   width: '380px',
 });
 
@@ -67,7 +67,7 @@ export const labelWrapper = style({
   display: 'inline-flex',
   alignItems: 'center',
   borderRadius: '8px 0 0 8px',
-  height: '55px',
+  height: 'var(--input-height-md)',
   backgroundColor: 'rgb(134, 167, 208)',
   ':hover': {
     backgroundColor: 'rgba(99, 147, 206, 1)',
@@ -146,8 +146,8 @@ export const textAreaStyle = style({
   overflowY: 'auto',
   zIndex: '2',
   overflowX: 'hidden',
-  fontSize: 'var(--font-size-xs)',
-  fontFamily: 'var(--font-family-primary)',
+  fontSize: 'var(--font-size-sm)',
+  fontFamily: 'var(--font-family-secondary)',
   letterSpacing: '1px',
   color: 'var(--description-color)',
 });

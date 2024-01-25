@@ -7,6 +7,8 @@ interface CategoryOption {
 
 export interface SelectProps {
   selectedOption: Signal<string>;
-  categorySlug: Signal<string>;
+  categorySlug?: Signal<string>;
   options: CategoryOption[];
+  exist: boolean;
+  placeholder: string;
 }

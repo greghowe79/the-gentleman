@@ -5,7 +5,7 @@
   letter-spacing: 1px;
   color: var(--description-color);
   position: relative;
-  height: 55px;
+  height: var(--input-height-md);
   display: flex;
   min-width: 0;
   background: rgba(0, 0, 0, 0.04);

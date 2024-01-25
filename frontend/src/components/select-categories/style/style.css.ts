@@ -3,28 +3,28 @@ import { style } from '@vanilla-extract/css';
 export const selectStyle = style({
   background: 'rgba(0, 0, 0, 0.04)',
   width: '100%',
-  height: '55px',
+  height: 'var(--input-height-md)',
   border: 'none',
   padding: '0 15px',
   borderRadius: '8px',
-  fontSize: 'var(--font-size-xs)',
+  fontSize: 'var(--font-size-sm)',
   letterSpacing: '1px',
   cursor: 'pointer',
   color: 'var(--description-color)',
-  fontFamily: 'var(--font-family-primary)',
+  fontFamily: 'var(--font-family-secondary)',
 });
 
 export const customSelectStyle = style({
   width: '100%',
-  height: '55px',
+  height: 'var(--input-height-md)',
   border: 'none',
   padding: '0 15px',
   borderRadius: '8px',
-  fontSize: 'var(--font-size-xs)',
+  fontSize: 'var(--font-size-sm)',
   letterSpacing: '1px',
   cursor: 'default',
   color: 'var(--description-color)',
-  fontFamily: 'var(--font-family-primary)',
+  fontFamily: 'var(--font-family-secondary)',
 });
 
 export const labelStyle = style({
@@ -40,8 +40,9 @@ export const pointer = style({
   justifyContent: 'center',
   cursor: 'pointer',
   width: '70px',
-  height: '55px',
-  borderRadius: '8px',
+  height: 'var(--input-height-md)',
+  borderTopRightRadius: '8px',
+  borderBottomRightRadius: '8px',
   ':hover': {
     backgroundColor: 'rgba(0,0,0,.04)',
   },
@@ -49,25 +50,29 @@ export const pointer = style({
 
 export const ulContainer = style({
   position: 'absolute',
-  background: 'rgba(245, 245, 245, 1)',
+  background: '#ffffff',
   zIndex: '3',
   width: 'calc(100% - 60px)',
   marginTop: '15px',
   color: 'var(--description-color)',
   borderRadius: '8px',
-  boxShadow: '0 0 0 1.5px hsla(0, 0%, 47%)',
+  boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.08)',
 });
 
 export const listStyle = style({
   listStyle: 'none',
-  padding: '15px 0',
+  padding: '0',
+  fontFamily: 'var(--font-family-secondary)',
+  fontSize: 'var(--font-size-sm)',
 });
 
 export const listItem = style({
   cursor: 'pointer',
-  paddingLeft: '15px',
+  paddingLeft: '12px',
+  height: 'var(--input-height-md)',
+  display: 'flex',
+  alignItems: 'center',
   ':hover': {
-    backgroundColor: 'var(--description-color)',
-    color: 'white',
+    backgroundColor: 'var(--list-item-background)',
   },
 });

@@ -67,6 +67,14 @@
   --product-name-color: rgb(65, 119, 100);
   --description-color: rgb(87, 87, 87);
 
+  /* List Item */
+  --list-item-background: rgba(0, 0, 0, 0.04);
+
+  /* Input Width and Height */
+  --input-width-sm: 80px;
+  --input-height-md: 55px;
+  --input-height-sm: 34px;
+
   /* Line Height */
   --line-height-xs: 1.2;
   --line-height-sm: 1.4;

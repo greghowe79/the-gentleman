@@ -20,7 +20,6 @@ html {
 }
 
 body {
-  /*  background: var(--qwik-dark-background); */
   color: var(--qwik-dark-text);
   overflow-x: hidden;
 }
@@ -42,6 +41,20 @@ body {
   border-radius: 10px;
 }
 .scrollable-content::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.ulContainer::-webkit-scrollbar {
+  width: 10px;
+  max-height: 100px;
+}
+.ulContainer::-webkit-scrollbar-track {
+  background-color: transparent;
+
+  border-radius: 10px;
+}
+.ulContainer::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 10px;
 }
@@ -189,11 +202,8 @@ ul {
 /* CONTAINER ------------------------------------ */
 .container {
   margin: 0 auto;
-  /*   padding: 30px 40px; */
 }
-.container.container-purple {
-  /* background: var(--qwik-light-purple); */
-}
+
 .container.container-dark {
   background: var(--qwik-dark-background);
   color: var(--qwik-dark-text);
@@ -201,20 +211,8 @@ ul {
 .container.container-center {
   text-align: center;
 }
-.container.container-flex {
-  /* does nothing on mobile */
-}
-.container.container-spacing-xl {
-  /*   padding: 50px 40px; */
-}
 
 @media screen and (min-width: 768px) {
-  .container {
-    /*  padding: 50px 80px; */
-  }
-  .container.container-spacing-xl {
-    /* padding: 100px 60px; */
-  }
   .container.container-flex {
     display: flex;
     justify-content: center;
@@ -252,33 +250,6 @@ button.button-small {
     padding: 23px 35px;
   }
 }
-
-/* DESIGN --------------------------------------- */
-/* .ellipsis {
-  position: absolute;
-  top: 100px;
-  left: -100px;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(
-    57.58% 57.58% at 48.79% 42.42%,
-    rgba(24, 180, 244, 0.5) 0%,
-    rgba(46, 55, 114, 0) 63.22%
-  );
-  transform: rotate(5deg);
-  opacity: 0.5;
-  z-index: -1;
-}
-.ellipsis.ellipsis-purple {
-  top: 1350px;
-  left: -100px;
-  background: radial-gradient(
-    50% 50% at 50% 50%,
-    rgba(172, 127, 244, 0.5) 0%,
-    rgba(21, 25, 52, 0) 100%
-  );
-  transform: rotate(-5deg);
-} */
 
 @media screen and (min-width: 768px) {
   .ellipsis {
@@ -326,23 +297,6 @@ button.button-small {
   z-index: -1;
 }
 
-/* .home:before {
-  content: ' ';
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-} */
-/* .home h3 {
-  position: absolute;
-  font-size: 74px;
-  text-align: left;
-  color: #009393;
-  margin-left: 15%;
-  font-weight: 700;
-} */
-
 .stage {
   width: auto;
   height: 100px;
@@ -371,7 +325,6 @@ button.button-small {
 }
 .cubespinner div {
   position: absolute;
-  /* width: 400px; */
   height: 80px;
   text-align: left;
 
