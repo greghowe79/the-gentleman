@@ -25,6 +25,7 @@ export const customSelectStyle = style({
   cursor: 'default',
   color: 'var(--description-color)',
   fontFamily: 'var(--font-family-secondary)',
+  pointerEvents: 'none',
 });
 
 export const labelStyle = style({
@@ -32,20 +33,17 @@ export const labelStyle = style({
   alignItems: 'center',
   background: 'rgba(0,0,0,.04)',
   borderRadius: '8px',
+  cursor: 'pointer',
 });
 
 export const pointer = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  cursor: 'pointer',
   width: '70px',
   height: 'var(--input-height-md)',
   borderTopRightRadius: '8px',
   borderBottomRightRadius: '8px',
-  ':hover': {
-    backgroundColor: 'rgba(0,0,0,.04)',
-  },
 });
 
 export const ulContainer = style({
@@ -57,6 +55,9 @@ export const ulContainer = style({
   color: 'var(--description-color)',
   borderRadius: '8px',
   boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.08)',
+  overflowY: 'auto',
+  height: 'auto',
+  maxHeight: '380px',
 });
 
 export const listStyle = style({
