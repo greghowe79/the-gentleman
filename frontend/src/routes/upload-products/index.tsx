@@ -29,6 +29,7 @@ import {
   handleChange,
   handlePriceKeyPress,
   handleTextAreaChange,
+  insertIntoTheProductTable,
   uploadImage,
   uploadImgStorage,
 } from '~/utils/helpers';
@@ -89,6 +90,19 @@ const UploadProducts = component$(() => {
 
     // Esegui qui la logica per inviare il nuovo prodotto al backend o gestirlo come preferisci
     console.log('Nuovo prodotto:', newProduct);
+
+    const itemToInsert = {
+      id: newProductId,
+      sku: newSKU,
+      name: productName.value,
+      url: imgUrl.value,
+      price: parseFloat(productPrice.value),
+      description: productDescription.value,
+      created_at: currentDate,
+      category: selectedOption.value,
+    };
+
+    insertIntoTheProductTable(itemToInsert);
 
     // NUOVO CODICE DI TEST PER SELEZIONARE LA CATEGORIA
     const { data: categoryProducts, error: newCategoryError } = await supabase
@@ -169,6 +183,7 @@ const UploadProducts = component$(() => {
                       name="image_uploads"
                       accept=".png, .jpg, .jpeg, .avif"
                       onChange$={(e) => uploadImage(e, currentFile, selectedFile)}
+                      required
                     />
                   </div>
                   <div class={previewContainer}>
@@ -232,6 +247,7 @@ const UploadProducts = component$(() => {
                   rows={6}
                   cols={50}
                   placeholder="Product description"
+                  required
                 />
               </div>
               <div class={ctaWrap}>

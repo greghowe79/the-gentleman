@@ -2,6 +2,7 @@ import { type QwikChangeEvent, type Signal, $, type QwikKeyboardEvent } from '@b
 import { supabase } from './supabase';
 import { type UserSess } from '~/root';
 import { v4 as uuidv4 } from 'uuid';
+import { type itemProps } from '~/routes/shop/types/types';
 
 export const rootDomain = 'http://localhost';
 
@@ -85,3 +86,11 @@ export const generateSku = $(
     return sku;
   }
 );
+
+export const insertIntoTheProductTable = $(async (itemToInsert: itemProps) => {
+  const { error: insertProductError } = await supabase.from('products').insert(itemToInsert);
+  if (insertProductError) {
+    console.error(insertProductError);
+    return;
+  }
+});
