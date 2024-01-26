@@ -19,39 +19,6 @@ import { Link, routeLoader$, useLocation } from '@builder.io/qwik-city';
 import { ListShopCategories } from '~/components/list-shop-categories/component/listShopCategories';
 import ShopProducts from '.';
 import ProductListPage from './[category]';
-//import { type JSX } from '@builder.io/qwik/jsx-runtime';
-//import ProductListPage from './[category]';
-//import ProductListPage from './[category]';
-
-// import { ListShopCategories } from '~/components/list-shop-categories/component/listShopCategories';
-// import ProductListPage from './[category]';
-
-//import { routeLoader$, Form, routeAction$ } from '@builder.io/qwik-city';
-//import styles from './button.module.css';
-
-// export const useJokeVoteAction = routeAction$((props: any) => {
-//   console.log('VOTE', props);
-// });
-
-// export default component$(() => {
-//   const dadJokeSignal = useDadJoke();
-
-//   const favoriteJokeAction = useJokeVoteAction();
-//   return (
-//     <section class="section bright">
-//       <p>{dadJokeSignal.value.joke}</p>
-//       <Form action={favoriteJokeAction}>
-//         <input type="hidden" name="jokeID" value={dadJokeSignal.value.id} />
-//         <button name="vote" value="up" class={styles['custom-button']}>
-//           👍
-//         </button>
-//         <button name="vote" value="down">
-//           👎
-//         </button>
-//       </Form>
-//     </section>
-//   );
-// });
 
 export interface Product {
   id: number;

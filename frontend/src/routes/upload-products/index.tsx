@@ -24,6 +24,7 @@ import styles from '../../components/search-bar/styles/search-bar.module.css';
 import { supabase } from '~/utils/supabase';
 import { v4 as uuidv4 } from 'uuid';
 import {
+  generateSku,
   getImages,
   handleChange,
   handlePriceKeyPress,
@@ -50,6 +51,7 @@ const UploadProducts = component$(() => {
   const currentFile: Signal<any> = useSignal();
   const isPreview = useSignal(false);
   const selectedOption = useSignal('');
+  const sequence = useSignal(1);
 
   useTask$(async ({ track }) => {
     track(() => userSession.userId);
@@ -66,12 +68,15 @@ const UploadProducts = component$(() => {
     // Genera un nuovo ID univoco utilizzando uuid
     const newProductId = uuidv4();
 
+    const newSKU = await generateSku(newProductId, productName.value, productDescription.value, sequence);
+
     // Ottieni la data corrente in formato ISO
     const currentDate = new Date().toISOString();
 
     // Crea un nuovo oggetto prodotto con l'ID generato e i dati del form
     const newProduct = {
       id: newProductId,
+      sku: newSKU,
       name: productName.value,
       slug: productSlug.value,
       categorySlug: categorySlug.value,

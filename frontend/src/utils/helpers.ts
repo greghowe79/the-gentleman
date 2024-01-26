@@ -75,3 +75,13 @@ export const uploadImgStorage = $(
     }
   }
 );
+
+export const generateSku = $(
+  (productId: string, productName: string, productDescription: string, sequence: Signal<number>): string => {
+    const sku = `${productId.substring(0, 2)}-${productName.substring(0, 2)}-${productDescription.substring(0, 2)}-${
+      sequence.value
+    }`;
+    sequence.value = sequence.value + 1;
+    return sku;
+  }
+);
