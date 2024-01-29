@@ -103,7 +103,7 @@ export const grid = style({
 });
 
 export const imageWrap = style({
-  height: '250px',
+  height: '300px',
   width: '200px',
   display: 'flex',
   flexDirection: 'column',
@@ -111,6 +111,7 @@ export const imageWrap = style({
   justifyContent: 'space-around',
   alignItems: 'center',
   borderRadius: '8px',
+  padding: '20px 0',
 });
 
 export const button = style({

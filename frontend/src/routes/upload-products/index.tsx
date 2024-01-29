@@ -24,8 +24,13 @@ import styles from '../../components/search-bar/styles/search-bar.module.css';
 import { supabase } from '~/utils/supabase';
 import { v4 as uuidv4 } from 'uuid';
 import {
+  deleteImage,
+  deleteProductsProduct,
+  deleteShopCategoryProduct,
+  deleteShopProduct,
   generateSku,
   getImages,
+  getProducts,
   handleChange,
   handlePriceKeyPress,
   handleTextAreaChange,
@@ -36,6 +41,7 @@ import {
 import { Image } from '@unpic/qwik';
 import CustomSelect from '~/components/select-categories/component/customSelect';
 import { categoryOptions } from '../../components/select-categories/data/data';
+import { type ItemProps } from '../shop/types/types';
 
 const CDNURL = 'https://oukztwgobbpvjuhlvpft.supabase.co/storage/v1/object/public/shop/';
 
@@ -53,11 +59,13 @@ const UploadProducts = component$(() => {
   const isPreview = useSignal(false);
   const selectedOption = useSignal('');
   const sequence = useSignal(1);
+  const productsTable: Signal<ItemProps[]> = useSignal([]);
 
   useTask$(async ({ track }) => {
     track(() => userSession.userId);
     if (userSession.isLoggedIn) {
       await getImages(userSession, images);
+      await getProducts(productsTable);
     }
   });
 
@@ -88,9 +96,6 @@ const UploadProducts = component$(() => {
       category: selectedOption.value,
     };
 
-    // Esegui qui la logica per inviare il nuovo prodotto al backend o gestirlo come preferisci
-    console.log('Nuovo prodotto:', newProduct);
-
     const itemToInsert = {
       id: newProductId,
       sku: newSKU,
@@ -102,7 +107,7 @@ const UploadProducts = component$(() => {
       category: selectedOption.value,
     };
 
-    insertIntoTheProductTable(itemToInsert);
+    await insertIntoTheProductTable(itemToInsert, productsTable);
 
     // NUOVO CODICE DI TEST PER SELEZIONARE LA CATEGORIA
     const { data: categoryProducts, error: newCategoryError } = await supabase
@@ -137,25 +142,13 @@ const UploadProducts = component$(() => {
     }
 
     const updatedProducts = [...products[0].products, newProduct];
-    const { data: newRecord, error: updateError } = await supabase
-      .from('shop')
-      .update({ products: updatedProducts })
-      .match({ id: 1 });
+    const { data: newRecord, error: updateError } = await supabase.from('shop').update({ products: updatedProducts }).match({ id: 1 });
     if (updateError) {
       console.error(updateError);
       return;
     }
     console.log('Record updated successfully', newRecord);
   });
-
-  // const deleteImage = $(async (imageName: string) => {
-  //   const { error } = await supabase.storage.from('shop').remove([userSession.userId + '/' + imageName]);
-  //   if (error) {
-  //     console.error(error);
-  //   } else {
-  //     getImages();
-  //   }
-  // });
 
   return (
     <>
@@ -268,24 +261,38 @@ const UploadProducts = component$(() => {
               <div style={{ background: 'red' }}>Ciao</div>
             ) : (
               <div class={grid}>
-                {images.value.map((image: any) => {
-                  return (
-                    <div key={image.id} class={imageWrap}>
-                      {/* <img src={CDNURL + userSession.userId + '/' + image.name} width={200} height={150} alt="image" /> */}
-                      {/* <button class={button} onClick$={() => deleteImage(image.name)}>
-                      Delete Image
-                    </button> */}
+                {images.value &&
+                  images.value.length > 0 &&
+                  productsTable.value.map((product: ItemProps, index: number) => {
+                    const imageUrl = CDNURL + userSession.userId + '/' + images.value?.[index]?.name;
 
-                      <Image
-                        src={CDNURL + userSession.userId + '/' + image.name}
-                        layout="constrained"
-                        decoding="async"
-                        loading="lazy"
-                        alt="A lovely bath"
-                      />
-                    </div>
-                  );
-                })}
+                    return (
+                      <div key={product.id} class={imageWrap}>
+                        <div
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            flexDirection: 'column',
+                            height: '250px',
+                          }}
+                        >
+                          <Image src={imageUrl} layout="constrained" decoding="async" loading="lazy" alt="A lovely bath" />
+                        </div>
+                        <button
+                          class={button}
+                          onClick$={() => [
+                            deleteImage(userSession, images.value[index]?.name, images),
+                            deleteShopProduct(1, product.id),
+                            deleteShopCategoryProduct(product.category, product.id),
+                            deleteProductsProduct(product.id, productsTable),
+                          ]}
+                        >
+                          Delete Products
+                        </button>
+                      </div>
+                    );
+                  })}
               </div>
             )}
           </div>
