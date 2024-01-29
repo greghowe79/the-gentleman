@@ -10,7 +10,20 @@ export interface Product {
   url: string;
 }
 
-export interface itemProps {
+export interface ShopTableProduct {
+  id: string;
+  sku: string;
+  url: string;
+  name: string;
+  slug: string;
+  price: number;
+  category: string;
+  created_at: string;
+  description: string;
+  categorySlug: string;
+}
+
+export interface ItemProps {
   id: string;
   sku: string;
   name: string;
@@ -19,4 +32,17 @@ export interface itemProps {
   description: string;
   created_at: string;
   category: string;
+}
+
+export interface ShopCategoriesTableProduct {
+  id: string;
+  sku: string;
+  url: string;
+  name: string;
+  slug: string;
+  price: number;
+  category: string;
+  created_at: string;
+  description: string;
+  categorySlug: string;
 }
