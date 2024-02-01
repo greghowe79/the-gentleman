@@ -25,32 +25,23 @@ import {
   spacer,
   quantityWrapper,
   label,
+  cartButtonStyle,
+  cartButtonWrapper,
+  Wrap,
 } from '../shop/styles.css';
 import { Arrow } from '~/components/starter/icons/arrow';
 import { Link, routeLoader$, useLocation } from '@builder.io/qwik-city';
 import { BodyContext } from '~/root';
-import { calculateCategoryPath } from './utils';
+import { addToCart, calculateCategoryPath } from './utils';
 import { Image } from '@unpic/qwik';
 import ProductDetailImage from '~/components/product-detail-image/component/ProductDetailImage';
 import CustomSelect from '~/components/select-categories/component/customSelect';
 import { quantityOptions } from '~/components/select-categories/data/data';
-
-export interface Service {
-  id: string;
-  url: string;
-  name: string;
-  slug: string;
-  price: number;
-  category: string;
-  created_at: string;
-  description: string;
-  categorySlug: string;
-}
+import { type Service } from './types';
 
 export const useService = routeLoader$(async (requestEvent) => {
   const res = await fetch(`http://localhost:3005/api_v1/${requestEvent.params.catchAll}`);
   const service: Service[] = await res.json();
-  console.log(service);
   return service;
 });
 
@@ -58,7 +49,6 @@ const ShopDetailLayout = component$(() => {
   const backgroundColor = useContext(BodyContext);
   const loc = useLocation();
   const service = useService();
-
   const categoryPath = calculateCategoryPath(loc.url.pathname);
   const selectedOption = useSignal('1');
 
@@ -89,9 +79,7 @@ const ShopDetailLayout = component$(() => {
                 <>
                   <span class={spanStyle}>
                     <Link class={linkStyle} href={categoryPath}>
-                      <span style={{ color: 'var(--description-color)' }}>
-                        {loc.params.catchAll.split('/')[1].replace(/-/g, ' ')}
-                      </span>
+                      <span style={{ color: 'var(--description-color)' }}>{loc.params.catchAll.split('/')[1].replace(/-/g, ' ')}</span>
                     </Link>
                     {loc.params.catchAll && <strong class={pointStyle}>&nbsp; . &nbsp;</strong>}
                   </span>
@@ -108,16 +96,7 @@ const ShopDetailLayout = component$(() => {
         </div>
         <div class={shopWrapperDetailContent}>
           <div class={stickyImageContainer}>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                height: '100%',
-                alignItems: 'center',
-                justifyContent: 'stretch',
-                userSelect: 'none',
-              }}
-            >
+            <div class={Wrap}>
               <div class={thumbnailsWrapper}>
                 <div class={thumbnail}>
                   <div class={svgDivThumbnail}>CIAO</div>
@@ -166,6 +145,11 @@ const ShopDetailLayout = component$(() => {
                   <div>
                     <CustomSelect selectedOption={selectedOption} options={quantityOptions} exist={false} placeholder="" />
                   </div>
+                </div>
+                <div class={cartButtonWrapper}>
+                  <button onClick$={() => addToCart(service, selectedOption)} class={cartButtonStyle}>
+                    Add to Cart
+                  </button>
                 </div>
               </div>
             </div>
