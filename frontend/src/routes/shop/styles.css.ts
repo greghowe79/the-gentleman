@@ -322,3 +322,33 @@ export const svgDivThumbnail = style({
   display: 'inline-flex',
   fontSize: '0',
 });
+
+export const cartButtonStyle = style({
+  display: 'inline-flex',
+  width: '190px',
+  backgroundColor: 'var(--product-name-color)',
+  color: 'white',
+  borderRadius: '25px',
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: '20px 16px',
+  fontFamily: 'var(--font-family-secondary)',
+  fontSize: 'var(--font-size-sm)',
+  height: 'var(--cta-add-to-cart)',
+});
+
+export const cartButtonWrapper = style({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-start',
+  marginTop: '30px',
+});
+
+export const Wrap = style({
+  display: 'flex',
+  flexDirection: 'row',
+  height: '100%',
+  alignItems: 'center',
+  justifyContent: 'stretch',
+  userSelect: 'none',
+});

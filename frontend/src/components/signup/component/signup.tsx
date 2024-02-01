@@ -120,15 +120,7 @@ export const SignUp = component$<LoginProps>(({ isLoginForm }) => {
             <div>
               <div>
                 <label class={styles['label']}>
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    placeholder="email"
-                    required
-                    class={styles['input']}
-                  />
+                  <input id="email" name="email" type="email" autoComplete="email" placeholder="email" required class={styles['input']} />
                 </label>
               </div>
             </div>
@@ -162,12 +154,7 @@ export const SignUp = component$<LoginProps>(({ isLoginForm }) => {
             </div>
 
             <div style={{ marginTop: '30px' }}>
-              <button
-                type="submit"
-                disabled={isLoading.value}
-                class=""
-                style={{ width: '100%', background: backgroundColor.value }}
-              >
+              <button type="submit" disabled={isLoading.value} class="" style={{ width: '100%', background: backgroundColor.value }}>
                 Register
               </button>
               <div
@@ -177,9 +164,7 @@ export const SignUp = component$<LoginProps>(({ isLoginForm }) => {
                   justifyContent: 'center',
                 }}
               >
-                <p style={{ color: 'var(--description-color)', fontSize: '0.6rem' }}>
-                  No password required. Authorize via email.
-                </p>
+                <p style={{ color: 'var(--description-color)', fontSize: '0.6rem' }}>No password required. Authorize via email.</p>
               </div>
             </div>
             <Message message={message} />

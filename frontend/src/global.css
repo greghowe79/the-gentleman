@@ -89,6 +89,9 @@
   --font-size-xxl: 30px;
   --font-size-xxl2: 54px;
 
+  /* CTA BUTTON HEIGHT */
+  --cta-add-to-cart: 50px;
+
   /* Font Family */
 
   --font-family-primary: 'Krona', sans-serif;
