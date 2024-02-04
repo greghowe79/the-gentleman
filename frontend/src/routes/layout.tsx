@@ -1,6 +1,6 @@
 import { component$, createContextId, type Signal, Slot, useStore, useStyles$ } from '@builder.io/qwik';
 import { routeLoader$, useLocation } from '@builder.io/qwik-city';
-import type { RequestHandler } from '@builder.io/qwik-city';
+import type { Cookie, RequestHandler } from '@builder.io/qwik-city';
 import { Header } from '~/components/starter/header/header';
 import Footer from '~/components/starter/footer/footer';
 import styles from './styles.css?inline';
@@ -25,16 +25,45 @@ export const useServerTimeLoader = routeLoader$(() => {
 
 export const LoaderContext = createContextId<Signal<boolean>>('loader-context');
 
+export const onRequest: RequestHandler = async ({ cookie, sharedMap }) => {
+  const cart = loadUserFromCookie(cookie);
+
+  if (cart) {
+    sharedMap.set('cart', cart);
+  } else {
+    return;
+  }
+};
+
+function loadUserFromCookie(cookie: Cookie): any {
+  if (cookie) {
+    let cart = cookie.get('cart')?.value;
+    if (cart) {
+      cart = cart.slice(2);
+      cart = JSON.parse(cart);
+      console.log('cart', cart);
+      return cart;
+    }
+  } else {
+    return null;
+  }
+}
+
+export const useCookie = routeLoader$(({ sharedMap }) => {
+  return sharedMap.get('cart') as any;
+});
+
 export default component$(() => {
   const loc = useLocation();
   const openPanel = useStore({ isOpen: false });
   const iconKey = useStore({ number: '' });
+  const cookie = useCookie();
 
   useStyles$(styles);
 
   return (
     <>
-      <IconsPanel openPanel={openPanel} iconKey={iconKey} />
+      <IconsPanel openPanel={openPanel} iconKey={iconKey} cookie={cookie} />
       <Header openPanel={openPanel} iconKey={iconKey} />
       <div class="scrollable-content">
         <main>

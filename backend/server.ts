@@ -26,6 +26,20 @@ const supabaseANonPublic = process.env.SUPABASE_SECRET_KEY!;
 
 const supabase = createClient(supabaseUrl, supabaseANonPublic);
 
+app.post(route + '/add-to-cart', async (req: Request, res: Response) => {
+  const product = req.body.product;
+  const cart = req.cookies.cart || [];
+  //console.log('cart', cart);
+  cart.push(product);
+  res.cookie('cart', cart, {
+    httpOnly: true,
+    expires: new Date(Date.now() + 8 * 3600000),
+    secure: process.env.NODE_ENV != 'development',
+    sameSite: 'lax',
+  });
+  return res.status(200).json({ message: 'Cookie stored', success: true, cart });
+});
+
 app.get(route + '/shop/:category', async (req: Request, res: Response) => {
   let slug = req.params.category;
   const { data: shop, error } = await supabase.from('shop_categories').select('*').eq('slug', slug).limit(1);

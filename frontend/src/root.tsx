@@ -1,18 +1,11 @@
-import {
-  type Signal,
-  component$,
-  createContextId,
-  useContextProvider,
-  useSignal,
-  useVisibleTask$,
-  useStore,
-} from '@builder.io/qwik';
+import { type Signal, component$, createContextId, useContextProvider, useSignal, useVisibleTask$, useStore } from '@builder.io/qwik';
 import { QwikCityProvider, RouterOutlet, ServiceWorkerRegister } from '@builder.io/qwik-city';
 import { RouterHead } from './components/router-head/router-head';
 
 import './global.css';
 import { supabase } from './utils/supabase';
 import axios from 'axios';
+import { type ProductDetailsProps } from './routes/[...catchAll]/types';
 
 export type UserSess = {
   userId: string;
@@ -20,8 +13,8 @@ export type UserSess = {
 };
 
 export const BodyContext = createContextId<Signal<string>>('body-context');
-
 export const UserSessionContext = createContextId<UserSess>('user-session');
+export const CartContext = createContextId<Signal<ProductDetailsProps[]>>('cart-context');
 
 export default component$(() => {
   const currentIndex = useSignal(0);
@@ -32,6 +25,7 @@ export default component$(() => {
   });
 
   const backgroundColor = useSignal('rgb(0, 0, 0)');
+  const cart: Signal<ProductDetailsProps[]> = useSignal([]);
 
   const colors = ['rgb(0, 0, 0)', 'rgb(47, 72, 88)', 'rgb(58, 0, 30)', 'rgb(131, 118, 85)'];
 
@@ -63,7 +57,6 @@ export default component$(() => {
 
   useVisibleTask$(async () => {
     const { data: authListener } = supabase.auth.onAuthStateChange(async (event: string, session: any) => {
-      // console.log(event);
       if (event === 'SIGNED_IN' && session?.access_token && session?.refresh_token) {
         //SEND COOKIES TO SERVER
         const bodyContent = {
@@ -105,7 +98,7 @@ export default component$(() => {
 
   useContextProvider(BodyContext, backgroundColor);
   useContextProvider(UserSessionContext, userSession);
-
+  useContextProvider(CartContext, cart);
   return (
     <QwikCityProvider>
       <head>
@@ -116,13 +109,7 @@ export default component$(() => {
 
         {/* <link rel="preload" href="/fonts/Montserrat-VariableFont_wght.ttf" as="font" type="font/ttf" crossOrigin="anonymous" /> */}
 
-        <link
-          rel="preload"
-          href="/fonts/montserrat-v26-latin-regular.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
+        <link rel="preload" href="/fonts/montserrat-v26-latin-regular.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <RouterHead />
 
         <link rel="preload" href="/fonts/montserrat-v26-latin-600.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
