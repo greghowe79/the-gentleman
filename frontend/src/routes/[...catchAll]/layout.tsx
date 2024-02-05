@@ -45,17 +45,6 @@ export const useService = routeLoader$(async (requestEvent) => {
   return service;
 });
 
-// export const useCookie = routeLoader$(async (requestEvent) => {
-//   // This code runs only on the server, after every navigation
-//   const cookieValue = requestEvent.cookie.get('cart');
-//   if (cookieValue) {
-//     const jsonString = cookieValue.value.slice(2);
-//     const parsedValue = await JSON.parse(jsonString);
-
-//     return parsedValue;
-//   }
-// });
-
 const ShopDetailLayout = component$(() => {
   const backgroundColor = useContext(BodyContext);
   const loc = useLocation();
