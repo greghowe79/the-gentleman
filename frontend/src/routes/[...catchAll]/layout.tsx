@@ -31,13 +31,13 @@ import {
 } from '../shop/styles.css';
 import { Arrow } from '~/components/starter/icons/arrow';
 import { Link, routeLoader$, useLocation } from '@builder.io/qwik-city';
-import { BodyContext } from '~/root';
+import { BodyContext, CartContext, UserSessionContext } from '~/root';
 import { addToCart, calculateCategoryPath } from './utils';
 import { Image } from '@unpic/qwik';
 import ProductDetailImage from '~/components/product-detail-image/component/ProductDetailImage';
 import CustomSelect from '~/components/select-categories/component/customSelect';
 import { quantityOptions } from '~/components/select-categories/data/data';
-import { type Service } from './types';
+import type { Service } from './types';
 
 export const useService = routeLoader$(async (requestEvent) => {
   const res = await fetch(`http://localhost:3005/api_v1/${requestEvent.params.catchAll}`);
@@ -51,6 +51,8 @@ const ShopDetailLayout = component$(() => {
   const service = useService();
   const categoryPath = calculateCategoryPath(loc.url.pathname);
   const selectedOption = useSignal('1');
+  const userSession = useContext(UserSessionContext);
+  const cart = useContext(CartContext);
 
   return (
     <div class={shopArea}>
@@ -147,7 +149,7 @@ const ShopDetailLayout = component$(() => {
                   </div>
                 </div>
                 <div class={cartButtonWrapper}>
-                  <button onClick$={() => addToCart(service, selectedOption)} class={cartButtonStyle}>
+                  <button onClick$={() => addToCart(service, selectedOption, userSession, cart)} class={cartButtonStyle}>
                     Add to Cart
                   </button>
                 </div>

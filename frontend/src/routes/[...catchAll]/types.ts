@@ -10,3 +10,15 @@ export interface Service {
   sku: string;
   categorySlug: string;
 }
+
+export interface ProductDetailsProps {
+  id: string;
+  order_id: string | null;
+  url: string;
+  product_id: string;
+  price: number;
+  sku: string;
+  quantity: number;
+  product_name: string;
+  amount: number;
+}

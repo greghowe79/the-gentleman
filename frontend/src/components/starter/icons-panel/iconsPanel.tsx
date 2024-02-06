@@ -12,7 +12,7 @@ import { UserSessionContext } from '~/root';
 import { supabase } from '~/utils/supabase';
 import { useNavigate } from '@builder.io/qwik-city';
 
-export const IconsPanel = component$<ToggleProps>(({ openPanel, iconKey }) => {
+export const IconsPanel = component$<ToggleProps>(({ openPanel, iconKey, cookie }) => {
   const userSession = useContext(UserSessionContext);
   const isSession = useSignal(false);
   const nav = useNavigate();
@@ -56,7 +56,7 @@ export const IconsPanel = component$<ToggleProps>(({ openPanel, iconKey }) => {
         <>
           <Overlay openPanel={openPanel} closed={closed} />
           <div class={styles['toggle-panel']} style={TogglePanelStyles}>
-            {number === '0' && <ShoppingBag text={'Your Shopping Bag is empty'} closed={closed} />}
+            {number === '0' && <ShoppingBag text={'Your Shopping Bag is empty'} closed={closed} cookie={cookie} />}
             {number === '1' && <SearchBar />}
             {number === '2' && (isLoginForm.active ? <Login isLoginForm={isLoginForm} /> : <SignUp isLoginForm={isLoginForm} />)}
             {number === '3' && <MenuLanguages />}
