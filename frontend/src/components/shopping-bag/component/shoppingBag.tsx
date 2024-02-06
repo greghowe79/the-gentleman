@@ -4,6 +4,22 @@ import { CustomButton } from '~/components/custom-button/component/customButton'
 import styles from '../styles/shopping-bag.module.css';
 import { Link } from '@builder.io/qwik-city';
 import { Image } from '@unpic/qwik';
+import {
+  controlsContainer,
+  controlsStyle,
+  flexWrap,
+  imgWrap,
+  itemsNumber,
+  linkStyle,
+  nameStyle,
+  price,
+  productsContainer,
+  spacer,
+  spacerFirstChild,
+  wrap,
+  wrapFirstChild,
+} from '../styles/style.css';
+import { type ProductDetailsProps } from '~/routes/[...catchAll]/types';
 
 export const ShoppingBag = component$(
   (props: {
@@ -21,38 +37,42 @@ export const ShoppingBag = component$(
     //console.log('VALOREEEEEE', props.cookie?.value);
     useTask$(() => {
       if (props.cookie?.value) {
-        console.log('props.cookie.value', props.cookie.value);
+        //console.log('props.cookie.value', props.cookie.value);
         cart.value = props.cookie.value;
       }
     });
 
-    console.log('DENTRO SHOPPING CARD', cart.value);
+    // console.log('DENTRO SHOPPING CARD', cart.value);
     return (
       <>
         {cart.value?.length > 0 ? (
-          <div style={{ flex: '1', overflow: 'hidden' }}>
-            <div style={{ transform: 'translate3d(0px, 0px, 0px)' }}>
-              <div style={{ padding: '30px 30px 60px 30px' }}>
+          <div class={wrap}>
+            <div class={wrapFirstChild}>
+              <div class={productsContainer}>
                 <div>
                   <div>
-                    <div style={{ color: 'red' }}>
-                      {cart.value.map((product: any) => {
+                    <div>
+                      {cart.value.map((product: ProductDetailsProps) => {
                         return (
                           <div key={product.id}>
-                            <Link href={'#'} style={{ display: 'flex', alignItems: 'center' }}>
-                              <div style={{ width: '60px', display: 'flex', alignItems: 'center' }}>
-                                <Image
-                                  src={product.url}
-                                  layout="constrained"
-                                  decoding="async"
-                                  loading="lazy"
-                                  alt="A lovely bath"
-                                  // class={imageStyle}
-                                />
+                            <Link class={linkStyle} href={'#'}>
+                              <div class={imgWrap}>
+                                <Image src={product.url} layout="constrained" decoding="async" loading="lazy" alt="A lovely bath" />
                               </div>
-                              <div style={{ display: 'flex', alignItems: 'center' }}>
-                                <div>{product.product_name}</div>
-                                <div></div>
+                              <div class={flexWrap}>
+                                <div class={nameStyle}>{product.product_name}</div>
+                                <div class={spacer}>
+                                  <div class={spacerFirstChild}>
+                                    <div>
+                                      <strong class={price}>EUR {product.price}</strong>
+                                    </div>
+                                    <div class={controlsContainer}>
+                                      <button class={controlsStyle}>-</button>
+                                      <div class={itemsNumber}>{product.quantity}</div>
+                                      <button class={controlsStyle}>+</button>
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
                             </Link>
                           </div>

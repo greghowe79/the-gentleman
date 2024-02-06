@@ -27,8 +27,6 @@ export const handleAddProductToCookie = $(async (product: ProductDetailsProps, c
     });
 });
 
-//const orderDetailsArray: any[] = [];
-
 export const addToCart = $(
   async (
     service: Readonly<Signal<Service[]>>,
@@ -49,7 +47,6 @@ export const addToCart = $(
       product_name: service.value[0]?.name,
       amount: service.value[0]?.price * parseInt(selectedOption.value),
     };
-    //orderDetailsArray.push(orderDetails);
 
     if (userSession.isLoggedIn) {
       const { error } = await supabase.from('order_details').insert(orderDetails);
@@ -58,7 +55,6 @@ export const addToCart = $(
       }
     }
 
-    //createIdentifier(orderDetailsArray);
     handleAddProductToCookie(orderDetails, cart);
   }
 );

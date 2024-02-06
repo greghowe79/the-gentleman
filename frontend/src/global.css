@@ -50,7 +50,7 @@
 
 :root {
   --qwik-dark-blue: #006ce9;
-  --qwik-light-blue: rgb(87, 87, 87);
+  --default-text-color: rgb(87, 87, 87);
   --qwik-light-purple: #ac7ff4;
   --qwik-dark-purple: #713fc2;
   --link-color-hover: rgb(241, 196, 15);

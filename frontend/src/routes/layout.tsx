@@ -26,7 +26,7 @@ export const useServerTimeLoader = routeLoader$(() => {
 export const LoaderContext = createContextId<Signal<boolean>>('loader-context');
 
 export const onRequest: RequestHandler = async ({ cookie, sharedMap }) => {
-  const cart = loadUserFromCookie(cookie);
+  const cart = loadProductsFromCookie(cookie);
 
   if (cart) {
     sharedMap.set('cart', cart);
@@ -35,7 +35,7 @@ export const onRequest: RequestHandler = async ({ cookie, sharedMap }) => {
   }
 };
 
-function loadUserFromCookie(cookie: Cookie): any {
+function loadProductsFromCookie(cookie: Cookie): any {
   if (cookie) {
     let cart = cookie.get('cart')?.value;
     if (cart) {

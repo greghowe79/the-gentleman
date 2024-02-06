@@ -155,7 +155,7 @@ h1 {
 }
 h1 .highlight,
 h3 .highlight {
-  color: var(--qwik-light-blue);
+  color: var(--default-text-color);
 }
 
 h2 {
@@ -185,7 +185,7 @@ h3 {
 /* TAGS ----------------------------------------- */
 a {
   text-decoration: none;
-  color: var(--qwik-light-blue);
+  color: var(--default-text-color);
 }
 
 code {
@@ -223,7 +223,7 @@ ul {
 /* BUTTONS -------------------------------------- */
 a.button,
 button {
-  background: var(--qwik-light-blue);
+  background: var(--default-text-color);
   border: none;
   border-radius: 8px;
   color: white;
