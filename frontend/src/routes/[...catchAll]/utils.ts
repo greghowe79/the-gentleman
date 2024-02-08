@@ -19,6 +19,7 @@ export const handleAddProductToCookie = $(async (product: ProductDetailsProps, c
       console.log('PRODUCTS:', response.data.cart);
 
       cart.value = response.data.cart;
+
       console.log('CART.VALUE', cart.value);
       return cart.value;
     })

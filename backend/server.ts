@@ -9,6 +9,17 @@ import { createClient } from '@supabase/supabase-js';
 import { Product } from './types/types';
 
 // Determine root domain
+export interface ProductDetailsProps {
+  id: string;
+  order_id: string | null;
+  url: string;
+  product_id: string;
+  price: number;
+  sku: string;
+  quantity: number;
+  product_name: string;
+  amount: number;
+}
 
 let rootDomain = process.env.NODE_ENV == 'development' ? process.env.ROOT_DOMAIN_DEV : process.env.ROOT_DOMAIN_PROD;
 
@@ -28,15 +39,34 @@ const supabase = createClient(supabaseUrl, supabaseANonPublic);
 
 app.post(route + '/add-to-cart', async (req: Request, res: Response) => {
   const product = req.body.product;
-  const cart = req.cookies.cart || [];
+  let cart: ProductDetailsProps[] = req.cookies.cart || [];
+
+  const itemFound = cart.find((item: ProductDetailsProps) => item.product_id === product.product_id);
+
+  const itemAlreadyExist = !!itemFound;
+
+  if (itemAlreadyExist) {
+    itemFound.quantity += product.quantity;
+    itemFound.amount += product.amount;
+  } else {
+    cart = [...cart, product];
+  }
+
   //console.log('cart', cart);
-  cart.push(product);
+
+  /////CODICE DI TEST//////////
+  // const total = cart.reduce((acc, item) => acc + item.amount, 0);
+  // let obj = { cart, total };
+  // console.log('OBJECT', obj);
+  /////FINE DEL CODICE DI TEST//////////
+
   res.cookie('cart', cart, {
     httpOnly: true,
     expires: new Date(Date.now() + 8 * 3600000),
     secure: process.env.NODE_ENV != 'development',
     sameSite: 'lax',
   });
+
   return res.status(200).json({ message: 'Cookie stored', success: true, cart });
 });
 
