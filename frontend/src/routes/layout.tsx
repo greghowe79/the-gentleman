@@ -5,6 +5,7 @@ import { Header } from '~/components/starter/header/header';
 import Footer from '~/components/starter/footer/footer';
 import styles from './styles.css?inline';
 import IconsPanel from '~/components/starter/icons-panel/iconsPanel';
+import { type CartProps } from './[...catchAll]/types';
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
   // Control caching for this request for best performance and to reduce hosting costs:
@@ -35,22 +36,41 @@ export const onRequest: RequestHandler = async ({ cookie, sharedMap }) => {
   }
 };
 
-function loadProductsFromCookie(cookie: Cookie): any {
-  if (cookie) {
-    let cart = cookie.get('cart')?.value;
-    if (cart) {
-      cart = cart.slice(2);
-      cart = JSON.parse(cart);
+// function loadProductsFromCookie(cookie: Cookie): any {
+//   if (cookie) {
+//     let cart = cookie.get('cart')?.value;
+//     if (cart) {
+//       cart = cart.slice(2);
+//       cart = JSON.parse(cart);
+//       console.log('cart', cart);
+//       console.log(typeof cart);
+//       return cart;
+//     }
+//   } else {
+//     return null;
+//   }
+// }
+
+function loadProductsFromCookie(cookie: Cookie): CartProps | null {
+  const cartValue = cookie.get('cart')?.value;
+
+  if (cartValue) {
+    try {
+      const cart = JSON.parse(cartValue.slice(2)) as CartProps;
       console.log('cart', cart);
+
       return cart;
+    } catch (error) {
+      console.error('Error parsing cart JSON:', error);
+      return null;
     }
-  } else {
-    return null;
   }
+
+  return null;
 }
 
 export const useCookie = routeLoader$(({ sharedMap }) => {
-  return sharedMap.get('cart') as any;
+  return sharedMap.get('cart') as CartProps;
 });
 
 export default component$(() => {

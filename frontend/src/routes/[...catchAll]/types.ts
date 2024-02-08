@@ -22,3 +22,8 @@ export interface ProductDetailsProps {
   product_name: string;
   amount: number;
 }
+
+export interface CartProps {
+  products: ProductDetailsProps[];
+  total: number;
+}

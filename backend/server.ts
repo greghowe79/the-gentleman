@@ -21,6 +21,11 @@ export interface ProductDetailsProps {
   amount: number;
 }
 
+export interface CartProps {
+  products: ProductDetailsProps[];
+  total: number;
+}
+
 let rootDomain = process.env.NODE_ENV == 'development' ? process.env.ROOT_DOMAIN_DEV : process.env.ROOT_DOMAIN_PROD;
 
 const app: Express = express();
@@ -37,36 +42,66 @@ const supabaseANonPublic = process.env.SUPABASE_SECRET_KEY!;
 
 const supabase = createClient(supabaseUrl, supabaseANonPublic);
 
+// app.post(route + '/add-to-cart', async (req: Request, res: Response) => {
+//   const product = req.body.product;
+//   let cart: ProductDetailsProps[] = req.cookies.cart || [];
+
+//   const itemFound = cart.find((item: ProductDetailsProps) => item.product_id === product.product_id);
+
+//   const itemAlreadyExist = !!itemFound;
+
+//   if (itemAlreadyExist) {
+//     itemFound.quantity += product.quantity;
+//     itemFound.amount += product.amount;
+//   } else {
+//     cart = [...cart, product];
+//   }
+
+//   //console.log('cart', cart);
+
+//   /////CODICE DI TEST//////////
+//   // const total = cart.reduce((acc, item) => acc + item.amount, 0);
+//   // let obj = { cart, total };
+//   // console.log('OBJECT', obj);
+//   /////FINE DEL CODICE DI TEST//////////
+
+//   res.cookie('cart', cart, {
+//     httpOnly: true,
+//     expires: new Date(Date.now() + 8 * 3600000),
+//     secure: process.env.NODE_ENV != 'development',
+//     sameSite: 'lax',
+//   });
+
+//   return res.status(200).json({ message: 'Cookie stored', success: true, cart });
+// });
+
+let cart: CartProps | undefined;
+
 app.post(route + '/add-to-cart', async (req: Request, res: Response) => {
-  const product = req.body.product;
-  let cart: ProductDetailsProps[] = req.cookies.cart || [];
+  const product: ProductDetailsProps = req.body.product;
 
-  const itemFound = cart.find((item: ProductDetailsProps) => item.product_id === product.product_id);
-
-  const itemAlreadyExist = !!itemFound;
-
-  if (itemAlreadyExist) {
-    itemFound.quantity += product.quantity;
-    itemFound.amount += product.amount;
-  } else {
-    cart = [...cart, product];
+  if (!cart) {
+    cart = { products: [], total: 0 };
   }
 
-  //console.log('cart', cart);
+  const isProductInCart = cart.products.find((cartProduct) => cartProduct.product_id === product.product_id);
+  const itemAlreadyExist = !!isProductInCart;
 
-  /////CODICE DI TEST//////////
-  // const total = cart.reduce((acc, item) => acc + item.amount, 0);
-  // let obj = { cart, total };
-  // console.log('OBJECT', obj);
-  /////FINE DEL CODICE DI TEST//////////
+  if (itemAlreadyExist) {
+    isProductInCart.quantity += product.quantity;
+    isProductInCart.amount += product.amount;
+  } else {
+    cart.products = [...cart.products, product];
+  }
 
+  cart.total = cart.products.reduce((total, cartProduct) => total + cartProduct.amount, 0);
+  console.log('CART NEL SERVER', cart);
   res.cookie('cart', cart, {
     httpOnly: true,
     expires: new Date(Date.now() + 8 * 3600000),
     secure: process.env.NODE_ENV != 'development',
     sameSite: 'lax',
   });
-
   return res.status(200).json({ message: 'Cookie stored', success: true, cart });
 });
 
