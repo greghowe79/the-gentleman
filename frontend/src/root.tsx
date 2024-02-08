@@ -99,6 +99,7 @@ export default component$(() => {
   useContextProvider(BodyContext, backgroundColor);
   useContextProvider(UserSessionContext, userSession);
   useContextProvider(CartContext, cart);
+
   return (
     <QwikCityProvider>
       <head>

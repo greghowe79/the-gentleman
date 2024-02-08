@@ -64,7 +64,7 @@ export const ShoppingBag = component$(
                                 <div class={spacer}>
                                   <div class={spacerFirstChild}>
                                     <div>
-                                      <strong class={price}>EUR {product.price}</strong>
+                                      <strong class={price}>EUR {product.amount}</strong>
                                     </div>
                                     <div class={controlsContainer}>
                                       <button class={controlsStyle}>-</button>
@@ -107,15 +107,15 @@ export const ShoppingBag = component$(
             <div>
               <div class={styles['subtotal-container']}>
                 <div style={{ flex: 1 }}>Subtotal</div>
-                <div>CHF 0.00</div>
+                <div>EUR 0.00</div>
               </div>
               <div class={styles['shipping-container']}>
                 <div style={{ flex: 1 }}>Shipping</div>
-                <div>CHF 0.00</div>
+                <div>EUR 0.00</div>
               </div>
               <div class={styles['total-container']}>
                 <div style={{ flex: 1 }}>Total</div>
-                <div>CHF 0.00</div>
+                <div>EUR 0.00</div>
               </div>
               <div class={styles['custom-button-container']}>
                 <CustomButton />
