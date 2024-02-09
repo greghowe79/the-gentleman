@@ -26,28 +26,42 @@ export const handleAddProductToCookie = $(async (product: ProductDetailsProps, c
 });
 
 export const addToCart = $(
-  async (service: Readonly<Signal<Service[]>>, selectedOption: Signal<string>, userSession: UserSess, cart: Signal<CartProps>) => {
-    const detailsId = uuidv4();
+  async (
+    isFromPdp: boolean,
+    userSession: UserSess,
+    cart: Signal<CartProps>,
+    product?: ProductDetailsProps | null,
+    selectedOption?: Signal<string>,
+    service?: Readonly<Signal<Service[]>>
+  ) => {
+    if (isFromPdp) {
+      if (service && selectedOption) {
+        const detailsId = uuidv4();
 
-    const orderDetails = {
-      id: detailsId,
-      order_id: null,
-      url: service.value[0]?.url,
-      product_id: service.value[0]?.id,
-      price: service.value[0]?.price,
-      sku: service.value[0]?.sku,
-      quantity: parseInt(selectedOption.value),
-      product_name: service.value[0]?.name,
-      amount: service.value[0]?.price * parseInt(selectedOption.value),
-    };
+        const orderDetails = {
+          id: detailsId,
+          order_id: null,
+          url: service.value[0]?.url,
+          product_id: service.value[0]?.id,
+          price: service.value[0]?.price,
+          sku: service.value[0]?.sku,
+          quantity: parseInt(selectedOption.value),
+          product_name: service.value[0]?.name,
+          amount: service.value[0]?.price * parseInt(selectedOption.value),
+        };
 
-    if (userSession.isLoggedIn) {
-      const { error } = await supabase.from('order_details').insert(orderDetails);
-      if (error) {
-        console.log(error);
+        if (userSession.isLoggedIn) {
+          const { error } = await supabase.from('order_details').insert(orderDetails);
+          if (error) {
+            console.log(error);
+          }
+        }
+
+        handleAddProductToCookie(orderDetails, cart);
       }
     }
-
-    handleAddProductToCookie(orderDetails, cart);
+    if (product !== null && product !== undefined) {
+      handleAddProductToCookie(product, cart);
+    }
   }
 );

@@ -1,5 +1,5 @@
-import { type QRL, component$, useContext, type Signal, useTask$ } from '@builder.io/qwik';
-import { BodyContext, CartContext } from '~/root';
+import { type QRL, component$, useContext, type Signal, useTask$, $ } from '@builder.io/qwik';
+import { BodyContext, CartContext, type UserSess, UserSessionContext } from '~/root';
 import { CustomButton } from '~/components/custom-button/component/customButton';
 import styles from '../styles/shopping-bag.module.css';
 import { Link } from '@builder.io/qwik-city';
@@ -20,15 +20,26 @@ import {
   wrapFirstChild,
 } from '../styles/style.css';
 import { type CartProps, type ProductDetailsProps } from '~/routes/[...catchAll]/types';
+import { addToCart } from '~/routes/[...catchAll]/utils';
 
 export const ShoppingBag = component$((props: { text: string; closed: QRL<() => void>; cookie?: Readonly<Signal<CartProps>> }) => {
   const backgroundColor = useContext(BodyContext);
   const cart = useContext(CartContext);
+  const userSession = useContext(UserSessionContext);
 
   useTask$(() => {
     if (props.cookie?.value) {
       cart.value = props.cookie.value;
     }
+  });
+
+  const addProduct = $((isFromPdp: boolean, userSession: UserSess, cart: Signal<CartProps>, product: ProductDetailsProps) => {
+    const newProduct = {
+      ...product,
+      quantity: 1,
+      amount: product.price,
+    };
+    addToCart(isFromPdp, userSession, cart, newProduct);
   });
 
   return (
@@ -57,7 +68,9 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
                                   <div class={controlsContainer}>
                                     <button class={controlsStyle}>-</button>
                                     <div class={itemsNumber}>{product.quantity}</div>
-                                    <button class={controlsStyle}>+</button>
+                                    <button onClick$={() => addProduct(false, userSession, cart, product)} class={controlsStyle}>
+                                      +
+                                    </button>
                                   </div>
                                 </div>
                               </div>
