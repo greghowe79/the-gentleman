@@ -36,21 +36,6 @@ export const onRequest: RequestHandler = async ({ cookie, sharedMap }) => {
   }
 };
 
-// function loadProductsFromCookie(cookie: Cookie): any {
-//   if (cookie) {
-//     let cart = cookie.get('cart')?.value;
-//     if (cart) {
-//       cart = cart.slice(2);
-//       cart = JSON.parse(cart);
-//       console.log('cart', cart);
-//       console.log(typeof cart);
-//       return cart;
-//     }
-//   } else {
-//     return null;
-//   }
-// }
-
 function loadProductsFromCookie(cookie: Cookie): CartProps | null {
   const cartValue = cookie.get('cart')?.value;
 
