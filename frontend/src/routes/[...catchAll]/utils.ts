@@ -1,7 +1,7 @@
 import { $, type Signal } from '@builder.io/qwik';
 import { supabase } from '~/utils/supabase';
 import { v4 as uuidv4 } from 'uuid';
-import type { ProductDetailsProps, Service } from './types';
+import type { CartProps, ProductDetailsProps, Service } from './types';
 import type { UserSess } from '~/root';
 import axios, { type AxiosResponse } from 'axios';
 
@@ -9,18 +9,15 @@ export const calculateCategoryPath = (pathname: string): string => {
   return pathname.replace(/\/[^/]+\/?$/, '');
 };
 
-export const handleAddProductToCookie = $(async (product: ProductDetailsProps, cart: Signal<ProductDetailsProps[]>) => {
+export const handleAddProductToCookie = $(async (product: ProductDetailsProps, cart: Signal<CartProps>) => {
   const bodyContent = {
     product: product,
   };
   await axios
     .post('/api_v1/add-to-cart', bodyContent, { withCredentials: true })
     .then((response: AxiosResponse<any, any>) => {
-      console.log('PRODUCTS:', response.data.cart);
-
       cart.value = response.data.cart;
 
-      console.log('CART.VALUE', cart.value);
       return cart.value;
     })
     .catch((error) => {
@@ -29,12 +26,7 @@ export const handleAddProductToCookie = $(async (product: ProductDetailsProps, c
 });
 
 export const addToCart = $(
-  async (
-    service: Readonly<Signal<Service[]>>,
-    selectedOption: Signal<string>,
-    userSession: UserSess,
-    cart: Signal<ProductDetailsProps[]>
-  ) => {
+  async (service: Readonly<Signal<Service[]>>, selectedOption: Signal<string>, userSession: UserSess, cart: Signal<CartProps>) => {
     const detailsId = uuidv4();
 
     const orderDetails = {
