@@ -149,7 +149,7 @@ const ShopDetailLayout = component$(() => {
                   </div>
                 </div>
                 <div class={cartButtonWrapper}>
-                  <button onClick$={() => addToCart(service, selectedOption, userSession, cart)} class={cartButtonStyle}>
+                  <button onClick$={() => addToCart(true, userSession, cart, null, selectedOption, service)} class={cartButtonStyle}>
                     Add to Cart
                   </button>
                 </div>
