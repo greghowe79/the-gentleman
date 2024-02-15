@@ -1,3 +1,6 @@
+import { type Signal } from '@builder.io/qwik';
+import { type UserSess } from '~/root';
+
 export interface Service {
   id: string;
   url: string;
@@ -26,4 +29,13 @@ export interface ProductDetailsProps {
 export interface CartProps {
   products: ProductDetailsProps[];
   total: number;
+}
+
+export interface AddToCartParams {
+  isFromPdp: boolean;
+  userSession: UserSess;
+  cart: Signal<CartProps>;
+  product?: ProductDetailsProps | null;
+  selectedOption?: Signal<string>;
+  service?: Readonly<Signal<Service[]>>;
 }
