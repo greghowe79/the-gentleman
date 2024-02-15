@@ -46,8 +46,9 @@ let cart: CartProps | undefined;
 
 app.post(route + '/add-to-cart', async (req: Request, res: Response) => {
   const product: ProductDetailsProps = req.body.product;
+  const cartCookie = req.cookies.cart;
 
-  if (!cart) {
+  if (!cart || !cartCookie) {
     cart = { products: [], total: 0 };
   }
 

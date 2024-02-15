@@ -34,12 +34,8 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
   });
 
   const addProduct = $((isFromPdp: boolean, userSession: UserSess, cart: Signal<CartProps>, product: ProductDetailsProps) => {
-    const newProduct = {
-      ...product,
-      quantity: 1,
-      amount: product.price,
-    };
-    addToCart(isFromPdp, userSession, cart, newProduct);
+    const newProduct = { ...product, quantity: 1, amount: product.price };
+    addToCart({ isFromPdp, userSession, cart, product: newProduct });
   });
 
   return (
