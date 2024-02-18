@@ -1,5 +1,5 @@
-import { type QRL, component$, useContext, type Signal, useTask$, $ } from '@builder.io/qwik';
-import { BodyContext, CartContext, type UserSess, UserSessionContext } from '~/root';
+import { type QRL, component$, useContext, type Signal, $, useTask$ } from '@builder.io/qwik';
+import { BodyContext, type UserSess, UserSessionContext } from '~/root';
 import { CustomButton } from '~/components/custom-button/component/customButton';
 import styles from '../styles/shopping-bag.module.css';
 import { Link } from '@builder.io/qwik-city';
@@ -20,17 +20,14 @@ import {
   wrapFirstChild,
 } from '../styles/style.css';
 import { type CartProps, type ProductDetailsProps } from '~/routes/[...catchAll]/types';
-import { addToCart } from '~/routes/[...catchAll]/utils';
+import { addToCart, getCookie } from '~/routes/[...catchAll]/utils';
 
-export const ShoppingBag = component$((props: { text: string; closed: QRL<() => void>; cookie?: Readonly<Signal<CartProps>> }) => {
+export const ShoppingBag = component$((props: { text: string; closed: QRL<() => void>; cart?: Signal<CartProps> }) => {
   const backgroundColor = useContext(BodyContext);
-  const cart = useContext(CartContext);
   const userSession = useContext(UserSessionContext);
 
   useTask$(() => {
-    if (props.cookie?.value) {
-      cart.value = props.cookie.value;
-    }
+    getCookie(props.cart);
   });
 
   const addProduct = $((isFromPdp: boolean, userSession: UserSess, cart: Signal<CartProps>, product: ProductDetailsProps) => {
@@ -40,14 +37,14 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
 
   return (
     <>
-      {cart.value.products.length > 0 ? (
+      {props.cart?.value && props.cart.value.products.length > 0 ? (
         <div class={[wrap, 'wrap']}>
           <div class={wrapFirstChild}>
             <div class={productsContainer}>
               <div>
                 <div>
                   <div>
-                    {cart.value.products.map((product: ProductDetailsProps) => {
+                    {props.cart.value.products.map((product: ProductDetailsProps) => {
                       return (
                         <div key={product.id}>
                           <Link class={linkStyle} href={'#'}>
@@ -64,7 +61,7 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
                                   <div class={controlsContainer}>
                                     <button class={controlsStyle}>-</button>
                                     <div class={itemsNumber}>{product.quantity}</div>
-                                    <button onClick$={() => addProduct(false, userSession, cart, product)} class={controlsStyle}>
+                                    <button onClick$={() => addProduct(false, userSession, props.cart!, product)} class={controlsStyle}>
                                       +
                                     </button>
                                   </div>
@@ -104,7 +101,7 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
           <div>
             <div class={styles['subtotal-container']}>
               <div style={{ flex: 1 }}>Subtotal</div>
-              <div>EUR {cart.value.total}</div>
+              <div>EUR {props.cart?.value.total}</div>
             </div>
             <div class={styles['shipping-container']}>
               <div style={{ flex: 1 }}>Shipping</div>
@@ -112,7 +109,7 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
             </div>
             <div class={styles['total-container']}>
               <div style={{ flex: 1 }}>Total</div>
-              <div>EUR {cart.value.total}</div>
+              <div>EUR {props.cart?.value.total}</div>
             </div>
             <div class={styles['custom-button-container']}>
               <CustomButton />

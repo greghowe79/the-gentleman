@@ -21,6 +21,7 @@ const Staging = component$(() => {
         isProtected.value = true;
         userSession.userId = data.user.id;
         userSession.isLoggedIn = true;
+
         await nav('/');
       } else {
         console.error(error);

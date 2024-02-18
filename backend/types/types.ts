@@ -9,3 +9,20 @@ export interface Product {
   description: string;
   categorySlug: string;
 }
+
+export interface ProductDetailsProps {
+  id: string;
+  order_id: string | null;
+  url: string;
+  product_id: string;
+  price: number;
+  sku: string;
+  quantity: number;
+  product_name: string;
+  amount: number;
+}
+
+export interface CartProps {
+  products: ProductDetailsProps[];
+  total: number;
+}
