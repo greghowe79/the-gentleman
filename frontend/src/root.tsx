@@ -6,6 +6,7 @@ import './global.css';
 import { supabase } from './utils/supabase';
 import axios from 'axios';
 import { type CartProps } from './routes/[...catchAll]/types';
+
 export type UserSess = {
   userId: string;
   isLoggedIn: boolean;

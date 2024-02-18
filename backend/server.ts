@@ -6,25 +6,9 @@ import cookieparser from 'cookie-parser';
 import dotenv from 'dotenv';
 dotenv.config();
 import { createClient } from '@supabase/supabase-js';
-import { Product } from './types/types';
+import { CartProps, Product, ProductDetailsProps } from './types/types';
 
 // Determine root domain
-export interface ProductDetailsProps {
-  id: string;
-  order_id: string | null;
-  url: string;
-  product_id: string;
-  price: number;
-  sku: string;
-  quantity: number;
-  product_name: string;
-  amount: number;
-}
-
-export interface CartProps {
-  products: ProductDetailsProps[];
-  total: number;
-}
 
 let rootDomain = process.env.NODE_ENV == 'development' ? process.env.ROOT_DOMAIN_DEV : process.env.ROOT_DOMAIN_PROD;
 
@@ -63,14 +47,18 @@ app.post(route + '/add-to-cart', async (req: Request, res: Response) => {
   }
 
   cart.total = cart.products.reduce((total, cartProduct) => total + cartProduct.amount, 0);
-  console.log('CART NEL SERVER', cart);
   res.cookie('cart', cart, {
     httpOnly: true,
-    expires: new Date(Date.now() + 8 * 3600000),
+    // expires: new Date(Date.now() + 8 * 3600000),
     secure: process.env.NODE_ENV != 'development',
     sameSite: 'lax',
   });
   return res.status(200).json({ message: 'Cookie stored', success: true, cart });
+});
+
+app.get(route + '/get-cookie', (req, res) => {
+  const cookies = req.cookies;
+  res.json({ cookies: cookies });
 });
 
 app.get(route + '/shop/:category', async (req: Request, res: Response) => {

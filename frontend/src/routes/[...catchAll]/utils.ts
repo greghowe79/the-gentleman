@@ -1,8 +1,9 @@
 import { $, type Signal } from '@builder.io/qwik';
-import { supabase } from '~/utils/supabase';
 import { v4 as uuidv4 } from 'uuid';
 import type { AddToCartParams, CartProps, ProductDetailsProps } from './types';
 import axios, { type AxiosResponse } from 'axios';
+import { type UserSess } from '~/root';
+import { checkProductAlreadyExist, insertProduct, updateOrderDetailsTable } from './actions';
 
 export const calculateCategoryPath = (pathname: string): string => {
   return pathname.replace(/\/[^/]+\/?$/, '');
@@ -18,6 +19,20 @@ export const handleAddProductToCookie = $(async (product: ProductDetailsProps, c
       cart.value = response.data.cart;
 
       return cart.value;
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+});
+
+export const getCookie = $(async (cart?: Signal<CartProps>) => {
+  await axios
+    .get('/api_v1/get-cookie', { withCredentials: true })
+    .then((response: AxiosResponse<any, any>) => {
+      if (cart) {
+        cart.value = response.data.cookies.cart;
+        return cart.value;
+      }
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -42,16 +57,37 @@ export const addToCart = $(async ({ isFromPdp, userSession, cart, product, selec
       };
 
       if (userSession.isLoggedIn) {
-        const { error } = await supabase.from('order_details').insert(orderDetails);
-        if (error) {
-          console.log(error);
+        const order = await checkProductAlreadyExist(orderDetails);
+
+        if (order && order.length > 0) {
+          await updateOrderDetailsTable(order, orderDetails);
+        } else {
+          await insertProduct(orderDetails);
         }
       }
 
       handleAddProductToCookie(orderDetails, cart);
+      console.log('SONO IO');
     }
   }
   if (product !== null && product !== undefined) {
+    if (userSession.isLoggedIn) {
+      const order = await checkProductAlreadyExist(product);
+
+      if (order && order.length > 0) {
+        await updateOrderDetailsTable(order, product);
+      } else {
+        await insertProduct(product);
+      }
+    }
     handleAddProductToCookie(product, cart);
+    console.log('SONO L ALTRO');
   }
+});
+
+export const deleteProduct = $((userSession: UserSess, productId: string) => {
+  if (userSession.isLoggedIn) {
+    console.log(`PRODOTTO ${productId} CANCELLATO DAL DATABASE`);
+  }
+  console.log(`PRODOTTO ${productId} CANCELLATO DAI COOKIE`);
 });
