@@ -82,7 +82,12 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
         <div class={styles['image-container']}>
           <div class={styles['image-container-firstChild']}>
             <div class={styles['image-container-secondChild']}>
-              <img src="https://matruecannabis.com/front/assets/empty.67d2d.webp" alt="" width={280} height={148} />
+              <img
+                src="https://cdn.shopify.com/s/files/1/0798/7793/1357/files/empty_cart_nobg.webp?v=1708530970"
+                alt=""
+                width={280}
+                height={148}
+              />
               <div
                 class={styles['text-container']}
                 style={{
@@ -101,7 +106,7 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
           <div>
             <div class={styles['subtotal-container']}>
               <div style={{ flex: 1 }}>Subtotal</div>
-              <div>EUR {props.cart?.value.total}</div>
+              <div>EUR {props.cart?.value ? props.cart.value.total : 0}</div>
             </div>
             <div class={styles['shipping-container']}>
               <div style={{ flex: 1 }}>Shipping</div>
@@ -109,7 +114,7 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
             </div>
             <div class={styles['total-container']}>
               <div style={{ flex: 1 }}>Total</div>
-              <div>EUR {props.cart?.value.total}</div>
+              <div>EUR {props.cart?.value ? props.cart.value.total : 0}</div>
             </div>
             <div class={styles['custom-button-container']}>
               <CustomButton />
