@@ -25,14 +25,14 @@ export const handleAddProductToCookie = $(async (product: ProductDetailsProps, c
     });
 });
 
-export const getCookie = $(async (cart?: Signal<CartProps>) => {
+export const handleDeleteProductFromCookie = $(async (cart: Signal<CartProps>, productID?: string) => {
   await axios
-    .get('/api_v1/get-cookie', { withCredentials: true })
+    .patch(`/api_v1/delete-cookie/${productID}`, { withCredentials: true })
     .then((response: AxiosResponse<any, any>) => {
-      if (cart) {
-        cart.value = response.data.cookies.cart;
-        return cart.value;
-      }
+      console.log('DATA', response.data.cart);
+
+      cart.value = response.data.cart;
+      return cart.value;
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -67,7 +67,6 @@ export const addToCart = $(async ({ isFromPdp, userSession, cart, product, selec
       }
 
       handleAddProductToCookie(orderDetails, cart);
-      console.log('SONO IO');
     }
   }
   if (product !== null && product !== undefined) {
@@ -81,13 +80,13 @@ export const addToCart = $(async ({ isFromPdp, userSession, cart, product, selec
       }
     }
     handleAddProductToCookie(product, cart);
-    console.log('SONO L ALTRO');
   }
 });
 
-export const deleteProduct = $((userSession: UserSess, productId: string) => {
+export const deleteProduct = $((userSession: UserSess, product: ProductDetailsProps | null, cart: Signal<CartProps>) => {
   if (userSession.isLoggedIn) {
-    console.log(`PRODOTTO ${productId} CANCELLATO DAL DATABASE`);
+    console.log(`UTENTE LOGGATO`);
   }
-  console.log(`PRODOTTO ${productId} CANCELLATO DAI COOKIE`);
+
+  handleDeleteProductFromCookie(cart, product?.product_id);
 });

@@ -1,4 +1,4 @@
-import { type QRL, component$, useContext, type Signal, $, useTask$ } from '@builder.io/qwik';
+import { type QRL, component$, useContext, type Signal, $, useResource$ } from '@builder.io/qwik';
 import { BodyContext, type UserSess, UserSessionContext } from '~/root';
 import { CustomButton } from '~/components/custom-button/component/customButton';
 import styles from '../styles/shopping-bag.module.css';
@@ -20,16 +20,20 @@ import {
   wrapFirstChild,
 } from '../styles/style.css';
 import { type CartProps, type ProductDetailsProps } from '~/routes/[...catchAll]/types';
-import { addToCart, getCookie } from '~/routes/[...catchAll]/utils';
+import { addToCart, deleteProduct } from '~/routes/[...catchAll]/utils';
 
 export const ShoppingBag = component$((props: { text: string; closed: QRL<() => void>; cart?: Signal<CartProps> }) => {
   const backgroundColor = useContext(BodyContext);
   const userSession = useContext(UserSessionContext);
 
-  useTask$(() => {
-    getCookie(props.cart);
+  useResource$(async () => {
+    const res = await fetch('/api_v1/get-cookie', { method: 'GET', credentials: 'include' });
+    const data = await res.json();
+    if (props.cart) {
+      props.cart.value = data.cookies.cart;
+      return props.cart.value;
+    }
   });
-
   const addProduct = $((isFromPdp: boolean, userSession: UserSess, cart: Signal<CartProps>, product: ProductDetailsProps) => {
     const newProduct = { ...product, quantity: 1, amount: product.price };
     addToCart({ isFromPdp, userSession, cart, product: newProduct });
@@ -59,7 +63,13 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
                                     <strong class={price}>EUR {product.amount}</strong>
                                   </div>
                                   <div class={controlsContainer}>
-                                    <button class={controlsStyle}>-</button>
+                                    <button
+                                      onClick$={() => product.quantity > 1 && deleteProduct(userSession, product, props.cart!)}
+                                      class={controlsStyle}
+                                      preventdefault:click
+                                    >
+                                      -
+                                    </button>
                                     <div class={itemsNumber}>{product.quantity}</div>
                                     <button onClick$={() => addProduct(false, userSession, props.cart!, product)} class={controlsStyle}>
                                       +
