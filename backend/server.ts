@@ -50,7 +50,7 @@ app.post(route + '/add-to-cart', async (req: Request, res: Response) => {
   res.cookie('cart', cart, {
     httpOnly: true,
     // expires: new Date(Date.now() + 8 * 3600000),
-    secure: process.env.NODE_ENV != 'development',
+    secure: process.env.NODE_ENV !== 'development',
     sameSite: 'lax',
   });
   return res.status(200).json({ message: 'Cookie stored', success: true, cart });
@@ -59,6 +59,38 @@ app.post(route + '/add-to-cart', async (req: Request, res: Response) => {
 app.get(route + '/get-cookie', (req, res) => {
   const cookies = req.cookies;
   res.json({ cookies: cookies });
+});
+
+app.patch(route + '/delete-cookie/:productId', async (req: Request, res: Response) => {
+  const productId = req.params.productId;
+  const cartCookie = req.cookies.cart;
+
+  if (!cart || !cartCookie) {
+    cart = { products: [], total: 0 };
+  }
+
+  if (cart) {
+    let indexElement = cart.products.findIndex((product: ProductDetailsProps) => product.product_id === productId);
+
+    if (indexElement !== -1) {
+      if (cart.products[indexElement].quantity > 1) {
+        cart.products[indexElement].quantity = cart.products[indexElement].quantity - 1;
+        cart.products[indexElement].amount = cart.products[indexElement].amount - cart.products[indexElement].price;
+      } else {
+        return;
+      }
+    } else {
+      console.log(`Product ${productId} does not exist`);
+    }
+  }
+
+  cart.total = cart.products.reduce((total, cartProduct) => total + cartProduct.amount, 0);
+  res.cookie('cart', cart, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV !== 'development',
+    sameSite: 'lax',
+  });
+  return res.status(200).json({ message: 'Cookie stored', success: true, cart });
 });
 
 app.get(route + '/shop/:category', async (req: Request, res: Response) => {
