@@ -1,4 +1,4 @@
-import { type QRL, component$, useContext, type Signal, $, useResource$ } from '@builder.io/qwik';
+import { type QRL, component$, useContext, type Signal, $, useResource$, useSignal } from '@builder.io/qwik';
 import { BodyContext, type UserSess, UserSessionContext } from '~/root';
 import { CustomButton } from '~/components/custom-button/component/customButton';
 import styles from '../styles/shopping-bag.module.css';
@@ -25,6 +25,7 @@ import { addToCart, deleteProduct } from '~/routes/[...catchAll]/utils';
 export const ShoppingBag = component$((props: { text: string; closed: QRL<() => void>; cart?: Signal<CartProps> }) => {
   const backgroundColor = useContext(BodyContext);
   const userSession = useContext(UserSessionContext);
+  const isLoading = useSignal(false);
 
   useResource$(async () => {
     const res = await fetch('/api_v1/get-cookie', { method: 'GET', credentials: 'include' });
@@ -34,10 +35,13 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
       return props.cart.value;
     }
   });
-  const addProduct = $((isFromPdp: boolean, userSession: UserSess, cart: Signal<CartProps>, product: ProductDetailsProps) => {
-    const newProduct = { ...product, quantity: 1, amount: product.price };
-    addToCart({ isFromPdp, userSession, cart, product: newProduct });
-  });
+  const addProduct = $(
+    (isFromPdp: boolean, userSession: UserSess, cart: Signal<CartProps>, product: ProductDetailsProps, isLoading: Signal<boolean>) => {
+      isLoading.value = true;
+      const newProduct = { ...product, quantity: 1, amount: product.price };
+      addToCart({ isFromPdp, userSession, cart, product: newProduct });
+    }
+  );
 
   return (
     <>
@@ -49,6 +53,7 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
                 <div>
                   <div>
                     {props.cart.value.products.map((product: ProductDetailsProps) => {
+                      isLoading.value = false;
                       return (
                         <div key={product.id}>
                           <Link class={linkStyle} href={'#'}>
@@ -64,14 +69,28 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
                                   </div>
                                   <div class={controlsContainer}>
                                     <button
-                                      onClick$={() => product.quantity > 1 && deleteProduct(userSession, product, props.cart!)}
+                                      onClick$={() => product.quantity > 1 && deleteProduct(userSession, product, props.cart!, isLoading)}
                                       class={controlsStyle}
                                       preventdefault:click
+                                      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                                      style={{ zIndex: isLoading.value ? -1 : 0, opacity: isLoading.value ? 0.5 : 1 }}
                                     >
                                       -
                                     </button>
-                                    <div class={itemsNumber}>{product.quantity}</div>
-                                    <button onClick$={() => addProduct(false, userSession, props.cart!, product)} class={controlsStyle}>
+
+                                    <div
+                                      class={itemsNumber}
+                                      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                                      style={{ opacity: isLoading.value ? 0.5 : 1 }}
+                                    >
+                                      {product.quantity}
+                                    </div>
+                                    <button
+                                      onClick$={() => addProduct(false, userSession, props.cart!, product, isLoading)}
+                                      class={controlsStyle}
+                                      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                                      style={{ zIndex: isLoading.value ? -1 : 0, opacity: isLoading.value ? 0.5 : 1 }}
+                                    >
                                       +
                                     </button>
                                   </div>

@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import type { AddToCartParams, CartProps, ProductDetailsProps } from './types';
 import axios, { type AxiosResponse } from 'axios';
 import { type UserSess } from '~/root';
-import { checkProductAlreadyExist, insertProduct, updateOrderDetailsTable } from './actions';
+import { checkProductAlreadyExist, deleteOrderDetailsTable, insertProduct, updateOrderDetailsTable } from './actions';
 
 export const calculateCategoryPath = (pathname: string): string => {
   return pathname.replace(/\/[^/]+\/?$/, '');
@@ -83,10 +83,18 @@ export const addToCart = $(async ({ isFromPdp, userSession, cart, product, selec
   }
 });
 
-export const deleteProduct = $((userSession: UserSess, product: ProductDetailsProps | null, cart: Signal<CartProps>) => {
-  if (userSession.isLoggedIn) {
-    console.log(`UTENTE LOGGATO`);
-  }
+export const deleteProduct = $(
+  async (userSession: UserSess, product: ProductDetailsProps, cart: Signal<CartProps>, isLoading: Signal<boolean>) => {
+    if (userSession.isLoggedIn) {
+      isLoading.value = true;
+      const order = await checkProductAlreadyExist(product);
+      if (order && order.length > 0) {
+        await deleteOrderDetailsTable(order, product);
+      } else {
+        console.log(`NON C'E' NESSUN ORDINE DA ELIMINARE`);
+      }
+    }
 
-  handleDeleteProductFromCookie(cart, product?.product_id);
-});
+    handleDeleteProductFromCookie(cart, product.product_id);
+  }
+);
