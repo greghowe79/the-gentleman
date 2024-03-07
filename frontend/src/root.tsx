@@ -106,6 +106,8 @@ export default component$(() => {
         <link rel="manifest" href="/manifest.json" />
         <link rel="preload" href="/fonts/kronaone-regular-webfont.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <link rel="preload" href="/fonts/montserrat-v26-latin-regular.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+
+        {/* <link rel="preload" href="/fonts/Cabin-Regular-webfont.woff2" as="font" type="font/woff2" crossOrigin="anonymous" /> */}
         <RouterHead />
         <link rel="preload" href="/fonts/montserrat-v26-latin-600.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <RouterHead />

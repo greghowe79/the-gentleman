@@ -33,7 +33,6 @@ const ShopProducts = component$(({ data, backgroundColor }: any) => {
             <p class={catDesc}>{data[0]?.category_description}</p>
           </div>
           {data[0]?.products.map((product: Product) => {
-            console.log('products', product);
             return (
               <div key={product.id} class={pdMainWrap}>
                 <div class={pdInnerWrap}>
