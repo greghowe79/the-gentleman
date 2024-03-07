@@ -133,16 +133,8 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
       <div class={styles['currency-container']}>
         <div class={styles['currency-container-firstChild']}>
           <div>
-            <div class={styles['subtotal-container']}>
-              <div style={{ flex: 1 }}>Subtotal</div>
-              <div>EUR {props.cart?.value ? props.cart.value.total : 0}</div>
-            </div>
-            <div class={styles['shipping-container']}>
-              <div style={{ flex: 1 }}>Shipping</div>
-              <div>EUR 0.00</div>
-            </div>
             <div class={styles['total-container']}>
-              <div style={{ flex: 1 }}>Total</div>
+              <div style={{ flex: 1 }}>Estimated total</div>
               <div>EUR {props.cart?.value ? props.cart.value.total : 0}</div>
             </div>
             <div class={styles['custom-button-container']}>

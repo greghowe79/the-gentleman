@@ -15,12 +15,11 @@ export const checkProductAlreadyExist = $(async (orderDetails: ProductDetailsPro
 export const updateOrderDetailsTable = $(async (order: ProductDetailsProps[], orderDetails: ProductDetailsProps) => {
   const { error } = await supabase
     .from('order_details')
-    .update({ quantity: order[0]?.quantity + orderDetails.quantity })
+    .update({ quantity: order[0]?.quantity + orderDetails.quantity, amount: order[0]?.amount + orderDetails.amount })
     .eq('product_id', orderDetails.product_id);
 
   if (error) {
     console.error(error);
-    return;
   }
 });
 
@@ -29,7 +28,7 @@ export const deleteOrderDetailsTable = $(async (order: ProductDetailsProps[], or
   if (quantity?.[0].quantity > 1) {
     const { error } = await supabase
       .from('order_details')
-      .update({ quantity: order[0]?.quantity - 1 })
+      .update({ quantity: order[0]?.quantity - 1, amount: order[0]?.amount - orderDetails.price })
       .eq('product_id', orderDetails.product_id);
 
     if (error) {
@@ -39,7 +38,8 @@ export const deleteOrderDetailsTable = $(async (order: ProductDetailsProps[], or
   }
 });
 
-export const insertProduct = $(async (orderDetails: ProductDetailsProps) => {
+export const insertProduct = $(async (orderDetails: ProductDetailsProps, user?: string) => {
+  orderDetails.user_id = user!;
   const { error } = await supabase.from('order_details').insert(orderDetails);
   if (error) {
     console.log(error);
@@ -66,9 +66,11 @@ export const deleteAllRows = $(async () => {
 
 export const updateTable = $(async (order: ProductDetailsProps[], product: ProductDetailsProps) => {
   order[0].quantity = product.quantity;
+  order[0].amount = product.amount;
+
   const { error } = await supabase
     .from('order_details')
-    .update({ quantity: order[0]?.quantity })
+    .update({ quantity: order[0]?.quantity, amount: order[0]?.amount })
     .eq('product_id', product.product_id);
 
   if (error) {

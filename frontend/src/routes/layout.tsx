@@ -9,6 +9,7 @@ import { CartContext, UserSessionContext } from '~/root';
 
 import { checkProductAlreadyExist, deleteAllRows, insertProduct, updateTable } from './[...catchAll]/actions';
 import { type ProductDetailsProps } from './[...catchAll]/types';
+import { supabase } from '~/utils/supabase';
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
   // Control caching for this request for best performance and to reduce hosting costs:
@@ -52,15 +53,18 @@ export default component$(() => {
     }
 
     const { products } = data.cookies.cart;
+    const { data: activeUser } = await supabase.auth.getUser();
+    const user = activeUser.user?.id;
+    console.log('USER', user);
 
     await Promise.all(
       products.map(async (product: ProductDetailsProps) => {
         const order = await checkProductAlreadyExist(product);
-        order && order.length > 0 ? await updateTable(order, product) : await insertProduct(product);
+        order && order.length > 0 ? await updateTable(order, product) : await insertProduct(product, user);
       })
     );
-
-    return (cart.value = data.cookies.cart);
+    cart.value = data.cookies.cart;
+    return cart.value;
   });
 
   return (

@@ -16,6 +16,7 @@ export interface Service {
 
 export interface ProductDetailsProps {
   id: string;
+  user_id: string | null;
   order_id: string | null;
   url: string;
   product_id: string;

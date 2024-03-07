@@ -71,7 +71,7 @@
 
 .currency-container {
   border-top: 1px solid #efefef;
-  flex: 1;
+  /*  flex: 1; */
 }
 
 .currency-container-firstChild {

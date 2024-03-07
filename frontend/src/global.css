@@ -48,6 +48,15 @@
   src: url('/fonts/montserrat-v26-latin-600.woff2') format('woff2');
 }
 
+/* cabin regular*/
+/* @font-face {
+  font-display: swap;
+  font-family: 'Cabin';
+  font-style: normal;
+  
+  src: url('/fonts/Cabin-Regular-webfont.woff2') format('woff2');
+} */
+
 :root {
   --qwik-dark-blue: #006ce9;
   --default-text-color: rgb(87, 87, 87);
@@ -97,6 +106,8 @@
   --font-family-primary: 'Krona', sans-serif;
   --font-family-secondary: 'Montserrat-600', sans-serif;
   --font-family-tertiary: 'Montserrat-400', sans-serif;
+
+  /* --font-family-tertiary: 'Cabin', sans-serif; */
 }
 ::selection {
   background-color: transparent;

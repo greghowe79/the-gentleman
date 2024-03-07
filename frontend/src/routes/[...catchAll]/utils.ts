@@ -4,6 +4,7 @@ import type { AddToCartParams, CartProps, ProductDetailsProps } from './types';
 import axios, { type AxiosResponse } from 'axios';
 import { type UserSess } from '~/root';
 import { checkProductAlreadyExist, deleteOrderDetailsTable, insertProduct, updateOrderDetailsTable } from './actions';
+import { supabase } from '~/utils/supabase';
 
 export const calculateCategoryPath = (pathname: string): string => {
   return pathname.replace(/\/[^/]+\/?$/, '');
@@ -29,8 +30,6 @@ export const handleDeleteProductFromCookie = $(async (cart: Signal<CartProps>, p
   await axios
     .patch(`/api_v1/delete-cookie/${productID}`, { withCredentials: true })
     .then((response: AxiosResponse<any, any>) => {
-      console.log('DATA', response.data.cart);
-
       cart.value = response.data.cart;
       return cart.value;
     })
@@ -46,6 +45,7 @@ export const addToCart = $(async ({ isFromPdp, userSession, cart, product, selec
 
       const orderDetails = {
         id: detailsId,
+        user_id: null,
         order_id: null,
         url: service.value[0]?.url,
         product_id: service.value[0]?.id,
@@ -57,12 +57,14 @@ export const addToCart = $(async ({ isFromPdp, userSession, cart, product, selec
       };
 
       if (userSession.isLoggedIn) {
+        const { data: activeUser } = await supabase.auth.getUser();
+        const user = activeUser.user?.id;
         const order = await checkProductAlreadyExist(orderDetails);
 
         if (order && order.length > 0) {
           await updateOrderDetailsTable(order, orderDetails);
         } else {
-          await insertProduct(orderDetails);
+          await insertProduct(orderDetails, user);
         }
       }
 
@@ -87,6 +89,7 @@ export const deleteProduct = $(
   async (userSession: UserSess, product: ProductDetailsProps, cart: Signal<CartProps>, isLoading: Signal<boolean>) => {
     if (userSession.isLoggedIn) {
       isLoading.value = true;
+
       const order = await checkProductAlreadyExist(product);
       if (order && order.length > 0) {
         await deleteOrderDetailsTable(order, product);
