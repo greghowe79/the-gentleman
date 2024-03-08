@@ -4,7 +4,6 @@ import type { AddToCartParams, CartProps, ProductDetailsProps } from './types';
 import axios, { type AxiosResponse } from 'axios';
 import { type UserSess } from '~/root';
 import { checkProductAlreadyExist, deleteOrderDetailsTable, insertProduct, updateOrderDetailsTable } from './actions';
-import { supabase } from '~/utils/supabase';
 
 export const calculateCategoryPath = (pathname: string): string => {
   return pathname.replace(/\/[^/]+\/?$/, '');
@@ -57,14 +56,12 @@ export const addToCart = $(async ({ isFromPdp, userSession, cart, product, selec
       };
 
       if (userSession.isLoggedIn) {
-        const { data: activeUser } = await supabase.auth.getUser();
-        const user = activeUser.user?.id;
-        const order = await checkProductAlreadyExist(orderDetails);
+        const order = await checkProductAlreadyExist(orderDetails, userSession.userId);
 
         if (order && order.length > 0) {
-          await updateOrderDetailsTable(order, orderDetails);
+          await updateOrderDetailsTable(order, orderDetails, userSession.userId);
         } else {
-          await insertProduct(orderDetails, user);
+          await insertProduct(orderDetails, userSession.userId);
         }
       }
 
@@ -73,13 +70,14 @@ export const addToCart = $(async ({ isFromPdp, userSession, cart, product, selec
   }
   if (product !== null && product !== undefined) {
     if (userSession.isLoggedIn) {
-      const order = await checkProductAlreadyExist(product);
+      const order = await checkProductAlreadyExist(product, userSession.userId);
 
       if (order && order.length > 0) {
-        await updateOrderDetailsTable(order, product);
-      } else {
-        await insertProduct(product);
+        await updateOrderDetailsTable(order, product, userSession.userId);
       }
+      // else {
+      //   await insertProduct(product);
+      // }
     }
     handleAddProductToCookie(product, cart);
   }
@@ -90,9 +88,10 @@ export const deleteProduct = $(
     if (userSession.isLoggedIn) {
       isLoading.value = true;
 
-      const order = await checkProductAlreadyExist(product);
+      const order = await checkProductAlreadyExist(product, userSession.userId);
+
       if (order && order.length > 0) {
-        await deleteOrderDetailsTable(order, product);
+        await deleteOrderDetailsTable(order, product, userSession.userId);
       } else {
         console.log(`NON C'E' NESSUN ORDINE DA ELIMINARE`);
       }

@@ -67,6 +67,7 @@ export default component$(() => {
           .post('/api_v1/store-auth', bodyContent, { withCredentials: true })
           .then((res) => {
             console.log(res.data);
+
             //Set Auth State Context
             userSession.userId = session?.user.id;
             userSession.isLoggedIn = true;
