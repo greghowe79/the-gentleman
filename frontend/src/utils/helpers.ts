@@ -67,7 +67,6 @@ export const uploadImgStorage = $(
     const { data, error } = await supabase.storage.from('shop').upload(userSession.userId + '/' + uuidv4(), currentFile.value);
     if (data) {
       imgUrl.value = CDNURL + data.path;
-      console.log('IMG URL', imgUrl.value);
       await getImages(userSession, images);
     } else {
       console.log(error);

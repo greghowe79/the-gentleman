@@ -9,7 +9,6 @@ import { CartContext, UserSessionContext } from '~/root';
 
 import { checkProductAlreadyExist, deleteAllRows, insertProduct, updateTable } from './[...catchAll]/actions';
 import { type ProductDetailsProps } from './[...catchAll]/types';
-import { supabase } from '~/utils/supabase';
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
   // Control caching for this request for best performance and to reduce hosting costs:
@@ -48,19 +47,19 @@ export default component$(() => {
     const data = await res.json();
 
     if (!data.cookies.cart) {
-      await deleteAllRows();
+      await deleteAllRows(userSession.userId);
       return;
     }
 
     const { products } = data.cookies.cart;
-    const { data: activeUser } = await supabase.auth.getUser();
-    const user = activeUser.user?.id;
-    console.log('USER', user);
 
     await Promise.all(
       products.map(async (product: ProductDetailsProps) => {
-        const order = await checkProductAlreadyExist(product);
-        order && order.length > 0 ? await updateTable(order, product) : await insertProduct(product, user);
+        const order = await checkProductAlreadyExist(product, userSession.userId);
+
+        order && order.length > 0
+          ? await updateTable(order, product, userSession.userId)
+          : await insertProduct(product, userSession.userId);
       })
     );
     cart.value = data.cookies.cart;
