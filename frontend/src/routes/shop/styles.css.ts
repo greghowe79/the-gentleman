@@ -56,8 +56,9 @@ export const priceStyle = style({
 export const linkStyle = style({
   fontSize: 'var(--font-size-sm)',
   fontFamily: 'var(--font-family-secondary)',
+  fontWeight: '600',
   letterSpacing: '1px',
-  lineHeight: '1.85',
+  lineHeight: 'var(--line-height-md)',
 });
 
 export const shopTitleStyle = style({
@@ -65,6 +66,7 @@ export const shopTitleStyle = style({
   margin: '0',
   letterSpacing: '-4px',
   display: 'inline-flex',
+  color: 'var(--title-color)',
 });
 
 export const shopWrapperContent = style({
@@ -110,6 +112,11 @@ export const spacer = style({
   marginTop: '41.7px',
 });
 
+export const spacerFirst = style({
+  marginTop: '41.7px',
+  letterSpacing: '0.06rem',
+});
+
 export const leftWrapperDetail = style({
   width: '45%',
   padding: '0 30px',
@@ -148,7 +155,7 @@ export const pdName = style({
 });
 
 export const pdMainWrap = style({
-  width: '50%',
+  width: '33.33%',
   marginTop: '60px',
 });
 
@@ -169,15 +176,17 @@ export const pdDesc = style({
 });
 
 export const catDesc = style({
-  fontSize: '15px',
   margin: '0',
+  letterSpacing: '0.06rem',
 });
 
 export const titleWrapper = style({
   display: 'inline-flex',
-  fontSize: 'var(--font-size-lg)',
+  fontSize: 'var(--font-size-xxl1)',
   letterSpacing: '-0.15px',
   fontFamily: 'var(--font-family-primary)',
+  color: 'var(--title-color)',
+  fontWeight: '400',
 });
 
 export const catDescWrapper = style({
@@ -260,14 +269,15 @@ export const titleDetail = style({
 
 export const titleContainer = style({
   display: 'inline-flex',
-  color: 'var(--product-name-color)',
+  color: 'var(--title-color)',
   fontFamily: 'var(--font-family-primary)',
-  fontSize: 'var(--font-size-xxl)',
+  fontSize: 'var(--font-size-xxl1)',
   lineHeight: 'var(--line-height-xs)',
   letterSpacing: '0',
-  fontWeight: '300',
+  fontWeight: '400',
   textAlign: 'left',
 });
+
 export const categoryWrapper = style({
   display: 'inline-flex',
   color: 'var(--product-name-color)',
@@ -325,7 +335,7 @@ export const svgDivThumbnail = style({
 
 export const cartButtonStyle = style({
   display: 'inline-flex',
-  width: '190px',
+  width: '85%',
   backgroundColor: 'var(--product-name-color)',
   color: 'white',
   borderRadius: '25px',

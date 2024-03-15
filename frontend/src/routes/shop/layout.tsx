@@ -90,20 +90,12 @@ const Shop = component$(() => {
         <div class={shopWrapperContent}>
           <div class={categoryMenuContainer}>
             <div>
-              <div class={shopTitleStyle} style={{ color: backgroundColor.value }}>
-                Shop
-              </div>
+              <div class={shopTitleStyle}>Shop</div>
             </div>
             <ListShopCategories />
           </div>
 
-          <div class={leftWrapper}>
-            {loc.url.pathname === '/shop/' ? (
-              <ShopProducts data={products.value} backgroundColor={backgroundColor.value} />
-            ) : (
-              <ProductListPage />
-            )}
-          </div>
+          <div class={leftWrapper}>{loc.url.pathname === '/shop/' ? <ShopProducts data={products.value} /> : <ProductListPage />}</div>
         </div>
       </div>
     </div>

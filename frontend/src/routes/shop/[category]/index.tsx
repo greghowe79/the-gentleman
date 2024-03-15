@@ -1,6 +1,5 @@
-import { component$, useContext } from '@builder.io/qwik';
+import { component$ } from '@builder.io/qwik';
 import { Link, routeLoader$ } from '@builder.io/qwik-city';
-import { BodyContext } from '~/root';
 import { Image } from '@unpic/qwik';
 import {
   pdDesc,
@@ -39,16 +38,12 @@ interface Product {
 const ProductListPage = component$(() => {
   const category: any = useCategory();
 
-  const backgroundColor = useContext(BodyContext);
-
   return (
     <>
       {category.value && category.value.length > 0 && (
         <>
           <div class={catDescWrapper}>
-            <div class={titleWrapper} style={{ color: backgroundColor.value }}>
-              {category.value[0]?.category_title}
-            </div>
+            <h1 class={titleWrapper}>{category.value[0]?.category_title}</h1>
             <p class={catDesc}>{category.value[0]?.category_description}</p>
           </div>
           {category.value[0]?.products.map((product: Product) => {

@@ -56,7 +56,7 @@ export const IconsPanel = component$<ToggleProps>(({ openPanel, iconKey, cart })
         <>
           <Overlay openPanel={openPanel} closed={closed} />
           <div class={styles['toggle-panel']} style={TogglePanelStyles}>
-            {number === '0' && <ShoppingBag text={'Your Shopping Bag is empty'} closed={closed} cart={cart} />}
+            {number === '0' && <ShoppingBag text={'Your Shopping Bag is empty'} closed={closed} cart={cart} openPanel={openPanel} />}
             {number === '1' && <SearchBar />}
             {number === '2' && (isLoginForm.active ? <Login isLoginForm={isLoginForm} /> : <SignUp isLoginForm={isLoginForm} />)}
             {number === '3' && <MenuLanguages />}

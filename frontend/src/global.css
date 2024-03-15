@@ -31,35 +31,49 @@
 } */
 
 /* montserrat-regular - latin */
-@font-face {
+/* @font-face {
   font-display: swap;
   font-family: 'Montserrat-400';
   font-style: normal;
   font-weight: 400;
   src: url('/fonts/montserrat-v26-latin-regular.woff2') format('woff2');
-}
+} */
 
 /* montserrat-600 - latin */
-@font-face {
+/* @font-face {
   font-display: swap;
   font-family: 'Montserrat-600';
   font-style: normal;
   font-weight: 600;
   src: url('/fonts/montserrat-v26-latin-600.woff2') format('woff2');
-}
+} */
 
 /* cabin regular*/
-/* @font-face {
+@font-face {
   font-display: swap;
   font-family: 'Cabin';
   font-style: normal;
-  
   src: url('/fonts/Cabin-Regular-webfont.woff2') format('woff2');
+}
+
+/* FjallaOne-Regular*/
+@font-face {
+  font-display: swap;
+  font-family: 'FjallaOne';
+  font-style: normal;
+  src: url('/fonts/FjallaOne-Regular.woff2') format('woff2');
+}
+
+/* @font-face {
+  font-display: swap;
+  font-family: 'FjallaOne';
+  font-style: normal;
+  src: url('/fonts/FjallaOne-Regular.ttf') format('truetype');
 } */
 
 :root {
   --qwik-dark-blue: #006ce9;
-  --default-text-color: rgb(87, 87, 87);
+  --default-text-color: rgba(46, 47, 48, 1);
   --qwik-light-purple: #ac7ff4;
   --qwik-dark-purple: #713fc2;
   --link-color-hover: rgb(241, 196, 15);
@@ -74,7 +88,10 @@
 
   --shop-container-width: 90vw;
   --product-name-color: rgb(65, 119, 100);
-  --description-color: rgb(87, 87, 87);
+  --description-color: rgba(46, 47, 48, 0.75);
+
+  /* Title color */
+  --title-color: #a73d36;
 
   /* List Item */
   --list-item-background: rgba(0, 0, 0, 0.04);
@@ -93,9 +110,11 @@
   --font-size-xs: 11px;
   --font-size-sm: 13px;
   --font-size-md: 15px;
+  --font-size-custom: 17px;
   --font-size-lg: 20px;
   --font-size-xl: 24px;
   --font-size-xxl: 30px;
+  --font-size-xxl1: 50px;
   --font-size-xxl2: 54px;
 
   /* CTA BUTTON HEIGHT */
@@ -103,11 +122,13 @@
 
   /* Font Family */
 
-  --font-family-primary: 'Krona', sans-serif;
-  --font-family-secondary: 'Montserrat-600', sans-serif;
-  --font-family-tertiary: 'Montserrat-400', sans-serif;
+  /* --font-family-primary: 'Krona', sans-serif; */
+  /*  --font-family-secondary: 'Montserrat-600', sans-serif; */
+  /*  --font-family-tertiary: 'Montserrat-400', sans-serif; */
 
-  /* --font-family-tertiary: 'Cabin', sans-serif; */
+  --font-family-secondary: 'Cabin', sans-serif;
+  --font-family-tertiary: 'Cabin', sans-serif;
+  --font-family-primary: 'FjallaOne', sans-serif;
 }
 ::selection {
   background-color: transparent;
