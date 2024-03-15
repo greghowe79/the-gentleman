@@ -75,10 +75,9 @@
 }
 
 .currency-container-firstChild {
-  margin: 30px 60px;
+  margin: 30px;
   color: var(--description-color);
   font-family: var(--font-family-secondary);
-  font-weight: 600;
 }
 
 .subtotal-container {
@@ -95,11 +94,8 @@
 
 .total-container {
   display: flex;
-  margin-top: 15px;
-  font-weight: 600;
-  padding-top: 30px;
-  font-size: 1.25rem;
   height: 2.313rem;
+  align-items: center;
 }
 .custom-button-container {
   display: flex;

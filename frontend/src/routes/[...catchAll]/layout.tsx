@@ -28,6 +28,7 @@ import {
   cartButtonStyle,
   cartButtonWrapper,
   Wrap,
+  spacerFirst,
 } from '../shop/styles.css';
 import { Arrow } from '~/components/starter/icons/arrow';
 import { Link, routeLoader$, useLocation } from '@builder.io/qwik-city';
@@ -81,7 +82,7 @@ const ShopDetailLayout = component$(() => {
                 <>
                   <span class={spanStyle}>
                     <Link class={linkStyle} href={categoryPath}>
-                      <span style={{ color: 'var(--description-color)' }}>{loc.params.catchAll.split('/')[1].replace(/-/g, ' ')}</span>
+                      <span style={{ color: 'var(--default-text-color)' }}>{loc.params.catchAll.split('/')[1].replace(/-/g, ' ')}</span>
                     </Link>
                     {loc.params.catchAll && <strong class={pointStyle}>&nbsp; . &nbsp;</strong>}
                   </span>
@@ -129,19 +130,18 @@ const ShopDetailLayout = component$(() => {
           <div class={leftWrapperDetail}>
             <div class={detailDescription}>
               <div class={titlePrice}>
-                <h1 class={titleDetail}>
+                <div class={titleDetail}>
                   <div>
-                    <div class={titleContainer}>{service.value[0]?.name}</div>
+                    <h1 class={titleContainer}>{service.value[0]?.name}</h1>
                   </div>
                   <div class={categoryWrapper}>
                     <strong class={categoryStyle}>{service.value[0]?.category}</strong>
                   </div>
-                </h1>
+                </div>
 
                 <div class={priceDetail}>EUR {service.value[0]?.price}</div>
               </div>
-              <div class={spacer}>{service.value[0]?.description}</div>
-              <div class={spacer}>
+              <div class={spacerFirst}>
                 <div class={quantityWrapper}>
                   <div class={label}>Choose the quantity</div>
                   <div>
@@ -166,6 +166,7 @@ const ShopDetailLayout = component$(() => {
                   </button>
                 </div>
               </div>
+              <div class={spacer}>{service.value[0]?.description}</div>
             </div>
           </div>
         </div>

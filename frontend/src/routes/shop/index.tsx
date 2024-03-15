@@ -21,15 +21,13 @@ import { Link } from '@builder.io/qwik-city';
 import { limitDescription } from './actions/actions';
 import { type Product } from './types/types';
 
-const ShopProducts = component$(({ data, backgroundColor }: any) => {
+const ShopProducts = component$(({ data }: any) => {
   return (
     <>
       {data && data.length > 0 && (
         <>
           <div class={catDescWrapper}>
-            <div class={titleWrapper} style={{ color: backgroundColor }}>
-              {data[0]?.category_title}
-            </div>
+            <h1 class={titleWrapper}>{data[0]?.category_title}</h1>
             <p class={catDesc}>{data[0]?.category_description}</p>
           </div>
           {data[0]?.products.map((product: Product) => {

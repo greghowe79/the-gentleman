@@ -32,9 +32,8 @@
   display: none;
   margin: 0;
   padding: 0;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.063rem;
+  font-size: 13.5px;
+  letter-spacing: 0.09rem;
 }
 
 .header li a {
