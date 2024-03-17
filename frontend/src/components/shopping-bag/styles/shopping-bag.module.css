@@ -76,7 +76,6 @@
 
 .currency-container-firstChild {
   margin: 30px;
-  color: var(--description-color);
   font-family: var(--font-family-secondary);
 }
 

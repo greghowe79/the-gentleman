@@ -53,6 +53,8 @@ export const addToCart = $(async ({ isFromPdp, userSession, cart, product, selec
         quantity: parseInt(selectedOption.value),
         product_name: service.value[0]?.name,
         amount: service.value[0]?.price * parseInt(selectedOption.value),
+        slug: service.value[0]?.slug,
+        category_slug: service.value[0]?.categorySlug,
       };
 
       if (userSession.isLoggedIn) {

@@ -4,6 +4,7 @@ import { BodyContext, type UserSess, UserSessionContext } from '~/root';
 import styles from '../styles/shopping-bag.module.css';
 import { Link } from '@builder.io/qwik-city';
 import { Image } from '@unpic/qwik';
+import CloseIcon from '~/components/starter/icons/close';
 import {
   controlsContainer,
   controlsStyle,
@@ -26,6 +27,9 @@ import {
   linkBtn,
   topBag,
   topBagTitle,
+  total,
+  closeButton,
+  totalAmount,
 } from '../styles/style.css';
 import { type CartProps, type ProductDetailsProps } from '~/routes/[...catchAll]/types';
 import { addToCart, deleteProduct } from '~/routes/[...catchAll]/utils';
@@ -59,32 +63,8 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
             <div>
               <h2 class={topBagTitle}>Your cart</h2>
             </div>
-            <button
-              onClick$={() => (props.openPanel.isOpen = false)}
-              style={{
-                height: '28px',
-                width: '28px',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                padding: '0',
-                background: 'transparent',
-                color: 'var(--default-text-color)',
-              }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-                focusable="false"
-                class="icon icon-close"
-                fill="none"
-                viewBox="0 0 18 17"
-              >
-                <path
-                  d="M.865 15.978a.5.5 0 00.707.707l7.433-7.431 7.579 7.282a.501.501 0 00.846-.37.5.5 0 00-.153-.351L9.712 8.546l7.417-7.416a.5.5 0 10-.707-.708L8.991 7.853 1.413.573a.5.5 0 10-.693.72l7.563 7.268-7.418 7.417z"
-                  fill="currentColor"
-                ></path>
-              </svg>
+            <button onClick$={() => (props.openPanel.isOpen = false)} class={closeButton}>
+              <CloseIcon />
             </button>
           </div>
           <div class={sbHeader}>
@@ -101,14 +81,18 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
                         isLoading.value = false;
                         return (
                           <div key={product.id}>
-                            <Link class={linkStyle} href={'#'}>
+                            <div class={linkStyle}>
                               <div class={imgWrap}>
                                 <Image src={product.url} layout="constrained" decoding="async" loading="lazy" alt="A lovely bath" />
                               </div>
                               <div class={flexWrap}>
                                 <div class={innerDiv}>
                                   <div class={line}>
-                                    <Link class={nameStyle} href={'#'}>
+                                    <Link
+                                      class={nameStyle}
+                                      onClick$={() => (props.openPanel.isOpen = false)}
+                                      href={'/shop/' + product.category_slug + '/' + product.slug}
+                                    >
                                       {product.product_name}
                                     </Link>
                                     <div class={priceSmall}>EUR {product.price}</div>
@@ -149,7 +133,7 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
                                   </div>
                                 </div>
                               </div>
-                            </Link>
+                            </div>
                           </div>
                         );
                       })}
@@ -187,8 +171,8 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
         <div class={styles['currency-container-firstChild']}>
           <div>
             <div class={styles['total-container']}>
-              <h2 style={{ flex: 1, fontSize: 'var(--font-size-lg)', color: 'var(--title-color)' }}>Estimated total</h2>
-              <div>EUR {props.cart?.value ? props.cart.value.total : 0}</div>
+              <h2 class={total}>Estimated total</h2>
+              <div class={totalAmount}>EUR {props.cart?.value ? props.cart.value.total : 0}</div>
             </div>
             <div class={styles['custom-button-container']}>
               {/*  <CustomButton /> */}

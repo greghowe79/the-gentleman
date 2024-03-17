@@ -69,12 +69,13 @@ export default component$(() => {
   return (
     <>
       <IconsPanel openPanel={openPanel} iconKey={iconKey} cart={cart} />
-      <Header openPanel={openPanel} iconKey={iconKey} />
+      <Header openPanel={openPanel} iconKey={iconKey} location={loc.url.href} />
+
       <div class="scrollable-content">
         <main>
           <Slot />
         </main>
-        {loc.url.href != 'http://localhost/upload-products/' && <Footer />}
+        {loc.url.href !== 'http://localhost/upload-products/' && loc.url.href !== 'http://localhost/become-a-seller/' && <Footer />}
       </div>
     </>
   );

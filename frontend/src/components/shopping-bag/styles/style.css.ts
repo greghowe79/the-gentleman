@@ -61,7 +61,8 @@ export const imgWrap = style({
   alignSelf: 'center',
 });
 export const nameStyle = style({
-  fontFamily: 'var(--font-family-secondary)',
+  fontFamily: 'var(--font-family-primary)',
+  fontSize: 'var(--font-size-title)',
 });
 
 export const linkStyle = style({
@@ -69,6 +70,7 @@ export const linkStyle = style({
   flexDirection: 'row',
   height: '150px',
   justifyContent: 'center',
+  color: 'var(--default-text-color)',
 });
 
 export const productsContainer = style({
@@ -127,6 +129,29 @@ export const topBag = style({
 export const topBagTitle = style({
   fontSize: 'var(--font-size-xxl)',
   color: 'var(--title-color)',
+});
+
+export const total = style({
+  flex: '1',
+  fontSize: 'var(--font-size-lg)',
+  color: 'var(--title-color)',
+  fontFamily: 'var(--font-family-primary)',
+});
+
+export const closeButton = style({
+  height: '28px',
+  width: '28px',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: '0',
+  background: 'transparent',
+  color: 'var(--default-text-color)',
+});
+
+export const totalAmount = style({
+  fontSize: 'var(--font-size-amount)',
+  color: 'var(--default-text-color)',
 });
 
 export const wrapFirstChild = style({ transform: 'translate3d(0px, 0px, 0px)' });
