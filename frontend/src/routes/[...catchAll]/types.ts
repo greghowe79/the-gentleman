@@ -25,6 +25,8 @@ export interface ProductDetailsProps {
   quantity: number;
   product_name: string;
   amount: number;
+  slug: string;
+  category_slug: string;
 }
 
 export interface CartProps {
