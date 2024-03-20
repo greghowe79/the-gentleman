@@ -7,7 +7,7 @@ export const shopArea = style({
 });
 
 export const shopContainer = style({
-  backgroundColor: 'white',
+  backgroundColor: '#fcfcfc',
   height: 'auto',
   width: 'var(--shop-container-width)',
 });
@@ -25,7 +25,7 @@ export const shopHeaderContainer = style({
   borderBottom: '1px solid rgba(0,0,0, 0.1)',
   display: 'flex',
   alignItems: 'center',
-  backgroundColor: 'white',
+  backgroundColor: '#fcfcfc',
 });
 
 export const shopBreadcrumb = style({

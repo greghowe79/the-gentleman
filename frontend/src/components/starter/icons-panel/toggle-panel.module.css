@@ -1,6 +1,6 @@
 .toggle-panel {
   position: fixed;
-  background-color: white;
+  background-color: #fcfcfc;
   display: flex;
   flex-direction: column;
   overflow: hidden;
