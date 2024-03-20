@@ -22,12 +22,12 @@ export const Header = component$<ToggleProps>(({ openPanel, iconKey, location })
 
   const handleClick = $(async () => {
     loading.value = true;
-
     try {
       const res = await createConnectAccount(userSession.userId);
-      console.log(res); // get the login link
+      loading.value = false;
+      window.open(res?.data);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       loading.value = false;
     }
   });

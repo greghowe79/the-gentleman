@@ -6,7 +6,11 @@ import axios from 'axios';
 
 export const createConnectAccount = $(async (user: any) => {
   if (user) {
-    await axios.post('/api_v1/create-connect-account', {});
+    const bodyContent = {
+      user: user,
+    };
+    const res = await axios.post('/api_v1/create-connect-account', bodyContent);
+    return res;
   }
 });
 

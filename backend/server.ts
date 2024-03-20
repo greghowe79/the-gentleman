@@ -7,6 +7,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 import { createClient } from '@supabase/supabase-js';
 import { CartProps, Product, ProductDetailsProps } from './types/types';
+import querystring from 'node:querystring';
+const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY);
 
 // Determine root domain
 
@@ -25,6 +27,39 @@ const supabaseUrl = process.env.SUPABASE_URL!;
 const supabaseANonPublic = process.env.SUPABASE_SECRET_KEY!;
 
 const supabase = createClient(supabaseUrl, supabaseANonPublic);
+
+app.post(route + '/create-connect-account', async (req: Request, res: Response) => {
+  const userId = req.body.user;
+  const { data: user, error } = await supabase.from('profiles').select('*').eq('id', userId).single();
+  if (error) return res.status(400).json({ error: error.message });
+
+  // console.log('USER====>', user);
+  if (!user.stripe_account_id) {
+    const account = await stripe.accounts.create({
+      type: 'express',
+    });
+    // console.log('ACCOUNT', account);
+    user.stripe_account_id = account.id;
+    console;
+
+    const { error } = await supabase.from('profiles').update({ stripe_account_id: user.stripe_account_id }).eq('id', userId);
+
+    if (error) console.error(error);
+    // if (error) return res.status(400).json({ error: error.message });
+
+    let accountLink = await stripe.accountLinks.create({
+      account: user.stripe_account_id,
+      refresh_url: process.env.STRIPE_REDIRECT_URL,
+      return_url: process.env.STRIPE_REDIRECT_URL,
+      type: 'account_onboarding',
+    });
+    accountLink = Object.assign(accountLink, { 'stripe_user[email]': user.email || undefined });
+    console.log('ACCOUNT LINK =====> ', accountLink);
+    const link = `${accountLink.url}?${querystring.stringify(accountLink)}`;
+    console.log('LINK', link);
+    return res.status(200).json(link);
+  }
+});
 
 let cart: CartProps | undefined;
 
