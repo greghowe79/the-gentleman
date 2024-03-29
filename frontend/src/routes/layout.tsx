@@ -75,7 +75,7 @@ export default component$(() => {
         <main>
           <Slot />
         </main>
-        {loc.url.href !== 'http://localhost/upload-products/' && loc.url.href !== 'http://localhost/become-a-seller/' && <Footer />}
+        {loc.url.href !== 'http://localhost/upload-products/' && loc.url.href !== 'http://localhost/dashboard-seller/' && <Footer />}
       </div>
     </>
   );
