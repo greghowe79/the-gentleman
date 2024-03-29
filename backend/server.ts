@@ -33,19 +33,16 @@ app.post(route + '/create-connect-account', async (req: Request, res: Response) 
   const { data: user, error } = await supabase.from('profiles').select('*').eq('id', userId).single();
   if (error) return res.status(400).json({ error: error.message });
 
-  // console.log('USER====>', user);
   if (!user.stripe_account_id) {
     const account = await stripe.accounts.create({
       type: 'express',
     });
-    // console.log('ACCOUNT', account);
+
     user.stripe_account_id = account.id;
-    console;
 
     const { error } = await supabase.from('profiles').update({ stripe_account_id: user.stripe_account_id }).eq('id', userId);
 
     if (error) console.error(error);
-    // if (error) return res.status(400).json({ error: error.message });
 
     let accountLink = await stripe.accountLinks.create({
       account: user.stripe_account_id,
@@ -54,11 +51,24 @@ app.post(route + '/create-connect-account', async (req: Request, res: Response) 
       type: 'account_onboarding',
     });
     accountLink = Object.assign(accountLink, { 'stripe_user[email]': user.email || undefined });
-    console.log('ACCOUNT LINK =====> ', accountLink);
+
     const link = `${accountLink.url}?${querystring.stringify(accountLink)}`;
-    console.log('LINK', link);
+
     return res.status(200).json(link);
   }
+});
+
+app.post(route + '/get-account-status', async (req: Request, res: Response) => {
+  const userId = req.body.user;
+  const { data: user, error } = await supabase.from('profiles').select('*').eq('id', userId).single();
+  if (error) return res.status(400).json({ error: error.message });
+
+  const account = await stripe.accounts.retrieve(user.stripe_account_id);
+
+  const { error: updateError } = await supabase.from('profiles').update({ stripe_seller: account, new: true }).eq('id', userId);
+  if (updateError) return res.status(400).json({ error: updateError.message });
+
+  return res.status(200).json(user);
 });
 
 let cart: CartProps | undefined;

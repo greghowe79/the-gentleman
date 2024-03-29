@@ -1,9 +1,63 @@
-import { component$ } from '@builder.io/qwik';
+import { component$, useContext, $, useSignal } from '@builder.io/qwik';
+import { UserSessionContext } from '~/root';
+import { createConnectAccount } from '~/utils/stripe';
+import { useLocation, useNavigate } from '@builder.io/qwik-city';
+import Loader from '~/components/loader/component/Loader';
+import { notConnWrap, title_h3 } from './styles.css';
 
 const SellerPage = component$(() => {
+  const userSession = useContext(UserSessionContext);
+
+  const loc = useLocation();
+  const nav = useNavigate();
+  const loading = useSignal(false);
+
+  const handleClick = $(async () => {
+    loading.value = true;
+    try {
+      const res = await createConnectAccount(userSession.userId);
+      await nav(res?.data);
+    } catch (error) {
+      console.error(error);
+    }
+  });
+
+  const connected = $(() => {
+    return (
+      <div>
+        <h1 style={{ color: 'black' }}>FORM PER CARICARE PRODOTTI</h1>
+      </div>
+    );
+  });
+
+  const notConnected = $(() => {
+    return (
+      <div class={notConnWrap}>
+        <h3 class={title_h3}>Setup payouts to post your products</h3>
+        <div style={{ color: 'black' }}>THE GENTLEMAN partners with stripe to transfer earning to your bank account</div>
+
+        <button
+          disabled={loading.value}
+          onClick$={() => (userSession.isLoggedIn ? handleClick() : alert('EFFETTUA IL LOGIN'))}
+          style={{ display: loc.url.href !== 'http://localhost/become-a-seller/' ? 'none' : 'block' }}
+        >
+          {loading.value ? 'Processing...' : 'Setup Payouts'}
+        </button>
+
+        <div style={{ color: 'black' }}>You'll be redirect to Stripe to complete the onboarding process</div>
+      </div>
+    );
+  });
+
   return (
     <div>
-      <div>You'll be redirect to Stripe to complete the onboarding process</div>
+      {loading.value ? (
+        <Loader />
+      ) : userSession.userId && userSession.isLoggedIn && userSession.stripe_seller && userSession.charges_enabled ? (
+        connected()
+      ) : (
+        notConnected()
+      )}
     </div>
   );
 });
