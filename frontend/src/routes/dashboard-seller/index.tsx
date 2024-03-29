@@ -4,6 +4,7 @@ import { createConnectAccount } from '~/utils/stripe';
 import { useLocation, useNavigate } from '@builder.io/qwik-city';
 import Loader from '~/components/loader/component/Loader';
 import { notConnWrap, title_h3 } from './styles.css';
+import Connected from '~/components/connected/component/connected';
 
 const SellerPage = component$(() => {
   const userSession = useContext(UserSessionContext);
@@ -22,14 +23,6 @@ const SellerPage = component$(() => {
     }
   });
 
-  const connected = $(() => {
-    return (
-      <div>
-        <h1 style={{ color: 'black' }}>FORM PER CARICARE PRODOTTI</h1>
-      </div>
-    );
-  });
-
   const notConnected = $(() => {
     return (
       <div class={notConnWrap}>
@@ -39,7 +32,7 @@ const SellerPage = component$(() => {
         <button
           disabled={loading.value}
           onClick$={() => (userSession.isLoggedIn ? handleClick() : alert('EFFETTUA IL LOGIN'))}
-          style={{ display: loc.url.href !== 'http://localhost/become-a-seller/' ? 'none' : 'block' }}
+          style={{ display: loc.url.href !== 'http://localhost/dashboard-seller/' ? 'none' : 'block' }}
         >
           {loading.value ? 'Processing...' : 'Setup Payouts'}
         </button>
@@ -54,7 +47,7 @@ const SellerPage = component$(() => {
       {loading.value ? (
         <Loader />
       ) : userSession.userId && userSession.isLoggedIn && userSession.stripe_seller && userSession.charges_enabled ? (
-        connected()
+        <Connected />
       ) : (
         notConnected()
       )}

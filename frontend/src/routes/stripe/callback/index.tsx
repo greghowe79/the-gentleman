@@ -20,7 +20,7 @@ const StripeCallback = component$(() => {
         const auth = JSON.parse(localStorage.getItem(localStorage.key(0)!)!);
         auth.user = user.value;
         localStorage.setItem('authData', JSON.stringify(auth));
-        window.location.href = '/become-a-seller/';
+        window.location.href = '/dashboard-seller/';
       }
     }
   });

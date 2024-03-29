@@ -1,5 +1,6 @@
 import { supabase } from '~/utils/supabase';
 import { $, type Signal } from '@builder.io/qwik';
+//import { type UserSess } from '~/root';
 
 export const getAdminUserId = $(async (adminUserId: Signal<string>): Promise<string> => {
   const { data, error } = await supabase.from('shop').select('user_id').limit(1);
