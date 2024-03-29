@@ -1,4 +1,4 @@
-import { type Signal, component$, createContextId, useContextProvider, useSignal, useVisibleTask$, useStore } from '@builder.io/qwik';
+import { type Signal, component$, createContextId, useContextProvider, useSignal, useVisibleTask$, useStore, $ } from '@builder.io/qwik';
 import { QwikCityProvider, RouterOutlet, ServiceWorkerRegister } from '@builder.io/qwik-city';
 import { RouterHead } from './components/router-head/router-head';
 
@@ -10,6 +10,8 @@ import { type CartProps } from './routes/[...catchAll]/types';
 export type UserSess = {
   userId: string;
   isLoggedIn: boolean;
+  stripe_seller: any;
+  charges_enabled: boolean;
 };
 
 export const BodyContext = createContextId<Signal<string>>('body-context');
@@ -22,6 +24,20 @@ export default component$(() => {
   const userSession = useStore<UserSess>({
     userId: '',
     isLoggedIn: false,
+    stripe_seller: {},
+    charges_enabled: false,
+  });
+  const getUserProfile = $(async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    const { data } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', user?.id)
+      .single();
+    if (data) return data;
   });
 
   const backgroundColor = useSignal('rgb(0, 0, 0)');
@@ -33,7 +49,8 @@ export default component$(() => {
 
   useVisibleTask$(async () => {
     const { data } = await supabase.auth.getUser();
-
+    /////////NUOVO CODICE////////////////////
+    const userProfile = await getUserProfile();
     if (data.user?.id) {
       // Set Auth State Context
       userSession.userId = data.user.id;
@@ -42,6 +59,13 @@ export default component$(() => {
       // Set Auth State Context
       userSession.userId = '';
       userSession.isLoggedIn = false;
+    }
+    if (userProfile.stripe_seller) {
+      userSession.stripe_seller = userProfile.stripe_seller;
+      userSession.charges_enabled = userProfile.stripe_seller.charges_enabled;
+    } else {
+      userSession.stripe_seller = {};
+      userSession.charges_enabled = false;
     }
   });
 
