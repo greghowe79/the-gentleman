@@ -1,8 +1,7 @@
 import { $ } from '@builder.io/qwik';
 
-//import { server$ } from '@builder.io/qwik-city';
-
 import axios from 'axios';
+import { type BalanceItem } from '~/components/connected/component/types/types';
 import { type UserSess } from '~/root';
 
 export const createConnectAccount = $(async (user: string) => {
@@ -25,9 +24,15 @@ export const getAccountStatus = $(async (userSession: UserSess) => {
   return res.data;
 });
 
-// export const createConnectAccount = server$(function (user: any) {
-//   // `this` is the `RequestEvent` object
-//   if (user) {
-//     console.log(this.env.get('STRIPE_PUBLIC_KEY'));
-//   }
-// });
+export const getAccountBalance = $(async (userSession: UserSess) => {
+  const bodyContent = {
+    user: userSession.userId,
+  };
+  const res = await axios.post('/api_v1/get-account-balance', bodyContent);
+
+  return res.data;
+});
+
+export const currencyFormatter = $((data: BalanceItem) => {
+  return (data.amount / 100).toLocaleString(data.currency, { style: 'currency', currency: data.currency });
+});

@@ -43,7 +43,7 @@ export default component$(() => {
   const backgroundColor = useSignal('rgb(0, 0, 0)');
   const cart: Signal<CartProps> = useSignal({ products: [], total: 0 });
 
-  const colors = ['rgb(0, 0, 0)', 'rgb(47, 72, 88)', 'rgb(58, 0, 30)', 'rgb(131, 118, 85)'];
+  const colors = ['rgb(0, 0, 0)', 'rgb(58, 0, 30)', 'rgb(131, 118, 85)'];
 
   const body = document.body;
 

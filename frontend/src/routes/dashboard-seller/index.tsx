@@ -1,17 +1,24 @@
-import { component$, useContext, $, useSignal } from '@builder.io/qwik';
+import { component$, useContext, $, useSignal, useTask$ } from '@builder.io/qwik';
 import { UserSessionContext } from '~/root';
-import { createConnectAccount } from '~/utils/stripe';
+import { createConnectAccount, getAccountBalance } from '~/utils/stripe';
 import { useLocation, useNavigate } from '@builder.io/qwik-city';
 import Loader from '~/components/loader/component/Loader';
 import { notConnWrap, title_h3 } from './styles.css';
 import Connected from '~/components/connected/component/connected';
+import type { Balance } from '~/components/connected/component/types/types';
 
 const SellerPage = component$(() => {
-  const userSession = useContext(UserSessionContext);
-
+  const balance = useSignal<Balance | undefined>();
   const loc = useLocation();
   const nav = useNavigate();
   const loading = useSignal(false);
+  const userSession = useContext(UserSessionContext);
+
+  useTask$(async ({ track }) => {
+    const value = await track(() => userSession.userId && getAccountBalance(userSession));
+    if (!value) return;
+    balance.value = value;
+  });
 
   const handleClick = $(async () => {
     loading.value = true;
@@ -47,7 +54,7 @@ const SellerPage = component$(() => {
       {loading.value ? (
         <Loader />
       ) : userSession.userId && userSession.isLoggedIn && userSession.stripe_seller && userSession.charges_enabled ? (
-        <Connected />
+        <Connected balance={balance.value} />
       ) : (
         notConnected()
       )}
