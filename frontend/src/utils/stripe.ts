@@ -36,3 +36,11 @@ export const getAccountBalance = $(async (userSession: UserSess) => {
 export const currencyFormatter = $((data: BalanceItem) => {
   return (data.amount / 100).toLocaleString(data.currency, { style: 'currency', currency: data.currency });
 });
+
+export const payoutSetting = $(async (userSession: UserSess) => {
+  const bodyContent = {
+    user: userSession.userId,
+  };
+  const res = await axios.post('/api_v1/payout-setting', bodyContent);
+  return res.data;
+});
