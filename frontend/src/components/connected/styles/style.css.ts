@@ -42,11 +42,15 @@ export const div5 = style({
   borderTopRightRadius: '0.5rem',
   boxShadow: '0 8px 28px rgba(0,0,0,0.28)',
 });
-export const div6 = style({
+export const settingStyle = style({
   gridArea: '2 / 5 / 5 / 7',
   backgroundColor: '#fcfcfc',
   borderRadius: '0.5rem',
   boxShadow: '0 8px 28px rgba(0,0,0,0.28)',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  cursor: 'pointer',
 });
 export const balanceStyle = style({
   gridArea: '2 / 3 / 5 / 5',

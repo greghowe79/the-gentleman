@@ -28,6 +28,15 @@ const supabaseANonPublic = process.env.SUPABASE_SECRET_KEY!;
 
 const supabase = createClient(supabaseUrl, supabaseANonPublic);
 
+app.post(route + '/payout-setting', async (req: Request, res: Response) => {
+  const userId = req.body.user;
+  const { data: user, error } = await supabase.from('profiles').select('*').eq('id', userId).single();
+  if (error) return res.status(400).json({ error: error.message });
+  const loginLink = await stripe.accounts.createLoginLink(user.stripe_account_id);
+  // , {redirect_url: process.env.STRIPE_SETTING_REDIRECT_URL,}
+  return res.status(200).json(loginLink);
+});
+
 app.post(route + '/get-account-balance', async (req: Request, res: Response) => {
   const userId = req.body.user;
   const { data: user, error } = await supabase.from('profiles').select('*').eq('id', userId).single();
