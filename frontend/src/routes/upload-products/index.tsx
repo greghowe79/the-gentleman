@@ -19,6 +19,7 @@ import {
   ctaWrap,
   prodDescrTextWrap,
   textAreaStyle,
+  buttonIcon,
 } from './style.css';
 import styles from '../../components/search-bar/styles/search-bar.module.css';
 import { supabase } from '~/utils/supabase';
@@ -42,6 +43,7 @@ import { Image } from '@unpic/qwik';
 import CustomSelect from '~/components/select-categories/component/customSelect';
 import { categoryOptions } from '../../components/select-categories/data/data';
 import { type ItemProps } from '../shop/types/types';
+import BinIcon from '~/components/starter/icons/bin';
 
 const CDNURL = 'https://oukztwgobbpvjuhlvpft.supabase.co/storage/v1/object/public/shop/';
 
@@ -279,8 +281,9 @@ const UploadProducts = component$(() => {
                         >
                           <Image src={imageUrl} layout="constrained" decoding="async" loading="lazy" alt="A lovely bath" />
                         </div>
+
                         <button
-                          class={button}
+                          class={buttonIcon}
                           onClick$={() => [
                             deleteImage(userSession, images.value[index]?.name, images),
                             deleteShopProduct(1, product.id),
@@ -288,7 +291,7 @@ const UploadProducts = component$(() => {
                             deleteProductsProduct(product.id, productsTable),
                           ]}
                         >
-                          Delete Products
+                          <BinIcon />
                         </button>
                       </div>
                     );

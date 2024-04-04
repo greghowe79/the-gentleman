@@ -52,26 +52,71 @@ export const settingStyle = style({
   justifyContent: 'center',
   cursor: 'pointer',
 });
-export const balanceStyle = style({
-  gridArea: '2 / 3 / 5 / 5',
-  backgroundColor: '#fcfcfc',
-  borderRadius: '0.5rem',
-  boxShadow: '0 8px 28px rgba(0,0,0,0.28)',
+
+export const productsLabel = style({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  fontFamily: 'var(--default-text-color)',
-  fontSize: 'var(--font-size-xxl2)',
-  fontWeight: '500',
+  borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+  ':hover': {
+    backgroundColor: 'var(--title-color)',
+    borderTopRightRadius: '0.5rem !important',
+  },
 });
 
 export const uploadButton = style({
-  borderTopRightRadius: '0.5rem !important',
   borderRadius: 'inherit',
-  width: '100%',
-  backgroundColor: '#000',
+  padding: '23px',
+  width: 'inherit',
+  backgroundColor: 'transparent',
+});
+
+export const listWrap = style({
+  display: 'flex',
+  justifyContent: 'flex-start',
+  alignItems: 'center',
+});
+
+export const ulStyle = style({
+  background: '#000000',
+  marginTop: '40px',
+  height: 'calc(100vh - var(--header-height) - 40px)',
+  listStyle: 'none',
+  borderTopRightRadius: '4px',
+  padding: '0',
+  width: '15%',
+  minWidth: '150px',
+  maxWidth: '160px',
+});
+
+export const labelStyle = style({
+  marginLeft: '15px',
+  width: '100px',
+  textAlign: 'left',
+});
+
+export const liStyle = style({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  cursor: 'pointer',
+  height: 'calc((100vh - var(--header-height) - 80px) / 9)',
   ':hover': {
     backgroundColor: 'var(--title-color)',
   },
-  borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+});
+
+export const iconLabelWrap = style({
+  display: 'flex',
+  alignItems: 'center',
+  cursor: 'pointer',
+});
+
+export const contentStyle = style({
+  color: 'var(--description-color)',
+  width: '90%',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: 'calc(100vh - var(--header-height))',
 });

@@ -119,6 +119,15 @@ export const button = style({
   fontSize: '14px',
 });
 
+export const buttonIcon = style({
+  padding: '15px 20px',
+  fontSize: '14px',
+  background: 'transparent',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+});
+
 export const prodNameInputWrap = style({
   padding: '15px 0 0 0',
 });
