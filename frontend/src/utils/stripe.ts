@@ -1,7 +1,7 @@
 import { $ } from '@builder.io/qwik';
-
 import axios from 'axios';
-import { type BalanceItem } from '~/components/connected/component/types/types';
+import type { BalanceItem } from '~/components/connected/types/types';
+
 import { type UserSess } from '~/root';
 
 export const createConnectAccount = $(async (user: string) => {
