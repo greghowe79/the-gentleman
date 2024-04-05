@@ -16,3 +16,9 @@ export const handlePayoutSettings = $(async (loading: Signal<boolean>, userSessi
     alert('Unable to access to settings. Try again');
   }
 });
+
+const handleActiveComponent = $((itemID: number, activeComponent: Signal<number>) => {
+  activeComponent.value = itemID;
+});
+
+export { handleActiveComponent };

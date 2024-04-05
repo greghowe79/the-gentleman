@@ -1,12 +1,4 @@
-// import { component$, $, useContext, useSignal } from '@builder.io/qwik';
-// import { Link, useNavigate } from '@builder.io/qwik-city';
-// import { parent, div1, div2, div3, div4, div5, settingStyle, balanceStyle, uploadButton, productsLabel } from '../styles/style.css';
-// import { currencyFormatter, payoutSetting } from '~/utils/stripe';
-// import type { BalanceItem, ConnectedProps } from './types/types';
-// import { UserSessionContext } from '~/root';
-// // import FaSettings from '~/components/starter/icons/settings';
-// // import FaProducts from '~/components/starter/icons/products';
-import { component$, useSignal, $, useContext } from '@builder.io/qwik';
+import { component$, useSignal, useContext } from '@builder.io/qwik';
 import { dashboardList } from '../data/data';
 import { contentStyle, iconLabelWrap, labelStyle, liStyle, listWrap, ulStyle } from '../styles/style.css';
 import { UserSessionContext } from '~/root';
@@ -14,42 +6,23 @@ import { useNavigate } from '@builder.io/qwik-city';
 import type { ConnectedProps } from '../types/types';
 import StripeLoader from '~/components/stripe-loader/component/stripeLoader';
 import Balance from '~/components/balance/component/balance';
+import { handleActiveComponent } from '../actions/actions';
 
 const Connected = component$<ConnectedProps>(({ balance }) => {
   const userSession = useContext(UserSessionContext);
   const loading = useSignal(false);
   const nav = useNavigate();
   const activeComponent = useSignal(0);
-  const handleActiveComponent = $((itemID: number) => {
-    activeComponent.value = itemID;
-  });
 
   return (
-    // <div class={parent}>
-    //   <div class={div1}>div1</div>
-    //   <div class={div2}>div2</div>
-    //   <div class={div3}>div3</div>
-    //   <div class={div4}>div4</div>
-    //   <div class={div5}>
-    //     <Link href="/upload-products" class={productsLabel}>
-    //       <FaProducts />
-    //       <button class={uploadButton}>Products</button>
-    //     </Link>
-    //   </div>
-    //   <div class={settingStyle} onClick$={() => handlePayoutSettings()}>
-    //     <FaSettings />
-    //   </div>
-    //   <div class={balanceStyle}>
-    //     {balance?.pending.map((ba: BalanceItem, index: number) => {
-    //       return <span key={index}>{currencyFormatter(ba)}</span>;
-    //     })}
-    //   </div>
-    // </div>
-
     <div class={listWrap}>
       <ul class={ulStyle}>
         {dashboardList.map((item) => (
-          <li key={item.id} class={liStyle} onClick$={() => [handleActiveComponent(item.id), item.onClick(loading, userSession, nav)]}>
+          <li
+            key={item.id}
+            class={liStyle}
+            onClick$={() => [handleActiveComponent(item.id, activeComponent), item.onClick(loading, userSession, nav)]}
+          >
             <div class={iconLabelWrap}>
               {item.type}
               <div class={labelStyle}>{item.label}</div>
