@@ -67,3 +67,8 @@
     display: inline-block;
   }
 }
+
+.button-wrap {
+  padding: 0 30px;
+  cursor: pointer;
+}
