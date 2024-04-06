@@ -1,3 +1,5 @@
+import type { JSX } from '@builder.io/qwik/jsx-runtime';
+
 export interface BalanceItem {
   amount: number;
   currency: string;
@@ -15,4 +17,9 @@ export interface Balance {
 
 export interface ConnectedProps {
   balance?: Balance;
+}
+
+export interface ComponentProps {
+  id: number;
+  child: JSX.Element;
 }
