@@ -3,7 +3,7 @@ import type { RouteNavigate } from '@builder.io/qwik-city';
 import type { UserSess } from '~/root';
 import { payoutSetting } from '~/utils/stripe';
 
-export const handlePayoutSettings = $(async (loading: Signal<boolean>, userSession: UserSess, nav: RouteNavigate) => {
+const handlePayoutSettings = $(async (loading: Signal<boolean>, userSession: UserSess, nav: RouteNavigate) => {
   loading.value = true;
 
   try {
@@ -18,7 +18,11 @@ export const handlePayoutSettings = $(async (loading: Signal<boolean>, userSessi
 });
 
 const handleActiveComponent = $((itemID: number, activeComponent: Signal<number>) => {
-  activeComponent.value = itemID;
+  if (activeComponent.value !== itemID) {
+    activeComponent.value = itemID;
+    return activeComponent.value;
+  }
+  return null;
 });
 
-export { handleActiveComponent };
+export { handleActiveComponent, handlePayoutSettings };
