@@ -8,7 +8,7 @@ export interface BalanceItem {
   };
 }
 
-export interface Balance {
+export interface BalanceProps {
   object: string;
   available: BalanceItem[];
   livemode: boolean;
@@ -16,7 +16,7 @@ export interface Balance {
 }
 
 export interface ConnectedProps {
-  balance?: Balance;
+  balance?: BalanceProps;
 }
 
 export interface ComponentProps {
