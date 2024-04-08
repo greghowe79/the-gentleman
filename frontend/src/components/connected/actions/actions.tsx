@@ -2,6 +2,7 @@ import { $, type Signal } from '@builder.io/qwik';
 import type { RouteNavigate } from '@builder.io/qwik-city';
 import type { UserSess } from '~/root';
 import { payoutSetting } from '~/utils/stripe';
+import type { ComponentProps } from '../types/types';
 
 const handlePayoutSettings = $(async (loading: Signal<boolean>, userSession: UserSess, nav: RouteNavigate) => {
   loading.value = true;
@@ -25,4 +26,12 @@ const handleActiveComponent = $((itemID: number, activeComponent: Signal<number>
   return null;
 });
 
-export { handleActiveComponent, handlePayoutSettings };
+const renderComponent = $((components: ComponentProps[], activeComponent: Signal<number>, contentStyle: string) => {
+  return components[activeComponent.value] ? (
+    <div key={activeComponent.value} class={contentStyle}>
+      {components[activeComponent.value].child}
+    </div>
+  ) : null;
+});
+
+export { handleActiveComponent, handlePayoutSettings, renderComponent };

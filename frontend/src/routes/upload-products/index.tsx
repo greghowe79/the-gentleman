@@ -107,6 +107,7 @@ const UploadProducts = component$(() => {
       description: productDescription.value,
       created_at: currentDate,
       category: selectedOption.value,
+      seller: userSession.stripe_seller?.id,
     };
 
     await insertIntoTheProductTable(itemToInsert, productsTable);

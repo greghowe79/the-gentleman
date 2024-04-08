@@ -5,10 +5,10 @@ import { useLocation, useNavigate } from '@builder.io/qwik-city';
 import Loader from '~/components/loader/component/Loader';
 import { notConnWrap, title_h3 } from './styles.css';
 import Connected from '~/components/connected/component/connected';
-import type { Balance } from '~/components/connected/types/types';
+import type { BalanceProps } from '~/components/connected/types/types';
 
 const SellerPage = component$(() => {
-  const balance = useSignal<Balance | undefined>();
+  const balance = useSignal<BalanceProps | undefined>();
   const loc = useLocation();
   const nav = useNavigate();
   const loading = useSignal(false);
