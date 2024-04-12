@@ -45,6 +45,20 @@ body {
   border-radius: 10px;
 }
 
+.row-collection::-webkit-scrollbar {
+  width: 3px;
+  max-height: 100px;
+}
+.row-collection::-webkit-scrollbar-track {
+  background-color: transparent;
+
+  border-radius: 10px;
+}
+.row-collection::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
 .ulContainer::-webkit-scrollbar {
   width: 10px;
   max-height: 100px;
@@ -541,4 +555,124 @@ button.button-small {
   color: var(--title-color);
   margin: 0.3em 0;
   font-size: var(--font-size-xxl1);
+}
+
+/*DASHBOARD SELLER PRODUCTS */
+
+.Table {
+  overflow: hidden;
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: column nowrap;
+  -moz-flex-flow: column nowrap;
+  flex-flow: column nowrap;
+  -webkit-box-pack: justify;
+  -moz-box-pack: justify;
+  box-pack: justify;
+  -webkit-justify-content: space-between;
+  -moz-justify-content: space-between;
+  -ms-justify-content: space-between;
+  -o-justify-content: space-between;
+  justify-content: space-between;
+  -ms-flex-pack: justify;
+  font-size: 1rem;
+  margin: 40px 0 0 0;
+  line-height: 1.5;
+  width: 90%;
+  box-shadow: 0 8px 28px #00000047;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.Table-header {
+  display: flex;
+  background-color: var(--title-color);
+  color: #fcfcfc;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  height: calc((100vh - var(--header-height) - 80px) / 9);
+  align-items: center;
+  font-family: var(--font-family-primary);
+  letter-spacing: 0.075rem;
+  padding: 0 1rem;
+  font-weight: 500;
+}
+@media (min-width: 500px) {
+  .Table-header {
+    font-weight: 500;
+  }
+}
+.Table-row {
+  width: calc(100% - 2rem);
+  height: 100px;
+  display: flex;
+  align-items: center;
+}
+
+@media (min-width: 500px) {
+  .Table-row {
+    display: -webkit-box;
+    display: -moz-box;
+    display: box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-flow: row nowrap;
+    -moz-flex-flow: row nowrap;
+    flex-flow: row nowrap;
+  }
+}
+.Table-row-item {
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: row nowrap;
+  -moz-flex-flow: row nowrap;
+  flex-flow: row nowrap;
+  -webkit-flex-grow: 1;
+  -moz-flex-grow: 1;
+  flex-grow: 1;
+  -ms-flex-positive: 1;
+  -webkit-flex-basis: 0;
+  -moz-flex-basis: 0;
+  flex-basis: 0;
+  -ms-flex-preferred-size: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-all;
+  padding: 0.5em;
+  word-break: break-word;
+}
+
+.tableRowWrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tableRowWrap:hover {
+  background-color: #f1f3f4;
+}
+
+@media (min-width: 500px) {
+  .Table-row-item {
+    padding: 0.5em;
+  }
+}
+
+.row-collection {
+  height: 300px;
+  overflow: auto;
+  /* margin-right: -17px; */
+  font-family: var(--font-family-secondary);
 }

@@ -5,10 +5,11 @@ import { Header } from '~/components/starter/header/header';
 import Footer from '~/components/starter/footer/footer';
 import styles from './styles.css?inline';
 import IconsPanel from '~/components/starter/icons-panel/iconsPanel';
-import { CartContext, UserSessionContext } from '~/root';
+import { CartContext, ModalContext, UserSessionContext } from '~/root';
 
 import { checkProductAlreadyExist, deleteAllRows, insertProduct, updateTable } from './[...catchAll]/actions';
 import { type ProductDetailsProps } from './[...catchAll]/types';
+import Modal from '~/components/Modal/component/Modal';
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
   // Control caching for this request for best performance and to reduce hosting costs:
@@ -35,6 +36,7 @@ export default component$(() => {
   const iconKey = useStore({ number: '' });
   const cart = useContext(CartContext);
   const userSession = useContext(UserSessionContext);
+  const isModalVisible = useContext(ModalContext);
 
   useStyles$(styles);
 
@@ -68,6 +70,7 @@ export default component$(() => {
 
   return (
     <>
+      {isModalVisible.value && <Modal />}
       <IconsPanel openPanel={openPanel} iconKey={iconKey} cart={cart} />
       <Header openPanel={openPanel} iconKey={iconKey} location={loc.url.href} />
 

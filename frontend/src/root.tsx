@@ -17,10 +17,13 @@ export type UserSess = {
 export const BodyContext = createContextId<Signal<string>>('body-context');
 export const UserSessionContext = createContextId<UserSess>('user-session');
 export const CartContext = createContextId<Signal<CartProps>>('cart-context');
+export const ModalContext = createContextId<Signal<boolean>>('modal-context');
+export const ProductNameContext = createContextId<Signal<string>>('product-name-context');
 
 export default component$(() => {
   const currentIndex = useSignal(0);
-
+  const isModalVisible = useSignal(false);
+  const productName = useSignal('');
   const userSession = useStore<UserSess>({
     userId: '',
     isLoggedIn: false,
@@ -123,7 +126,8 @@ export default component$(() => {
   useContextProvider(BodyContext, backgroundColor);
   useContextProvider(UserSessionContext, userSession);
   useContextProvider(CartContext, cart);
-
+  useContextProvider(ModalContext, isModalVisible);
+  useContextProvider(ProductNameContext, productName);
   return (
     <QwikCityProvider>
       <head>

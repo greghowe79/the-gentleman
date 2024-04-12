@@ -1,32 +1,42 @@
-import { component$, useSignal, useContext, useTask$ } from '@builder.io/qwik';
-import { dashboardList, getDashboardComponents } from '../data/data';
+import { component$, useContext, useSignal, useTask$, $ } from '@builder.io/qwik';
+import { columns, dashboardList } from '../data/data';
 import { contentStyle, iconLabelWrap, labelStyle, liStyle, listWrap, ulStyle } from '../styles/style.css';
-import { UserSessionContext } from '~/root';
+import type { ConnectedProps } from '../types/types';
 import { useNavigate } from '@builder.io/qwik-city';
-import type { ComponentProps, ConnectedProps } from '../types/types';
-
-import { handleActiveComponent, renderComponent } from '../actions/actions';
+import { UserSessionContext } from '~/root';
+import type { SellerProduct } from '~/components/seller-products/types/types';
 
 const Connected = component$<ConnectedProps>(({ balance }) => {
   const userSession = useContext(UserSessionContext);
   const loading = useSignal(false);
   const nav = useNavigate();
-  const activeComponent = useSignal(0);
-  const dashboardComponents = useSignal<ComponentProps[]>([]);
+  const products = useSignal<SellerProduct[]>([]);
+  const clickedIndex = useSignal(0);
 
-  useTask$(async () => {
-    dashboardComponents.value = await getDashboardComponents(balance);
+  useTask$(() => {
+    clickedIndex.value = 0;
   });
 
+  const propsArray = [
+    { customProp1: 'valore personalizzato 0' },
+    { userSession: userSession, seller_products: products, columns: columns },
+    { customProp2: 'valore personalizzato 2' },
+    { customProp2: 'valore personalizzato 3' },
+    { customProp2: 'valore personalizzato 4' },
+    { customProp2: 'valore personalizzato 5' },
+    { balance: balance },
+    { loading: loading, userSession: userSession, nav: nav },
+    { customProp2: 'valore personalizzato 8' },
+  ];
+
+  const handleActiveItem = $((itemID: number) => {
+    clickedIndex.value = itemID;
+  });
   return (
     <div class={listWrap}>
       <ul class={ulStyle}>
-        {dashboardList.map((item) => (
-          <li
-            key={item.id}
-            class={liStyle}
-            onClick$={() => [handleActiveComponent(item.id, activeComponent), item.onClick(loading, userSession, nav)]}
-          >
+        {dashboardList(propsArray).map((item) => (
+          <li key={item.id} class={liStyle} onClick$={() => [handleActiveItem(item.id), item.onClick()]}>
             <div class={iconLabelWrap}>
               {item.type}
               <div class={labelStyle}>{item.label}</div>
@@ -35,7 +45,9 @@ const Connected = component$<ConnectedProps>(({ balance }) => {
         ))}
       </ul>
 
-      {renderComponent(dashboardComponents.value, activeComponent, contentStyle)}
+      <div key={dashboardList(propsArray)[clickedIndex.value].id} class={contentStyle}>
+        {dashboardList(propsArray)[clickedIndex.value].component}
+      </div>
     </div>
   );
 });

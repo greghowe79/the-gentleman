@@ -42,7 +42,7 @@ import {
 import { Image } from '@unpic/qwik';
 import CustomSelect from '~/components/select-categories/component/customSelect';
 import { categoryOptions } from '../../components/select-categories/data/data';
-import { type ItemProps } from '../shop/types/types';
+import type { ShopCategoriesTableProduct, ItemProps } from '../shop/types/types';
 import BinIcon from '~/components/starter/icons/bin';
 
 const CDNURL = 'https://oukztwgobbpvjuhlvpft.supabase.co/storage/v1/object/public/shop/';
@@ -85,7 +85,7 @@ const UploadProducts = component$(() => {
     const currentDate = new Date().toISOString();
 
     // Crea un nuovo oggetto prodotto con l'ID generato e i dati del form
-    const newProduct = {
+    const newProduct: ShopCategoriesTableProduct = {
       id: newProductId,
       sku: newSKU,
       name: productName.value,
@@ -96,6 +96,8 @@ const UploadProducts = component$(() => {
       created_at: currentDate,
       description: productDescription.value,
       category: selectedOption.value,
+      user_id: userSession.userId,
+      seller: userSession.stripe_seller?.id,
     };
 
     const itemToInsert = {
@@ -107,6 +109,7 @@ const UploadProducts = component$(() => {
       description: productDescription.value,
       created_at: currentDate,
       category: selectedOption.value,
+      user_id: userSession.userId,
       seller: userSession.stripe_seller?.id,
     };
 
@@ -267,6 +270,7 @@ const UploadProducts = component$(() => {
                 {images.value &&
                   images.value.length > 0 &&
                   productsTable.value.map((product: ItemProps, index: number) => {
+                    console.log('IMAGE NAME', images.value[index]?.name);
                     const imageUrl = CDNURL + userSession.userId + '/' + images.value?.[index]?.name;
 
                     return (
