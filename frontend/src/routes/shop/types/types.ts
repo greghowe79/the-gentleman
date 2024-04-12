@@ -32,6 +32,8 @@ export interface ItemProps {
   description: string;
   created_at: string;
   category: string;
+  user_id: string;
+  seller: string;
 }
 
 export interface ShopCategoriesTableProduct {
@@ -45,4 +47,6 @@ export interface ShopCategoriesTableProduct {
   created_at: string;
   description: string;
   categorySlug: string;
+  user_id: string;
+  seller: string;
 }

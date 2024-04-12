@@ -100,6 +100,7 @@ export const insertIntoTheProductTable = $(async (itemToInsert: ItemProps, produ
 export const deleteShopProduct = $(async (id: number, productId: string) => {
   try {
     const { data: shopData, error: shopError } = await supabase.from('shop').select('products').eq('id', id).single();
+
     if (shopError) {
       console.error(shopError.message);
       return;
@@ -157,6 +158,7 @@ export const deleteShopCategoryProduct = $(async (category: string, productId: s
 
 export const deleteImage = $(async (userSession: UserSess, imageName: string, images: Signal<any>) => {
   const { error } = await supabase.storage.from('shop').remove([userSession.userId + '/' + imageName]);
+
   if (error) {
     console.error(error);
   } else {
