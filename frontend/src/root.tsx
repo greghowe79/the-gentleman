@@ -6,6 +6,8 @@ import './global.css';
 import { supabase } from './utils/supabase';
 import axios from 'axios';
 import { type CartProps } from './routes/[...catchAll]/types';
+import type { ItemProps } from './routes/shop/types/types';
+import type { SellerProduct } from './components/seller-products/types/types';
 
 export type UserSess = {
   userId: string;
@@ -18,18 +20,26 @@ export const BodyContext = createContextId<Signal<string>>('body-context');
 export const UserSessionContext = createContextId<UserSess>('user-session');
 export const CartContext = createContextId<Signal<CartProps>>('cart-context');
 export const ModalContext = createContextId<Signal<boolean>>('modal-context');
-export const ProductNameContext = createContextId<Signal<string>>('product-name-context');
+export const ImagesContext = createContextId<Signal<any>>('images-context');
+export const ImageIndexContext = createContextId<Signal<number>>('image-index-context');
+export const ProductsTableContext = createContextId<Signal<ItemProps[]>>('product-table-context');
+export const ProductsSellerContext = createContextId<Signal<SellerProduct[]>>('seller-products-context');
 
 export default component$(() => {
   const currentIndex = useSignal(0);
   const isModalVisible = useSignal(false);
-  const productName = useSignal('');
+  const images: Signal<any> = useSignal([]);
+  const imageIndex: Signal<number> = useSignal(0);
+  const productsTable: Signal<ItemProps[]> = useSignal([]);
+  const products = useSignal<SellerProduct[]>([]);
+
   const userSession = useStore<UserSess>({
     userId: '',
     isLoggedIn: false,
     stripe_seller: {},
     charges_enabled: false,
   });
+
   const getUserProfile = $(async () => {
     const {
       data: { user },
@@ -127,7 +137,10 @@ export default component$(() => {
   useContextProvider(UserSessionContext, userSession);
   useContextProvider(CartContext, cart);
   useContextProvider(ModalContext, isModalVisible);
-  useContextProvider(ProductNameContext, productName);
+  useContextProvider(ImagesContext, images);
+  useContextProvider(ImageIndexContext, imageIndex);
+  useContextProvider(ProductsTableContext, productsTable);
+  useContextProvider(ProductsSellerContext, products);
   return (
     <QwikCityProvider>
       <head>

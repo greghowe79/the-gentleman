@@ -1,5 +1,5 @@
 import { component$, useContext, $, useSignal, useTask$, type Signal } from '@builder.io/qwik';
-import { UserSessionContext } from '~/root';
+import { ImagesContext, ProductsTableContext, UserSessionContext } from '~/root';
 import {
   formContainer,
   form,
@@ -26,7 +26,7 @@ import { supabase } from '~/utils/supabase';
 import { v4 as uuidv4 } from 'uuid';
 import {
   deleteImage,
-  deleteProductsProduct,
+  //deleteProductsProduct,
   deleteShopCategoryProduct,
   deleteShopProduct,
   generateSku,
@@ -55,13 +55,13 @@ const UploadProducts = component$(() => {
   const productPrice = useSignal('');
   const imgUrl = useSignal('');
   const userSession = useContext(UserSessionContext);
-  const images: Signal<any> = useSignal([]);
+  const images = useContext(ImagesContext);
   const selectedFile = useSignal('No file currently selected for upload');
   const currentFile: Signal<any> = useSignal();
   const isPreview = useSignal(false);
   const selectedOption = useSignal('');
   const sequence = useSignal(1);
-  const productsTable: Signal<ItemProps[]> = useSignal([]);
+  const productsTable = useContext(ProductsTableContext);
 
   useTask$(async ({ track }) => {
     track(() => userSession.userId);
@@ -270,7 +270,6 @@ const UploadProducts = component$(() => {
                 {images.value &&
                   images.value.length > 0 &&
                   productsTable.value.map((product: ItemProps, index: number) => {
-                    console.log('IMAGE NAME', images.value[index]?.name);
                     const imageUrl = CDNURL + userSession.userId + '/' + images.value?.[index]?.name;
 
                     return (
@@ -293,7 +292,7 @@ const UploadProducts = component$(() => {
                             deleteImage(userSession, images.value[index]?.name, images),
                             deleteShopProduct(1, product.id),
                             deleteShopCategoryProduct(product.category, product.id),
-                            deleteProductsProduct(product.id, productsTable),
+                            // deleteProductsProduct(product.id, productsTable),
                           ]}
                         >
                           <BinIcon />

@@ -1,20 +1,25 @@
-import { component$, useContext } from '@builder.io/qwik';
+import { component$, useContext, useSignal } from '@builder.io/qwik';
 import { buttonsWrapper, modalOverlay, modalText, modalWrapper, cancelButtonStyle, deleteButtonStyle } from '../styles/styles.css';
-import { ModalContext, ProductNameContext } from '~/root';
+import { ImageIndexContext, ImagesContext, ModalContext, ProductsSellerContext, ProductsTableContext, UserSessionContext } from '~/root';
 import { cancelButtonText, deleteButtonText } from '../data/data';
 import ModalText from '~/components/modal-text/component/ModalText';
-//import { deleteImage, deleteProductsProduct, deleteShopCategoryProduct, deleteShopProduct } from '~/utils/helpers';
+import { deleteImage, deleteProductsProduct, deleteShopCategoryProduct, deleteShopProduct } from '~/utils/helpers';
 
 const Modal = component$(() => {
   const isModalVisible = useContext(ModalContext);
-  const productName = useContext(ProductNameContext);
-  //const userSession = useContext(UserSessionContext);
+  const userSession = useContext(UserSessionContext);
+  const images = useContext(ImagesContext);
+  const imageIndex = useContext(ImageIndexContext);
+  const productsTable = useContext(ProductsTableContext);
+  const products = useContext(ProductsSellerContext);
+  const isLoading = useSignal(false);
+  const { id, category } = products.value[imageIndex.value];
 
   return (
     <div class={modalOverlay} onClick$={() => (isModalVisible.value = false)}>
       <div class={modalWrapper}>
         <div class={modalText}>
-          <ModalText productName={productName} />
+          <ModalText productName={products.value[imageIndex.value]?.name} />
         </div>
         <div class={buttonsWrapper}>
           <button class={cancelButtonStyle} onclick$={() => (isModalVisible.value = false)}>
@@ -24,13 +29,13 @@ const Modal = component$(() => {
             class={deleteButtonStyle}
             onclick$={(e) => [
               e.stopPropagation(),
-              // deleteImage(userSession, images.value[index]?.name, images),
-              // deleteShopProduct(1, product.id),
-              // deleteShopCategoryProduct(product.category, product.id),
-              // deleteProductsProduct(product.id, productsTable),
+              deleteImage(userSession, images.value[imageIndex.value]?.name, images),
+              deleteShopProduct(1, id),
+              deleteShopCategoryProduct(category, id),
+              deleteProductsProduct(id, productsTable, userSession, products, isLoading, isModalVisible),
             ]}
           >
-            {deleteButtonText}
+            {isLoading.value ? 'Loading ...' : deleteButtonText}
           </button>
         </div>
       </div>
