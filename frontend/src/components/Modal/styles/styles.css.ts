@@ -13,14 +13,15 @@ const modalOverlay = style({
 
 const modalWrapper = style({
   width: '40%',
+  height: '150px',
   backgroundColor: '#fcfcfc',
   color: 'var(--default-text-color)',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
+  justifyContent: 'space-between',
   padding: '20px',
   borderRadius: '4px',
-  gap: '40px',
   boxShadow: '0 8px 28px #00000047',
 });
 
@@ -52,6 +53,7 @@ const buttonsStyleCancel = style({
 
 const buttonsStyleDelete = style({
   backgroundColor: 'var(--title-color)',
+  width: '10rem',
   ':hover': {
     backgroundColor: 'rgb(149, 46, 40)',
   },

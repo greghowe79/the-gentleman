@@ -4,11 +4,12 @@ import { Image } from '@unpic/qwik';
 import type { SellerProductsProps } from '../types/types';
 import { buttonIcon } from '~/routes/upload-products/style.css';
 import BinIcon from '~/components/starter/icons/bin';
-import { ModalContext, ProductNameContext } from '~/root';
+import { ModalContext, ImageIndexContext } from '~/root';
 
 const SellerProducts = component$<SellerProductsProps>(({ products, columns }) => {
   const isModalVisible = useContext(ModalContext);
-  const productName = useContext(ProductNameContext);
+  const imageIndex = useContext(ImageIndexContext);
+
   return (
     <div class="Table">
       <div class="Table-header">
@@ -19,7 +20,7 @@ const SellerProducts = component$<SellerProductsProps>(({ products, columns }) =
         ))}
       </div>
       <div class="row-collection">
-        {products.value.map((product) => (
+        {products.value.map((product, index) => (
           <div key={product.id} class="tableRowWrap">
             <div class="Table-row">
               <div class="Table-row-item" data-header="Image">
@@ -40,7 +41,7 @@ const SellerProducts = component$<SellerProductsProps>(({ products, columns }) =
                 {product.category}
               </div>
               <div class="Table-row-item" data-header="Actions">
-                <button class={buttonIcon} onClick$={() => [(productName.value = product.name), (isModalVisible.value = true)]}>
+                <button class={buttonIcon} onClick$={() => [(isModalVisible.value = true), (imageIndex.value = index)]}>
                   <BinIcon />
                 </button>
               </div>

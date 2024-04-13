@@ -1,8 +1,10 @@
 import { type QwikChangeEvent, type Signal, $, type QwikKeyboardEvent } from '@builder.io/qwik';
 import { supabase } from './supabase';
-import { type UserSess } from '~/root';
+import type { UserSess } from '~/root';
 import { v4 as uuidv4 } from 'uuid';
 import { type ShopTableProduct, type ItemProps, type ShopCategoriesTableProduct } from '~/routes/shop/types/types';
+import { getSellerProducts } from '~/components/connected/data/data';
+import type { SellerProduct } from '~/components/seller-products/types/types';
 
 export const rootDomain = 'http://localhost';
 
@@ -65,6 +67,7 @@ export const getImages = $(async (userSession: UserSess, images: Signal<any>) =>
 export const uploadImgStorage = $(
   async (userSession: UserSess, currentFile: Signal<any>, imgUrl: Signal<string>, images: Signal<any>, CDNURL: string) => {
     const { data, error } = await supabase.storage.from('shop').upload(userSession.userId + '/' + uuidv4(), currentFile.value);
+
     if (data) {
       imgUrl.value = CDNURL + data.path;
       await getImages(userSession, images);
@@ -166,11 +169,24 @@ export const deleteImage = $(async (userSession: UserSess, imageName: string, im
   }
 });
 
-export const deleteProductsProduct = $(async (productId: string, productsTable: Signal<ItemProps[]>) => {
-  const { error: productsError } = await supabase.from('products').delete().eq('id', productId);
-  if (productsError) {
-    console.error(productsError);
-  } else {
-    await getProducts(productsTable);
+export const deleteProductsProduct = $(
+  async (
+    productId: string,
+    productsTable: Signal<ItemProps[]>,
+    userSession: UserSess,
+    products: Signal<SellerProduct[]>,
+    isLoading: Signal<boolean>,
+    isModalVisible: Signal<boolean>
+  ) => {
+    isLoading.value = true;
+    const { error: productsError } = await supabase.from('products').delete().eq('id', productId);
+    if (productsError) {
+      console.error(productsError);
+    } else {
+      await getProducts(productsTable);
+      await getSellerProducts(userSession, products);
+      isLoading.value = false;
+      isModalVisible.value = false;
+    }
   }
-});
+);

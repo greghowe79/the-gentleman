@@ -19,11 +19,13 @@ const handleClickDashboard = $((customProp: any) => {
   console.log('Dashboard clicked with customProp:', customProp);
 });
 
-const getSellerProducts = $(async (userSession: UserSess, sellerProducts: Signal<any>) => {
+export const getSellerProducts = $(async (userSession: UserSess, sellerProducts: Signal<any>) => {
   console.log('sellerProducts', sellerProducts);
+
   const { data } = await supabase.from('products').select('*').eq('seller', userSession.stripe_seller.id);
   console.log('DATA', data);
   sellerProducts.value = data;
+
   return sellerProducts.value;
 });
 

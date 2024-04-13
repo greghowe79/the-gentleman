@@ -17,6 +17,7 @@ export interface Column {
   id: number;
   label: string;
 }
+
 export interface SellerProductsProps {
   products: Signal<SellerProduct[]>;
   columns: Column[];

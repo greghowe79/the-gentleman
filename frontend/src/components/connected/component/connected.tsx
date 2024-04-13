@@ -3,14 +3,15 @@ import { columns, dashboardList } from '../data/data';
 import { contentStyle, iconLabelWrap, labelStyle, liStyle, listWrap, ulStyle } from '../styles/style.css';
 import type { ConnectedProps } from '../types/types';
 import { useNavigate } from '@builder.io/qwik-city';
-import { UserSessionContext } from '~/root';
-import type { SellerProduct } from '~/components/seller-products/types/types';
+import { UserSessionContext, ProductsSellerContext } from '~/root';
+//import type { SellerProduct } from '~/components/seller-products/types/types';
 
 const Connected = component$<ConnectedProps>(({ balance }) => {
   const userSession = useContext(UserSessionContext);
   const loading = useSignal(false);
   const nav = useNavigate();
-  const products = useSignal<SellerProduct[]>([]);
+  // const products = useSignal<SellerProduct[]>([]);
+  const products = useContext(ProductsSellerContext);
   const clickedIndex = useSignal(0);
 
   useTask$(() => {
