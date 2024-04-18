@@ -35,7 +35,7 @@ const Modal = component$(() => {
               deleteProductsProduct(id, productsTable, userSession, products, isLoading, isModalVisible),
             ]}
           >
-            {isLoading.value ? 'Loading ...' : deleteButtonText}
+            {isLoading.value ? 'Deleting ...' : deleteButtonText}
           </button>
         </div>
       </div>

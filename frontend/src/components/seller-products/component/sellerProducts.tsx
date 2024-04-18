@@ -5,6 +5,8 @@ import type { SellerProductsProps } from '../types/types';
 import { buttonIcon } from '~/routes/upload-products/style.css';
 import BinIcon from '~/components/starter/icons/bin';
 import { ModalContext, ImageIndexContext } from '~/root';
+import EditIcon from '~/components/starter/icons/edit';
+import { Link } from '@builder.io/qwik-city';
 
 const SellerProducts = component$<SellerProductsProps>(({ products, columns }) => {
   const isModalVisible = useContext(ModalContext);
@@ -44,6 +46,10 @@ const SellerProducts = component$<SellerProductsProps>(({ products, columns }) =
                 <button class={buttonIcon} onClick$={() => [(isModalVisible.value = true), (imageIndex.value = index)]}>
                   <BinIcon />
                 </button>
+
+                <Link class={buttonIcon} href={`/edit-product/${product.id}`}>
+                  <EditIcon />
+                </Link>
               </div>
             </div>
           </div>
