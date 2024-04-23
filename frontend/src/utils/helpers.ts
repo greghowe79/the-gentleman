@@ -31,13 +31,28 @@ export const handleTextAreaChange = $((e: QwikChangeEvent<HTMLTextAreaElement>, 
   return input.value;
 });
 
-export const uploadImage = $(async (e: QwikChangeEvent<HTMLInputElement>, currentFile: Signal<any>, selectedFile: Signal<string>) => {
-  const file = e.target.files?.[0];
-  if (file) {
-    currentFile.value = file;
-    selectedFile.value = file.name;
+export const displayLocalImage = $((file: File, imageUrl?: Signal<string>) => {
+  const allowedExtensions = ['.jpg', '.jpeg', '.png', '.avif'];
+  const fileExtension = file.name.split('.').pop()?.toLowerCase();
+
+  if (fileExtension && allowedExtensions.includes('.' + fileExtension)) {
+    if (imageUrl) imageUrl.value = URL.createObjectURL(file);
+  } else {
+    console.error('Unsupported file format');
   }
 });
+
+export const uploadImage = $(
+  async (e: QwikChangeEvent<HTMLInputElement>, currentFile: Signal<any>, selectedFile: Signal<string>, imageUrl?: Signal<string>) => {
+    const file = e.target.files?.[0];
+
+    if (file) {
+      displayLocalImage(file, imageUrl);
+      currentFile.value = file;
+      selectedFile.value = file.name;
+    }
+  }
+);
 
 export const handlePriceKeyPress = $((e: QwikKeyboardEvent<HTMLInputElement> & any) => {
   const invalidKeys = ['-', '+', '.'];

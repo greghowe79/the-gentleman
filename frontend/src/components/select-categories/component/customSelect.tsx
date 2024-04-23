@@ -5,7 +5,7 @@ import { pointer, labelStyle, ulContainer, listStyle, listItem, customSelectStyl
 import { type SelectProps } from '../types/types';
 import CustomIcon from '~/components/custom-icon/component/customIcon';
 
-const CustomSelect = component$(({ selectedOption, categorySlug, options, exist, placeholder }: SelectProps) => {
+const CustomSelect = component$(({ selectedOption, categorySlug, options, exist, placeholder, isFromEditPage }: SelectProps) => {
   const rotation = useSignal(0);
   const open = useSignal(false);
   const shouldFormatCategory = useSignal(exist);
@@ -23,7 +23,7 @@ const CustomSelect = component$(({ selectedOption, categorySlug, options, exist,
   });
 
   return (
-    <div>
+    <div style={{ display: isFromEditPage ? 'none' : 'block' }}>
       <div>
         <label
           onClick$={() => rotateArrow(open, rotation)}
