@@ -1,26 +1,206 @@
-import { component$ } from '@builder.io/qwik';
+import { type Signal, component$, useContext, useSignal, $ } from '@builder.io/qwik';
 import { routeLoader$ } from '@builder.io/qwik-city';
+import CustomSelect from '~/components/select-categories/component/customSelect';
+import { categoryOptions } from '~/components/select-categories/data/data';
+import { ImageIndexContext, ImagesContext, UserSessionContext } from '~/root';
+import {
+  button,
+  containerBlock,
+  ctaWrap,
+  flexWrapper,
+  form,
+  input,
+  label,
+  labelWrapper,
+  prevWrap,
+  preview,
+  previewContainer,
+  prodDescrTextWrap,
+  prodNameInputWrap,
+  slidingContainer,
+  textAreaStyle,
+  editDetail,
+  imageContainer,
+  imgStyle,
+  editContainer,
+  editDesc,
+  editFormContainer,
+} from '~/routes/upload-products/style.css';
+import { handleChange, handlePriceKeyPress, handleTextAreaChange, uploadImage } from '~/utils/helpers';
 import { supabase } from '~/utils/supabase';
+import { Image } from '@unpic/qwik';
+import styles from '../../../components/search-bar/styles/search-bar.module.css';
+import { pdDesc, pdName, priceStyle } from '~/routes/shop/styles.css';
+import { limitDescription } from '~/routes/shop/actions/actions';
+import { updateImgStorage } from '~/utils/edit_actions';
 
 export const useProductDetails = routeLoader$(async (requestEvent) => {
   const { data, error } = await supabase.from('products').select('*').eq('id', requestEvent.params.id);
-  console.log('REQUEST PARAMS', requestEvent.params.id);
   if (error) {
     console.error(error);
   }
-  console.log('ROUTELOADER', data);
+
   return {
-    productDetail: data,
+    productDetail: data as any,
   };
 });
 
 const EditPage = component$(() => {
   const product = useProductDetails();
-  console.log('PRODUCT', product.value.productDetail);
+  const selectedOption = useSignal(product.value.productDetail[0]?.category);
+  const currentFile: Signal<any> = useSignal();
+  const selectedFile = useSignal(product.value.productDetail[0]?.file_name);
+  const productName = useSignal(product.value.productDetail[0]?.name);
+  const productSlug = useSignal(product.value.productDetail[0]?.slug);
+  const productPrice = useSignal(product.value.productDetail[0]?.price);
+  const productDescription = useSignal(product.value.productDetail[0]?.description);
+  const categorySlug = useSignal(product.value.productDetail[0]?.category_slug);
+  const imageUrl = useSignal<string>(product.value.productDetail[0]?.url);
+  const userSession = useContext(UserSessionContext);
+  const isPreview = useSignal(false);
+
+  const images = useContext(ImagesContext);
+  const imageIndex = useContext(ImageIndexContext);
+
+  const handleSubmit = $(async () => {
+    console.log('SUBMITTED');
+    console.log('IMAGES', images.value[imageIndex.value]);
+    console.log('IMAGE INDEX', imageIndex.value);
+    await updateImgStorage(userSession, imageIndex, currentFile);
+  });
+
   return (
-    <div>
-      <h1>EDIT PAGE</h1>
-    </div>
+    <>
+      {userSession.isLoggedIn && (
+        <div class={editFormContainer}>
+          <div class={containerBlock}>
+            <form class={[form, 'form']} onSubmit$={handleSubmit} preventdefault:submit>
+              <CustomSelect
+                isFromEditPage={true}
+                selectedOption={selectedOption}
+                categorySlug={categorySlug}
+                options={categoryOptions}
+                exist={true}
+                placeholder={'Please choose a category'}
+              />
+              <div class={prodNameInputWrap}>
+                <div class={flexWrapper}>
+                  <div class={labelWrapper}>
+                    <label for="edit_image_downloads" class={label}>
+                      <div>Upload</div>
+                    </label>
+                    <input
+                      class={input}
+                      type="file"
+                      id="edit_image_downloads"
+                      name="edit_image_downloads"
+                      accept=".png, .jpg, .jpeg, .avif"
+                      onChange$={(e) => uploadImage(e, currentFile, selectedFile, imageUrl)}
+                      required={selectedFile.value !== product.value.productDetail[0]?.file_name}
+                    />
+                  </div>
+                  <div class={previewContainer}>
+                    <div class={prevWrap}>
+                      <p class={preview}>{selectedFile.value}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class={prodNameInputWrap}>
+                <label for="product" class={styles['label']}>
+                  <input
+                    value={productName.value}
+                    type="text"
+                    id="product"
+                    name="product"
+                    placeholder="Product name"
+                    class={styles['input']}
+                    required
+                    onChange$={(e) => handleChange(e, productName)}
+                  />
+                </label>
+              </div>
+
+              <div class={prodNameInputWrap}>
+                <label for="slug" class={styles['label']}>
+                  <input
+                    value={productSlug.value}
+                    type="text"
+                    id="slug"
+                    name="slug"
+                    placeholder="Slug"
+                    class={styles['input']}
+                    required
+                    onChange$={(e) => handleChange(e, productSlug)}
+                  />
+                </label>
+              </div>
+
+              <div class={prodNameInputWrap}>
+                <label for="price" class={styles['label']}>
+                  <input
+                    value={productPrice.value}
+                    min={0}
+                    onKeyPress$={(e) => handlePriceKeyPress(e)}
+                    step="any"
+                    type="number"
+                    id="price"
+                    name="price"
+                    placeholder="Price"
+                    class={styles['input']}
+                    required
+                    onChange$={(e) => handleChange(e, productPrice)}
+                  />
+                </label>
+              </div>
+              <div class={prodDescrTextWrap}>
+                <label for="prodDescription" style={{ display: 'none' }}></label>
+
+                <textarea
+                  value={productDescription.value}
+                  id="prodDescription"
+                  class={[textAreaStyle, 'text-area-style']}
+                  onChange$={(e) => handleTextAreaChange(e, productDescription)}
+                  rows={6}
+                  cols={50}
+                  placeholder="Product description"
+                  required
+                />
+              </div>
+              <div class={ctaWrap}>
+                <button class={button} type="button" onClick$={() => (isPreview.value = true)}>
+                  Preview
+                </button>
+                <button class={button} type="submit">
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+          <div class={[slidingContainer, editContainer, 'sliding-container']}>
+            <div>
+              <div>
+                <div>
+                  <div class={imageContainer}>
+                    <Image src={imageUrl.value} layout="constrained" decoding="async" loading="lazy" alt="A lovely bath" class={imgStyle} />
+                  </div>
+                </div>
+              </div>
+              <div class={editDetail}>
+                <div class={pdName}>{productName.value}</div>
+                <div class={pdDesc}> - {categorySlug.value} - </div>
+                <div class={editDesc}>
+                  <p>{limitDescription(productDescription.value)}</p>
+                </div>
+                <div>
+                  <strong class={priceStyle}>EUR {productPrice.value}</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 });
 

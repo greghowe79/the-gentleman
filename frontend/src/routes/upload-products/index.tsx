@@ -111,6 +111,9 @@ const UploadProducts = component$(() => {
       category: selectedOption.value,
       user_id: userSession.userId,
       seller: userSession.stripe_seller?.id,
+      slug: productSlug.value,
+      file_name: selectedFile.value,
+      category_slug: categorySlug.value,
     };
 
     await insertIntoTheProductTable(itemToInsert, productsTable);
@@ -163,6 +166,7 @@ const UploadProducts = component$(() => {
           <div class={containerBlock}>
             <form class={[form, 'form']} onSubmit$={handleSubmit} preventdefault:submit>
               <CustomSelect
+                isFromEditPage={false}
                 selectedOption={selectedOption}
                 categorySlug={categorySlug}
                 options={categoryOptions}

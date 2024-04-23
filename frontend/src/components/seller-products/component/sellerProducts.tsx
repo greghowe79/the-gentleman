@@ -47,7 +47,7 @@ const SellerProducts = component$<SellerProductsProps>(({ products, columns }) =
                   <BinIcon />
                 </button>
 
-                <Link class={buttonIcon} href={`/edit-product/${product.id}`}>
+                <Link class={buttonIcon} href={`/edit-product/${product.id}`} onClick$={() => (imageIndex.value = index)}>
                   <EditIcon />
                 </Link>
               </div>

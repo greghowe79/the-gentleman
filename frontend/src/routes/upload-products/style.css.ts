@@ -37,7 +37,7 @@ export const containerBlock = style({
 });
 
 export const slidingContainer = style({
-  width: 'calc(100vw - 525px)',
+  width: 'calc(100vw - 535px)',
   position: 'absolute',
   right: '15px',
   top: 'calc(30px + var(--header-height))',
@@ -160,4 +160,48 @@ export const textAreaStyle = style({
   fontFamily: 'var(--font-family-secondary)',
   letterSpacing: '1px',
   color: 'var(--description-color)',
+});
+
+export const editFormContainer = style({
+  display: 'flex',
+  alignItems: 'start',
+  backgroundColor: 'rgb(203 213 225)',
+  justifyContent: 'space-between',
+});
+
+export const itemContainer = style({
+  display: 'flex',
+  alignItems: 'center',
+  flexDirection: 'column',
+});
+
+export const editDetail = style({
+  display: 'flex',
+  alignItems: 'center',
+  flexDirection: 'column',
+  color: 'var(--default-text-color)',
+});
+export const imageContainer = style({
+  textAlign: 'center',
+});
+
+export const imgStyle = style({
+  width: '50% !important',
+  maxWidth: '600px',
+});
+export const editContainer = style({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  position: 'relative',
+  top: '30px',
+});
+
+export const editDesc = style({
+  fontSize: ' var(--font-size-xs)',
+  lineHeight: 'var(--line-height-md)',
+  letterSpacing: ' 1px',
+  wordWrap: 'break-word',
+  width: '350px',
+  textAlign: 'center',
 });

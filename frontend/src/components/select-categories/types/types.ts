@@ -6,6 +6,7 @@ interface CategoryOption {
 }
 
 export interface SelectProps {
+  isFromEditPage?: boolean;
   selectedOption: Signal<string>;
   categorySlug?: Signal<string>;
   options: CategoryOption[];

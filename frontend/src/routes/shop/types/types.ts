@@ -34,6 +34,9 @@ export interface ItemProps {
   category: string;
   user_id: string;
   seller: string;
+  slug: string;
+  file_name: string;
+  category_slug: string;
 }
 
 export interface ShopCategoriesTableProduct {
