@@ -32,7 +32,7 @@ import { Image } from '@unpic/qwik';
 import styles from '../../../components/search-bar/styles/search-bar.module.css';
 import { pdDesc, pdName, priceStyle } from '~/routes/shop/styles.css';
 import { limitDescription } from '~/routes/shop/actions/actions';
-import { updateImgStorage } from '~/utils/edit_actions';
+import { checkImageHasBeenChanged, replaceImageInBucket, updateProductTable } from '~/utils/edit_actions';
 
 export const useProductDetails = routeLoader$(async (requestEvent) => {
   const { data, error } = await supabase.from('products').select('*').eq('id', requestEvent.params.id);
@@ -49,7 +49,7 @@ const EditPage = component$(() => {
   const product = useProductDetails();
   const selectedOption = useSignal(product.value.productDetail[0]?.category);
   const currentFile: Signal<any> = useSignal();
-  const selectedFile = useSignal(product.value.productDetail[0]?.file_name);
+  const selectedFile = useSignal<string>(product.value.productDetail[0]?.file_name);
   const productName = useSignal(product.value.productDetail[0]?.name);
   const productSlug = useSignal(product.value.productDetail[0]?.slug);
   const productPrice = useSignal(product.value.productDetail[0]?.price);
@@ -57,16 +57,15 @@ const EditPage = component$(() => {
   const categorySlug = useSignal(product.value.productDetail[0]?.category_slug);
   const imageUrl = useSignal<string>(product.value.productDetail[0]?.url);
   const userSession = useContext(UserSessionContext);
-  const isPreview = useSignal(false);
-
   const images = useContext(ImagesContext);
+  const isPreview = useSignal(false);
   const imageIndex = useContext(ImageIndexContext);
+  const imageHasBeenChanged = useSignal(false);
 
   const handleSubmit = $(async () => {
-    console.log('SUBMITTED');
-    console.log('IMAGES', images.value[imageIndex.value]);
-    console.log('IMAGE INDEX', imageIndex.value);
-    await updateImgStorage(userSession, imageIndex, currentFile);
+    imageHasBeenChanged.value = await checkImageHasBeenChanged(selectedFile, product.value.productDetail[0]?.file_name);
+    imageHasBeenChanged.value ? await replaceImageInBucket(userSession, images.value[imageIndex.value]?.name, currentFile) : null;
+    updateProductTable(product.value.productDetail[0]?.id, selectedFile);
   });
 
   return (

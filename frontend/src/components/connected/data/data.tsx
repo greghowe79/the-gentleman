@@ -22,7 +22,11 @@ const handleClickDashboard = $((customProp: any) => {
 export const getSellerProducts = $(async (userSession: UserSess, sellerProducts: Signal<any>) => {
   console.log('sellerProducts', sellerProducts);
 
-  const { data } = await supabase.from('products').select('*').eq('seller', userSession.stripe_seller.id);
+  const { data } = await supabase
+    .from('products')
+    .select('*')
+    .eq('seller', userSession.stripe_seller.id)
+    .order('created_at', { ascending: true });
   console.log('DATA', data);
   sellerProducts.value = data;
 

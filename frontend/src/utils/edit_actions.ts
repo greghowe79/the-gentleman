@@ -1,21 +1,28 @@
 import { type Signal, $ } from '@builder.io/qwik';
 import type { UserSess } from '~/root';
 import { supabase } from './supabase';
-import type { FileObject } from '@supabase/storage-js/dist/module/lib/types';
 
-const replaceImage = $(async (userSession: UserSess, file: FileObject, currentFile: Signal<any>) => {
-  const { data: updatedImage, error } = await supabase.storage.from('shop').update(userSession.userId + '/' + file.name, currentFile.value);
+const replaceImageInBucket = $(async (userSession: UserSess, imageName: string, currentFile: Signal<any>) => {
+  const { data: updatedImage, error } = await supabase.storage.from('shop').update(userSession.userId + '/' + imageName, currentFile.value);
   if (error) {
-    console.error('Error updating image:', error.message);
+    console.error('Error replacing image:', error.message);
     return;
   }
   console.log('UPDATED IMAGE', updatedImage);
 });
 
-const updateImgStorage = $(async (userSession: UserSess, imageIndex: Signal<number>, currentFile: Signal<any>) => {
-  const { data: files } = await supabase.storage.from('shop').list(userSession.userId + '/');
-  const file = files?.[imageIndex.value];
-  if (file) replaceImage(userSession, file, currentFile);
+const checkImageHasBeenChanged = $(async (selectedFile: Signal<string>, receivedFileName: string): Promise<boolean> => {
+  return selectedFile.value !== receivedFileName;
 });
 
-export { updateImgStorage };
+const updateProductTable = $(async (id: string, selectedFile: Signal<string>) => {
+  const { error } = await supabase.from('products').update({ file_name: selectedFile.value }).eq('id', id);
+
+  if (error) {
+    console.error('Error updating product:', error.message);
+    return;
+  }
+  console.log('PRODUCTS TABLE UPDATED');
+});
+
+export { checkImageHasBeenChanged, updateProductTable, replaceImageInBucket };
