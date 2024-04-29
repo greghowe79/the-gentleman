@@ -1,6 +1,6 @@
 import { type Signal, $ } from '@builder.io/qwik';
 import type { UserSess } from '~/root';
-import { supabase } from './supabase';
+import { supabase } from '../supabase';
 
 const replaceImageInBucket = $(async (userSession: UserSess, imageName: string, currentFile: Signal<any>) => {
   const { data: updatedImage, error } = await supabase.storage.from('shop').update(userSession.userId + '/' + imageName, currentFile.value);

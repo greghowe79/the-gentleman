@@ -32,7 +32,7 @@ import { Image } from '@unpic/qwik';
 import styles from '../../../components/search-bar/styles/search-bar.module.css';
 import { pdDesc, pdName, priceStyle } from '~/routes/shop/styles.css';
 import { limitDescription } from '~/routes/shop/actions/actions';
-import { checkImageHasBeenChanged, replaceImageInBucket, updateProductTable } from '~/utils/edit_actions';
+import { checkImageHasBeenChanged, replaceImageInBucket, updateProductTable } from '~/utils/edit_page_utils/edit_actions';
 
 export const useProductDetails = routeLoader$(async (requestEvent) => {
   const { data, error } = await supabase.from('products').select('*').eq('id', requestEvent.params.id);

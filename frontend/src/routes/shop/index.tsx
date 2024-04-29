@@ -16,6 +16,8 @@ import {
   contPad,
   imageStyle,
   priceStyle,
+  priceWrapStyle,
+  addToCartButton,
 } from './styles.css';
 import { Link } from '@builder.io/qwik-city';
 import { limitDescription } from './actions/actions';
@@ -56,11 +58,27 @@ const ShopProducts = component$(({ data }: any) => {
                       <div class={pdDesc}>
                         <p>{limitDescription(product.description)}</p>
                       </div>
-                      <div>
+                      <div class={priceWrapStyle}>
                         <strong class={priceStyle}>EUR {product.price}</strong>
                       </div>
                     </div>
                   </Link>
+                  <button
+                    onClick$={() =>
+                      // addToCart({
+                      //   isFromPdp: true,
+                      //   userSession,
+                      //   cart,
+                      //   product: null,
+                      //   selectedOption,
+                      //   service,
+                      // })
+                      console.log('ECCO')
+                    }
+                    class={addToCartButton}
+                  >
+                    Add to Cart
+                  </button>
                 </div>
               </div>
             );

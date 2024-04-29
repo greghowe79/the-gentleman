@@ -195,6 +195,9 @@ export const catDescWrapper = style({
 });
 
 export const detail = style({
+  display: 'flex',
+  flexDirection: 'column',
+  height: '150px',
   marginTop: '30px',
 });
 
@@ -336,15 +339,39 @@ export const svgDivThumbnail = style({
 export const cartButtonStyle = style({
   display: 'inline-flex',
   width: '85%',
-  backgroundColor: 'var(--product-name-color)',
-  color: 'white',
+  backgroundColor: 'transparent',
+  color: 'var(--default-text-color)',
   borderRadius: '25px',
   justifyContent: 'center',
   alignItems: 'center',
   padding: '20px 16px',
   fontFamily: 'var(--font-family-secondary)',
-  fontSize: 'var(--font-size-sm)',
+  fontSize: 'var(--font-size-md)',
   height: 'var(--cta-add-to-cart)',
+  border: '2px solid var(--default-text-color)',
+  ':hover': {
+    border: '3px solid var(--default-text-color)',
+  },
+});
+
+export const addToCartButton = style({
+  display: 'inline-flex',
+  width: 'calc(100% - 30px)',
+  backgroundColor: 'transparent',
+  color: 'var(--default-text-color)',
+  borderRadius: '25px',
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: '20px 16px',
+  fontFamily: 'var(--font-family-secondary)',
+  fontSize: 'var(--font-size-md)',
+  height: 'var(--cta-add-to-cart)',
+  alignSelf: 'center',
+  border: '2px solid var(--default-text-color)',
+  ':hover': {
+    border: '3px solid var(--default-text-color)',
+  },
+  marginTop: '15px',
 });
 
 export const cartButtonWrapper = style({
@@ -361,4 +388,8 @@ export const Wrap = style({
   alignItems: 'center',
   justifyContent: 'stretch',
   userSelect: 'none',
+});
+
+export const priceWrapStyle = style({
+  marginTop: 'auto',
 });
