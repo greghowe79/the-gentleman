@@ -29,7 +29,7 @@ const Modal = component$(() => {
             class={deleteButtonStyle}
             onclick$={(e) => [
               e.stopPropagation(),
-              deleteImage(userSession, images.value[imageIndex.value]?.name, images),
+              deleteImage(userSession, images.value?.[imageIndex.value]?.name, images),
               deleteShopProduct(1, id),
               deleteShopCategoryProduct(category, id),
               deleteProductsProduct(id, productsTable, userSession, products, isLoading, isModalVisible),
