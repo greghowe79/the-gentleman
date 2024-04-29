@@ -15,14 +15,32 @@ const checkImageHasBeenChanged = $(async (selectedFile: Signal<string>, received
   return selectedFile.value !== receivedFileName;
 });
 
-const updateProductTable = $(async (id: string, selectedFile: Signal<string>) => {
-  const { error } = await supabase.from('products').update({ file_name: selectedFile.value }).eq('id', id);
+const updateProductTable = $(
+  async (
+    id: string,
+    selectedFile: Signal<string>,
+    productName: Signal<string>,
+    productPrice: Signal<string>,
+    productDescription: Signal<string>,
+    productSlug: Signal<string>
+  ) => {
+    const { error } = await supabase
+      .from('products')
+      .update({
+        file_name: selectedFile.value,
+        name: productName.value,
+        price: parseFloat(productPrice.value),
+        description: productDescription.value,
+        slug: productSlug.value,
+      })
+      .eq('id', id);
 
-  if (error) {
-    console.error('Error updating product:', error.message);
-    return;
+    if (error) {
+      console.error('Error updating product:', error.message);
+      return;
+    }
+    console.log('PRODUCTS TABLE UPDATED');
   }
-  console.log('PRODUCTS TABLE UPDATED');
-});
+);
 
 export { checkImageHasBeenChanged, updateProductTable, replaceImageInBucket };
