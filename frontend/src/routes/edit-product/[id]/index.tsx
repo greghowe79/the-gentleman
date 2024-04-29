@@ -50,10 +50,10 @@ const EditPage = component$(() => {
   const selectedOption = useSignal(product.value.productDetail[0]?.category);
   const currentFile: Signal<any> = useSignal();
   const selectedFile = useSignal<string>(product.value.productDetail[0]?.file_name);
-  const productName = useSignal(product.value.productDetail[0]?.name);
-  const productSlug = useSignal(product.value.productDetail[0]?.slug);
-  const productPrice = useSignal(product.value.productDetail[0]?.price);
-  const productDescription = useSignal(product.value.productDetail[0]?.description);
+  const productName = useSignal<string>(product.value.productDetail[0]?.name);
+  const productSlug = useSignal<string>(product.value.productDetail[0]?.slug);
+  const productPrice = useSignal<string>(product.value.productDetail[0]?.price);
+  const productDescription = useSignal<string>(product.value.productDetail[0]?.description);
   const categorySlug = useSignal(product.value.productDetail[0]?.category_slug);
   const imageUrl = useSignal<string>(product.value.productDetail[0]?.url);
   const userSession = useContext(UserSessionContext);
@@ -64,8 +64,8 @@ const EditPage = component$(() => {
 
   const handleSubmit = $(async () => {
     imageHasBeenChanged.value = await checkImageHasBeenChanged(selectedFile, product.value.productDetail[0]?.file_name);
-    imageHasBeenChanged.value ? await replaceImageInBucket(userSession, images.value[imageIndex.value]?.name, currentFile) : null;
-    updateProductTable(product.value.productDetail[0]?.id, selectedFile);
+    imageHasBeenChanged.value ? await replaceImageInBucket(userSession, images.value?.[imageIndex.value]?.name, currentFile) : null;
+    updateProductTable(product.value.productDetail[0]?.id, selectedFile, productName, productPrice, productDescription, productSlug);
   });
 
   return (
