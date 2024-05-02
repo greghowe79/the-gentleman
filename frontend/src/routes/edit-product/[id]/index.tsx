@@ -33,6 +33,7 @@ import styles from '../../../components/search-bar/styles/search-bar.module.css'
 import { pdDesc, pdName, priceStyle } from '~/routes/shop/styles.css';
 import { limitDescription } from '~/routes/shop/actions/actions';
 import { checkImageHasBeenChanged, replaceImageInBucket, updateProductTable } from '~/utils/edit_page_utils/edit_actions';
+import type { ImageBucketReplacementProps, ImageChangeCheckerProps, ProductTableUpdateProps } from '~/utils/edit_page_utils/types';
 
 export const useProductDetails = routeLoader$(async (requestEvent) => {
   const { data, error } = await supabase.from('products').select('*').eq('id', requestEvent.params.id);
@@ -58,14 +59,36 @@ const EditPage = component$(() => {
   const imageUrl = useSignal<string>(product.value.productDetail[0]?.url);
   const userSession = useContext(UserSessionContext);
   const images = useContext(ImagesContext);
-  const isPreview = useSignal(false);
+
   const imageIndex = useContext(ImageIndexContext);
   const imageHasBeenChanged = useSignal(false);
 
+  const imageChangeCheckerArgs: ImageChangeCheckerProps = {
+    selectedFile,
+    receivedFileName: product.value.productDetail[0]?.file_name,
+  };
+
+  const ImageBucketReplacementArgs: ImageBucketReplacementProps = {
+    userSession,
+    imageName: images.value?.[imageIndex.value]?.name,
+    currentFile,
+  };
+
+  const productTableUpdateArgs: ProductTableUpdateProps = {
+    id: product.value.productDetail[0]?.id,
+    selectedFile,
+    productName,
+    productPrice,
+    productDescription,
+    productSlug,
+  };
+
   const handleSubmit = $(async () => {
-    imageHasBeenChanged.value = await checkImageHasBeenChanged(selectedFile, product.value.productDetail[0]?.file_name);
-    imageHasBeenChanged.value ? await replaceImageInBucket(userSession, images.value?.[imageIndex.value]?.name, currentFile) : null;
-    updateProductTable(product.value.productDetail[0]?.id, selectedFile, productName, productPrice, productDescription, productSlug);
+    imageHasBeenChanged.value = await checkImageHasBeenChanged(imageChangeCheckerArgs);
+    imageHasBeenChanged.value
+      ? (await replaceImageInBucket(ImageBucketReplacementArgs), (imageChangeCheckerArgs.receivedFileName = selectedFile.value))
+      : null;
+    updateProductTable(productTableUpdateArgs);
   });
 
   return (
@@ -167,9 +190,6 @@ const EditPage = component$(() => {
                 />
               </div>
               <div class={ctaWrap}>
-                <button class={button} type="button" onClick$={() => (isPreview.value = true)}>
-                  Preview
-                </button>
                 <button class={button} type="submit">
                   Save Changes
                 </button>
