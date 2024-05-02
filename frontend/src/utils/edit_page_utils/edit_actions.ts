@@ -1,8 +1,9 @@
-import { type Signal, $ } from '@builder.io/qwik';
-import type { UserSess } from '~/root';
+import { $ } from '@builder.io/qwik';
 import { supabase } from '../supabase';
+import type { ImageBucketReplacementProps, ImageChangeCheckerProps, ProductTableUpdateProps } from './types';
 
-const replaceImageInBucket = $(async (userSession: UserSess, imageName: string, currentFile: Signal<any>) => {
+const replaceImageInBucket = $(async (imageBucketReplacementParams: ImageBucketReplacementProps) => {
+  const { userSession, imageName, currentFile } = imageBucketReplacementParams;
   const { data: updatedImage, error } = await supabase.storage.from('shop').update(userSession.userId + '/' + imageName, currentFile.value);
   if (error) {
     console.error('Error replacing image:', error.message);
@@ -11,36 +12,29 @@ const replaceImageInBucket = $(async (userSession: UserSess, imageName: string, 
   console.log('UPDATED IMAGE', updatedImage);
 });
 
-const checkImageHasBeenChanged = $(async (selectedFile: Signal<string>, receivedFileName: string): Promise<boolean> => {
+const checkImageHasBeenChanged = $(async (imageChangeCheckerParams: ImageChangeCheckerProps): Promise<boolean> => {
+  const { selectedFile, receivedFileName } = imageChangeCheckerParams;
   return selectedFile.value !== receivedFileName;
 });
 
-const updateProductTable = $(
-  async (
-    id: string,
-    selectedFile: Signal<string>,
-    productName: Signal<string>,
-    productPrice: Signal<string>,
-    productDescription: Signal<string>,
-    productSlug: Signal<string>
-  ) => {
-    const { error } = await supabase
-      .from('products')
-      .update({
-        file_name: selectedFile.value,
-        name: productName.value,
-        price: parseFloat(productPrice.value),
-        description: productDescription.value,
-        slug: productSlug.value,
-      })
-      .eq('id', id);
+const updateProductTable = $(async (productTableUpdateParams: ProductTableUpdateProps) => {
+  const { id, selectedFile, productName, productPrice, productDescription, productSlug } = productTableUpdateParams;
+  const { error } = await supabase
+    .from('products')
+    .update({
+      file_name: selectedFile.value,
+      name: productName.value,
+      price: parseFloat(productPrice.value),
+      description: productDescription.value,
+      slug: productSlug.value,
+    })
+    .eq('id', id);
 
-    if (error) {
-      console.error('Error updating product:', error.message);
-      return;
-    }
-    console.log('PRODUCTS TABLE UPDATED');
+  if (error) {
+    console.error('Error updating product:', error.message);
+    return;
   }
-);
+  console.log('PRODUCTS TABLE UPDATED');
+});
 
 export { checkImageHasBeenChanged, updateProductTable, replaceImageInBucket };
