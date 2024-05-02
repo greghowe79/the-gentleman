@@ -33,9 +33,6 @@ const Modal = component$(() => {
               deleteShopProduct(1, id),
               deleteShopCategoryProduct(category, id),
               deleteProductsProduct(id, productsTable, userSession, products, isLoading, isModalVisible),
-              console.log('IMAGE VALUE', images.value),
-              console.log('images value.[imageIndex.value', images.value?.[imageIndex.value]),
-              console.log('IMAGE NAME', images.value?.[imageIndex.value]?.name),
             ]}
           >
             {isLoading.value ? 'Deleting ...' : deleteButtonText}
