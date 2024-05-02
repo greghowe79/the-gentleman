@@ -22,12 +22,5 @@
     }
   },
   "files": ["./.eslintrc.cjs"],
-  "include": [
-    "src",
-    "./*.d.ts",
-    "./*.config.ts",
-    "src/entry.express.tsx",
-    "adapters/express/vite.config.ts",
-    "server/entry.express.mjs"
-  ]
+  "include": ["src", "./*.d.ts", "./*.config.ts", "src/entry.express.tsx", "adapters/express/vite.config.ts", "server/entry.express.mjs"]
 }

@@ -32,7 +32,12 @@ import { Image } from '@unpic/qwik';
 import styles from '../../../components/search-bar/styles/search-bar.module.css';
 import { pdDesc, pdName, priceStyle } from '~/routes/shop/styles.css';
 import { limitDescription } from '~/routes/shop/actions/actions';
-import { checkImageHasBeenChanged, replaceImageInBucket, updateProductTable } from '~/utils/edit_page_utils/edit_actions';
+import {
+  checkImageHasBeenChanged,
+  replaceImageInBucket,
+  updateProductTable,
+  updateShopCategoryTable,
+} from '~/utils/edit_page_utils/edit_actions';
 import type { ImageBucketReplacementProps, ImageChangeCheckerProps, ProductTableUpdateProps } from '~/utils/edit_page_utils/types';
 
 export const useProductDetails = routeLoader$(async (requestEvent) => {
@@ -55,11 +60,10 @@ const EditPage = component$(() => {
   const productSlug = useSignal<string>(product.value.productDetail[0]?.slug);
   const productPrice = useSignal<string>(product.value.productDetail[0]?.price);
   const productDescription = useSignal<string>(product.value.productDetail[0]?.description);
-  const categorySlug = useSignal(product.value.productDetail[0]?.category_slug);
+  const categorySlug = useSignal<string>(product.value.productDetail[0]?.category_slug);
   const imageUrl = useSignal<string>(product.value.productDetail[0]?.url);
   const userSession = useContext(UserSessionContext);
   const images = useContext(ImagesContext);
-
   const imageIndex = useContext(ImageIndexContext);
   const imageHasBeenChanged = useSignal(false);
 
@@ -89,6 +93,7 @@ const EditPage = component$(() => {
       ? (await replaceImageInBucket(ImageBucketReplacementArgs), (imageChangeCheckerArgs.receivedFileName = selectedFile.value))
       : null;
     updateProductTable(productTableUpdateArgs);
+    updateShopCategoryTable(categorySlug, userSession, product.value.productDetail[0]?.id);
   });
 
   return (

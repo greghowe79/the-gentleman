@@ -1,6 +1,7 @@
-import { $ } from '@builder.io/qwik';
+import { $, type Signal } from '@builder.io/qwik';
 import { supabase } from '../supabase';
 import type { ImageBucketReplacementProps, ImageChangeCheckerProps, ProductTableUpdateProps } from './types';
+import type { UserSess } from '~/root';
 
 const replaceImageInBucket = $(async (imageBucketReplacementParams: ImageBucketReplacementProps) => {
   const { userSession, imageName, currentFile } = imageBucketReplacementParams;
@@ -37,4 +38,21 @@ const updateProductTable = $(async (productTableUpdateParams: ProductTableUpdate
   console.log('PRODUCTS TABLE UPDATED');
 });
 
-export { checkImageHasBeenChanged, updateProductTable, replaceImageInBucket };
+const updateShopCategoryTable = $(async (categorySlug: Signal<string>, userSession: UserSess, id: string) => {
+  const { data: categoryProducts, error: newCategoryError } = await supabase
+    .from('shop_categories')
+    .select('products')
+    .eq('slug', categorySlug.value);
+
+  if (newCategoryError) {
+    console.error(newCategoryError);
+    return;
+  }
+
+  const sellerProducts = categoryProducts[0]?.products.filter((product: any) => product.seller === userSession.stripe_seller?.id);
+
+  const sellerProduct = sellerProducts.filter((product: any) => product.id === id);
+  console.log('sellerProduct', sellerProduct);
+});
+
+export { checkImageHasBeenChanged, updateProductTable, replaceImageInBucket, updateShopCategoryTable };
