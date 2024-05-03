@@ -43,7 +43,6 @@ export const columns = [
 ];
 
 export const dashboardList = (propsArray: any) => {
-  console.log('SELLER PRODUCTS', propsArray[1].seller_products);
   return [
     {
       id: 0,

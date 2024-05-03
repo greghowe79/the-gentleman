@@ -20,3 +20,25 @@ export interface ProductTableUpdateProps {
   productDescription: Signal<string>;
   productSlug: Signal<string>;
 }
+
+export interface ProductUpdateProps {
+  name: string;
+  slug: string;
+  price: number;
+  description: string;
+}
+
+export interface Product {
+  id: string;
+  sku: string;
+  url: string;
+  name: string;
+  slug: string;
+  price: number;
+  seller: string;
+  user_id: string;
+  category: string;
+  created_at: string;
+  description: string;
+  categorySlug: string;
+}

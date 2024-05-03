@@ -1,4 +1,4 @@
-import { type Signal, component$, useContext, useSignal, $ } from '@builder.io/qwik';
+import { type Signal, component$, useContext, useSignal, $, useTask$ } from '@builder.io/qwik';
 import { routeLoader$ } from '@builder.io/qwik-city';
 import CustomSelect from '~/components/select-categories/component/customSelect';
 import { categoryOptions } from '~/components/select-categories/data/data';
@@ -26,7 +26,7 @@ import {
   editDesc,
   editFormContainer,
 } from '~/routes/upload-products/style.css';
-import { handleChange, handlePriceKeyPress, handleTextAreaChange, uploadImage } from '~/utils/helpers';
+import { getImages, handleChange, handlePriceKeyPress, handleTextAreaChange, uploadImage } from '~/utils/helpers';
 import { supabase } from '~/utils/supabase';
 import { Image } from '@unpic/qwik';
 import styles from '../../../components/search-bar/styles/search-bar.module.css';
@@ -38,7 +38,12 @@ import {
   updateProductTable,
   updateShopCategoryTable,
 } from '~/utils/edit_page_utils/edit_actions';
-import type { ImageBucketReplacementProps, ImageChangeCheckerProps, ProductTableUpdateProps } from '~/utils/edit_page_utils/types';
+import type {
+  ImageBucketReplacementProps,
+  ImageChangeCheckerProps,
+  ProductTableUpdateProps,
+  ProductUpdateProps,
+} from '~/utils/edit_page_utils/types';
 
 export const useProductDetails = routeLoader$(async (requestEvent) => {
   const { data, error } = await supabase.from('products').select('*').eq('id', requestEvent.params.id);
@@ -67,6 +72,13 @@ const EditPage = component$(() => {
   const imageIndex = useContext(ImageIndexContext);
   const imageHasBeenChanged = useSignal(false);
 
+  useTask$(async ({ track }) => {
+    track(() => userSession.userId);
+    if (userSession.isLoggedIn) {
+      await getImages(userSession, images);
+    }
+  });
+
   const imageChangeCheckerArgs: ImageChangeCheckerProps = {
     selectedFile,
     receivedFileName: product.value.productDetail[0]?.file_name,
@@ -88,12 +100,19 @@ const EditPage = component$(() => {
   };
 
   const handleSubmit = $(async () => {
+    const productUpdateArgs: ProductUpdateProps = {
+      name: productName.value,
+      slug: productSlug.value,
+      price: parseFloat(productPrice.value),
+      description: productDescription.value,
+    };
+
     imageHasBeenChanged.value = await checkImageHasBeenChanged(imageChangeCheckerArgs);
     imageHasBeenChanged.value
       ? (await replaceImageInBucket(ImageBucketReplacementArgs), (imageChangeCheckerArgs.receivedFileName = selectedFile.value))
       : null;
     updateProductTable(productTableUpdateArgs);
-    updateShopCategoryTable(categorySlug, userSession, product.value.productDetail[0]?.id);
+    updateShopCategoryTable(categorySlug, userSession, product.value.productDetail[0]?.id, productUpdateArgs);
   });
 
   return (
