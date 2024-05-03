@@ -1,6 +1,6 @@
 import { $, type Signal } from '@builder.io/qwik';
 import { supabase } from '../supabase';
-import type { ImageBucketReplacementProps, ImageChangeCheckerProps, ProductTableUpdateProps } from './types';
+import type { ImageBucketReplacementProps, ImageChangeCheckerProps, Product, ProductTableUpdateProps, ProductUpdateProps } from './types';
 import type { UserSess } from '~/root';
 
 const replaceImageInBucket = $(async (imageBucketReplacementParams: ImageBucketReplacementProps) => {
@@ -38,21 +38,40 @@ const updateProductTable = $(async (productTableUpdateParams: ProductTableUpdate
   console.log('PRODUCTS TABLE UPDATED');
 });
 
-const updateShopCategoryTable = $(async (categorySlug: Signal<string>, userSession: UserSess, id: string) => {
-  const { data: categoryProducts, error: newCategoryError } = await supabase
-    .from('shop_categories')
-    .select('products')
-    .eq('slug', categorySlug.value);
+const updateShopCategoryTable = $(
+  async (categorySlug: Signal<string>, userSession: UserSess, id: string, productUpdateParams: ProductUpdateProps) => {
+    const { name, slug, price, description } = productUpdateParams;
+    const { data: categoryProducts, error: newCategoryError } = await supabase
+      .from('shop_categories')
+      .select('products')
+      .eq('slug', categorySlug.value);
 
-  if (newCategoryError) {
-    console.error(newCategoryError);
-    return;
+    if (newCategoryError) {
+      console.error(newCategoryError);
+      return;
+    }
+
+    const productIndex = categoryProducts[0]?.products.findIndex(
+      (product: Product) => product.seller === userSession.stripe_seller?.id && product.id === id
+    );
+    if (productIndex !== -1) {
+      const product = categoryProducts[0]?.products[productIndex];
+      product.name = name;
+      product.slug = slug;
+      product.price = price;
+      product.description = description;
+
+      const { error: updateCategoryError } = await supabase
+        .from('shop_categories')
+        .update({ products: categoryProducts[0].products })
+        .eq('slug', categorySlug.value);
+
+      if (updateCategoryError) {
+        console.error(updateCategoryError);
+        return;
+      }
+    }
   }
-
-  const sellerProducts = categoryProducts[0]?.products.filter((product: any) => product.seller === userSession.stripe_seller?.id);
-
-  const sellerProduct = sellerProducts.filter((product: any) => product.id === id);
-  console.log('sellerProduct', sellerProduct);
-});
+);
 
 export { checkImageHasBeenChanged, updateProductTable, replaceImageInBucket, updateShopCategoryTable };
