@@ -74,4 +74,32 @@ const updateShopCategoryTable = $(
   }
 );
 
-export { checkImageHasBeenChanged, updateProductTable, replaceImageInBucket, updateShopCategoryTable };
+const updateShopTable = $(async (userSession: UserSess, id: string, productUpdateParams: ProductUpdateProps) => {
+  const { name, slug, price, description } = productUpdateParams;
+  const { data: shopProducts, error: newShopError } = await supabase.from('shop').select('products').eq('id', 1);
+
+  if (newShopError) {
+    console.error(newShopError);
+    return;
+  }
+
+  const productIndex = shopProducts[0]?.products.findIndex(
+    (product: Product) => product.seller === userSession.stripe_seller?.id && product.id === id
+  );
+  if (productIndex !== -1) {
+    const product = shopProducts[0]?.products[productIndex];
+    product.name = name;
+    product.slug = slug;
+    product.price = price;
+    product.description = description;
+
+    const { error: updateShopError } = await supabase.from('shop').update({ products: shopProducts[0].products }).eq('id', 1);
+
+    if (updateShopError) {
+      console.error(updateShopError);
+      return;
+    }
+  }
+});
+
+export { checkImageHasBeenChanged, updateProductTable, replaceImageInBucket, updateShopCategoryTable, updateShopTable };
