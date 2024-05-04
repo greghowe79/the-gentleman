@@ -37,6 +37,7 @@ import {
   replaceImageInBucket,
   updateProductTable,
   updateShopCategoryTable,
+  updateShopTable,
 } from '~/utils/edit_page_utils/edit_actions';
 import type {
   ImageBucketReplacementProps,
@@ -113,6 +114,7 @@ const EditPage = component$(() => {
       : null;
     updateProductTable(productTableUpdateArgs);
     updateShopCategoryTable(categorySlug, userSession, product.value.productDetail[0]?.id, productUpdateArgs);
+    updateShopTable(userSession, product.value.productDetail[0]?.id, productUpdateArgs);
   });
 
   return (
