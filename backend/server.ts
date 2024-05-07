@@ -8,6 +8,8 @@ dotenv.config();
 import { createClient } from '@supabase/supabase-js';
 import { CartProps, Product, ProductDetailsProps } from './types/types';
 import querystring from 'node:querystring';
+import { v4 as uuidv4 } from 'uuid';
+import { calculateTotalAmountBySeller } from './actions';
 const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY);
 
 // Determine root domain
@@ -27,6 +29,86 @@ const supabaseUrl = process.env.SUPABASE_URL!;
 const supabaseANonPublic = process.env.SUPABASE_SECRET_KEY!;
 
 const supabase = createClient(supabaseUrl, supabaseANonPublic);
+
+function generateUniqueString() {
+  const timestamp = Date.now();
+  const uuid = uuidv4();
+
+  return `UNIQUE_${timestamp}_${uuid}`;
+}
+
+// const createTransfers = async (sellerTotals: { seller_id: string; total_amount: number }[], unique_transfer_group_identifier: string) => {
+//   //const uniqueString = 'unique_transfer_group_identifier'; // Sostituisci con un identificatore univoco per il gruppo di trasferimenti
+
+//   // Itera su ogni oggetto nel sellerTotals
+//   sellerTotals.forEach(async (sellerData) => {
+//     try {
+//       // Creazione del trasferimento Stripe
+//       const transfer = await stripe.transfers.create({
+//         amount: sellerData.total_amount,
+//         currency: 'eur',
+//         destination: sellerData.seller_id,
+//         transfer_group: unique_transfer_group_identifier,
+//       });
+
+//       // Gestione della risposta del trasferimento creato
+//       console.log('Transfer created:', transfer);
+//     } catch (error) {
+//       // Gestione degli errori durante la creazione del trasferimento
+//       console.error('Error creating transfer:', error);
+//     }
+//   });
+// };
+
+app.post(route + '/stripe-session-id', async (req: Request, res: Response) => {
+  const unique_transfer_group_identifier = generateUniqueString();
+  const { user } = req.body;
+  const { orderDetailsId } = req.body;
+  const { data, error } = await supabase.from('order_details').select('*').eq('order_id', orderDetailsId);
+  if (error) {
+    console.error(error);
+  }
+
+  const session = await stripe.checkout.sessions.create({
+    line_items: data?.map((item) => {
+      return {
+        price_data: {
+          currency: 'eur',
+          unit_amount: item.price * 100,
+          product_data: {
+            name: item.product_name,
+            images: [item.url],
+          },
+        },
+        quantity: item.quantity,
+      };
+    }),
+    payment_intent_data: {
+      transfer_group: unique_transfer_group_identifier,
+    },
+    mode: 'payment',
+    billing_address_collection: 'required',
+    shipping_address_collection: {
+      allowed_countries: ['IT'],
+    },
+    success_url: process.env.STRIPE_SUCCESS_URL,
+    cancel_url: process.env.STRIPE_CANCEL_URL,
+  });
+  //console.log('SESSION ', session);
+  const { error: stripeSessionError } = await supabase.from('profiles').update({ stripeSession: session }).eq('id', user);
+  if (stripeSessionError) {
+    console.error(stripeSessionError);
+  }
+
+  const sellerTotals = calculateTotalAmountBySeller(data!);
+
+  console.log(sellerTotals);
+  //createTransfers(sellerTotals, unique_transfer_group_identifier);
+
+  const session_url = session.url;
+
+  return res.status(200).json({ sessionUrl: session_url });
+});
 
 app.post(route + '/payout-setting', async (req: Request, res: Response) => {
   const userId = req.body.user;

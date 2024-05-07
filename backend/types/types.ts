@@ -28,3 +28,7 @@ export interface CartProps {
   products: ProductDetailsProps[];
   total: number;
 }
+
+export interface SellerAmountMap {
+  [sellerId: string]: number;
+}

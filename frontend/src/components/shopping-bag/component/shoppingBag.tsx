@@ -1,8 +1,8 @@
-import { type QRL, component$, useContext, type Signal, $, useResource$, useSignal } from '@builder.io/qwik';
+import { type QRL, component$, useContext, type Signal, $, useResource$, useSignal, type QwikMouseEvent } from '@builder.io/qwik';
 import { BodyContext, type UserSess, UserSessionContext } from '~/root';
-//import { CustomButton } from '~/components/custom-button/component/customButton';
+
 import styles from '../styles/shopping-bag.module.css';
-import { Link } from '@builder.io/qwik-city';
+import { Link, useNavigate } from '@builder.io/qwik-city';
 import { Image } from '@unpic/qwik';
 import CloseIcon from '~/components/starter/icons/close';
 import {
@@ -24,20 +24,24 @@ import {
   line,
   sbHeader,
   customBtn,
-  linkBtn,
+  // linkBtn,
   topBag,
   topBagTitle,
   total,
   closeButton,
   totalAmount,
+  customBtnWrapper,
 } from '../styles/style.css';
 import { type CartProps, type ProductDetailsProps } from '~/routes/[...catchAll]/types';
 import { addToCart, deleteProduct } from '~/routes/[...catchAll]/utils';
+import { getSessionId } from '~/utils/stripe';
+//import { getSessionId } from '~/utils/stripe';
 
 export const ShoppingBag = component$((props: { text: string; closed: QRL<() => void>; cart?: Signal<CartProps>; openPanel?: any }) => {
   const backgroundColor = useContext(BodyContext);
   const userSession = useContext(UserSessionContext);
   const isLoading = useSignal(false);
+  const nav = useNavigate();
 
   useResource$(async () => {
     const res = await fetch('/api_v1/get-cookie', { method: 'GET', credentials: 'include' });
@@ -54,6 +58,14 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
       addToCart({ isFromPdp, userSession, cart, product: newProduct });
     }
   );
+
+  const handleClick = $(async (e: QwikMouseEvent<HTMLButtonElement> & any) => {
+    e.preventDefault();
+    if (!userSession.isLoggedIn) console.log('PLEASE LOGIN');
+    const orederId = userSession.userId.split('').reverse().join('');
+    const res = await getSessionId(userSession, orederId);
+    await nav(res?.sessionUrl);
+  });
 
   return (
     <>
@@ -175,10 +187,11 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
               <div class={totalAmount}>EUR {props.cart?.value ? props.cart.value.total : 0}</div>
             </div>
             <div class={styles['custom-button-container']}>
-              {/*  <CustomButton /> */}
-              <Link class={linkBtn} href="/checkout" onClick$={() => (props.openPanel.isOpen = false)}>
-                <button class={customBtn}>Check out</button>
-              </Link>
+              <div class={customBtnWrapper}>
+                <button class={customBtn} onClick$={(e) => [handleClick(e), (props.openPanel.isOpen = false)]}>
+                  Check out
+                </button>
+              </div>
             </div>
           </div>
         </div>
