@@ -45,7 +45,7 @@ export const addToCart = $(async ({ isFromPdp, userSession, cart, product, selec
       const orderDetails = {
         id: detailsId,
         user_id: null,
-        order_id: null,
+        order_id: userSession.userId.split('').reverse().join(''),
         url: service.value[0]?.url,
         product_id: service.value[0]?.id,
         price: service.value[0]?.price,
@@ -55,6 +55,7 @@ export const addToCart = $(async ({ isFromPdp, userSession, cart, product, selec
         amount: service.value[0]?.price * parseInt(selectedOption.value),
         slug: service.value[0]?.slug,
         category_slug: service.value[0]?.categorySlug,
+        seller_id: service.value[0]?.seller,
       };
 
       if (userSession.isLoggedIn) {

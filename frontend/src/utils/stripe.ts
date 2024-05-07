@@ -44,3 +44,12 @@ export const payoutSetting = $(async (userSession: UserSess) => {
   const res = await axios.post('/api_v1/payout-setting', bodyContent);
   return res.data;
 });
+
+export const getSessionId = $(async (userSession: UserSess, orderDetailsId: string) => {
+  const bodyContent = {
+    user: userSession.userId,
+    orderDetailsId,
+  };
+  const res = await axios.post('/api_v1/stripe-session-id', bodyContent);
+  return res.data;
+});

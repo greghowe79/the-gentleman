@@ -12,6 +12,7 @@ export interface Service {
   description: string;
   sku: string;
   categorySlug: string;
+  seller: string;
 }
 
 export interface ProductDetailsProps {

@@ -108,6 +108,10 @@ export const sbHeader = style({
   fontSize: 'var(--font-size-xs)',
 });
 
+export const customBtnWrapper = style({
+  width: '100%',
+});
+
 export const customBtn = style({
   width: '100%',
   padding: '15px 20px',
