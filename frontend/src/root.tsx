@@ -44,13 +44,10 @@ export default component$(() => {
     const {
       data: { user },
     } = await supabase.auth.getUser();
-
-    const { data } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', user?.id)
-      .single();
-    if (data) return data;
+    if (user) {
+      const { data } = await supabase.from('profiles').select('*').eq('id', user.id).single();
+      if (data) return data;
+    }
   });
 
   const backgroundColor = useSignal('rgb(0, 0, 0)');
