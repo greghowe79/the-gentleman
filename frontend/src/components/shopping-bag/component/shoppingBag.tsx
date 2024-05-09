@@ -34,8 +34,8 @@ import {
 } from '../styles/style.css';
 import { type CartProps, type ProductDetailsProps } from '~/routes/[...catchAll]/types';
 import { addToCart, deleteProduct } from '~/routes/[...catchAll]/utils';
-import { createTransfers, getSessionId } from '~/utils/stripe';
-//import { getSessionId } from '~/utils/stripe';
+//import { createTransfers, getSessionId } from '~/utils/stripe';
+import { getSessionId } from '~/utils/stripe';
 
 export const ShoppingBag = component$((props: { text: string; closed: QRL<() => void>; cart?: Signal<CartProps>; openPanel?: any }) => {
   const backgroundColor = useContext(BodyContext);
@@ -61,18 +61,24 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
 
   const handleClick = $(async (e: QwikMouseEvent<HTMLButtonElement> & any) => {
     e.preventDefault();
-    if (!userSession.isLoggedIn) console.log('PLEASE LOGIN');
+
+    if (!userSession.isLoggedIn) {
+      alert('PLEASE LOGIN');
+      return;
+    }
+    isLoading.value = true;
     const orederId = userSession.userId.split('').reverse().join('');
     const res = await getSessionId(userSession, orederId);
 
     //4000000000000077
     await nav(res?.sessionUrl);
-    console.log('PAYMENT STATUS', res?.paymentStatus);
-    if (res?.paymentStatus === 'unpaid') {
-      return;
-    } else {
-      await createTransfers(res?.totalsSeller, res?.uniqueTransferGroupIdentifier);
-    }
+    isLoading.value = false;
+    // console.log('PAYMENT STATUS', res?.paymentStatus);
+    // if (res?.paymentStatus === 'unpaid') {
+    //   return;
+    // } else {
+    //   await createTransfers(res?.totalsSeller, res?.uniqueTransferGroupIdentifier);
+    // }
   });
 
   return (
@@ -196,8 +202,8 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
             </div>
             <div class={styles['custom-button-container']}>
               <div class={customBtnWrapper}>
-                <button class={customBtn} onClick$={(e) => [handleClick(e), (props.openPanel.isOpen = false)]}>
-                  Check out
+                <button class={customBtn} onClick$={(e) => handleClick(e)} disabled={isLoading.value}>
+                  {isLoading.value ? 'Loading...' : userSession.isLoggedIn ? 'Check out' : 'Login to checkout'}
                 </button>
               </div>
             </div>
