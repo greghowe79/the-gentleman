@@ -37,7 +37,7 @@ function generateUniqueString() {
   return `UNIQUE_${timestamp}_${uuid}`;
 }
 
-// const createTransfers = async (sellerTotals: { seller_id: string; total_amount: number }[], unique_transfer_group_identifier: string) => {
+// const createTransfers = async (sellerTotals: { seller_id: string; total_amount: number }[], uniqueTransferGroupIdentifier: string) => {
 //   //const uniqueString = 'unique_transfer_group_identifier'; // Sostituisci con un identificatore univoco per il gruppo di trasferimenti
 
 //   // Itera su ogni oggetto nel sellerTotals
@@ -45,10 +45,10 @@ function generateUniqueString() {
 //     try {
 //       // Creazione del trasferimento Stripe
 //       const transfer = await stripe.transfers.create({
-//         amount: sellerData.total_amount,
+//         amount: Math.round(sellerData.total_amount * 100 * 0.8),
 //         currency: 'eur',
 //         destination: sellerData.seller_id,
-//         transfer_group: unique_transfer_group_identifier,
+//         transfer_group: uniqueTransferGroupIdentifier,
 //       });
 
 //       // Gestione della risposta del trasferimento creato
@@ -94,20 +94,48 @@ app.post(route + '/stripe-session-id', async (req: Request, res: Response) => {
     success_url: process.env.STRIPE_SUCCESS_URL,
     cancel_url: process.env.STRIPE_CANCEL_URL,
   });
-  //console.log('SESSION ', session);
+  console.log('SESSION ', session.payment_status);
   const { error: stripeSessionError } = await supabase.from('profiles').update({ stripeSession: session }).eq('id', user);
   if (stripeSessionError) {
     console.error(stripeSessionError);
   }
 
-  const sellerTotals = calculateTotalAmountBySeller(data!);
-
-  console.log(sellerTotals);
-  //createTransfers(sellerTotals, unique_transfer_group_identifier);
-
   const session_url = session.url;
+  const seller_totals = calculateTotalAmountBySeller(data!);
+  const payment_status = session.payment_status;
 
-  return res.status(200).json({ sessionUrl: session_url });
+  console.log(seller_totals);
+
+  return res.status(200).json({
+    sessionUrl: session_url,
+    totalsSeller: seller_totals,
+    uniqueTransferGroupIdentifier: unique_transfer_group_identifier,
+    paymentStatus: payment_status,
+  });
+});
+
+app.post(route + '/create-transfers', async (req: Request, res: Response) => {
+  const { sellerTotals } = req.body as { sellerTotals: { seller_id: string; total_amount: number }[] };
+  const { uniqueTransferGroupIdentifier } = req.body as { uniqueTransferGroupIdentifier: string };
+
+  // Itera su ogni oggetto nel sellerTotals
+  sellerTotals.forEach(async (sellerData) => {
+    try {
+      // Creazione del trasferimento Stripe
+      const transfer = await stripe.transfers.create({
+        amount: Math.round(sellerData.total_amount * 100 * 0.8),
+        currency: 'eur',
+        destination: sellerData.seller_id,
+        transfer_group: uniqueTransferGroupIdentifier,
+      });
+
+      // Gestione della risposta del trasferimento creato
+      console.log('Transfer created:', transfer);
+    } catch (error) {
+      // Gestione degli errori durante la creazione del trasferimento
+      console.error('Error creating transfer:', error);
+    }
+  });
 });
 
 app.post(route + '/payout-setting', async (req: Request, res: Response) => {

@@ -53,3 +53,14 @@ export const getSessionId = $(async (userSession: UserSess, orderDetailsId: stri
   const res = await axios.post('/api_v1/stripe-session-id', bodyContent);
   return res.data;
 });
+
+export const createTransfers = $(
+  async (sellerTotals: { seller_id: string; total_amount: number }[], uniqueTransferGroupIdentifier: string) => {
+    const bodyContent = {
+      sellerTotals,
+      uniqueTransferGroupIdentifier,
+    };
+    const res = await axios.post('/api_v1/create-transfers', bodyContent);
+    return res.data;
+  }
+);

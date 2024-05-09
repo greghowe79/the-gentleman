@@ -34,7 +34,7 @@ import {
 } from '../styles/style.css';
 import { type CartProps, type ProductDetailsProps } from '~/routes/[...catchAll]/types';
 import { addToCart, deleteProduct } from '~/routes/[...catchAll]/utils';
-import { getSessionId } from '~/utils/stripe';
+import { createTransfers, getSessionId } from '~/utils/stripe';
 //import { getSessionId } from '~/utils/stripe';
 
 export const ShoppingBag = component$((props: { text: string; closed: QRL<() => void>; cart?: Signal<CartProps>; openPanel?: any }) => {
@@ -64,7 +64,15 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
     if (!userSession.isLoggedIn) console.log('PLEASE LOGIN');
     const orederId = userSession.userId.split('').reverse().join('');
     const res = await getSessionId(userSession, orederId);
+
+    //4000000000000077
     await nav(res?.sessionUrl);
+    console.log('PAYMENT STATUS', res?.paymentStatus);
+    if (res?.paymentStatus === 'unpaid') {
+      return;
+    } else {
+      await createTransfers(res?.totalsSeller, res?.uniqueTransferGroupIdentifier);
+    }
   });
 
   return (
