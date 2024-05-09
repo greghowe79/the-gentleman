@@ -6,7 +6,7 @@ import { currencyFormatter } from '~/utils/stripe';
 const Balance = component$<ConnectedProps>(({ balance }) => {
   return (
     <div class={balanceStyle}>
-      {balance?.pending.map((ba: BalanceItem, index: number) => {
+      {balance?.available.map((ba: BalanceItem, index: number) => {
         return (
           <div key={index} class={currencyContainer}>
             <span>{currencyFormatter(ba)}</span>
