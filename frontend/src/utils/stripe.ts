@@ -64,3 +64,13 @@ export const createTransfers = $(
     return res.data;
   }
 );
+
+export const stripeSuccessRequest = $(async (userSession: UserSess, orderId: string) => {
+  const bodyContent = {
+    user: userSession.userId,
+    orderId,
+  };
+
+  const res = await axios.post('/api_v1/stripe-success', bodyContent);
+  return res.data;
+});

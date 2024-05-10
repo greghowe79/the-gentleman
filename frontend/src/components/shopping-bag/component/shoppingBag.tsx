@@ -5,6 +5,7 @@ import styles from '../styles/shopping-bag.module.css';
 import { Link, useNavigate } from '@builder.io/qwik-city';
 import { Image } from '@unpic/qwik';
 import CloseIcon from '~/components/starter/icons/close';
+
 import {
   controlsContainer,
   controlsStyle,
@@ -68,6 +69,7 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
     }
     isLoading.value = true;
     const orederId = userSession.userId.split('').reverse().join('');
+
     const res = await getSessionId(userSession, orederId);
 
     //4000000000000077
