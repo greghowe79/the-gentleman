@@ -63,7 +63,8 @@ function generateUniqueString() {
 app.post(route + '/stripe-session-id', async (req: Request, res: Response) => {
   const unique_transfer_group_identifier = generateUniqueString();
   const { user } = req.body;
-  const { orderDetailsId } = req.body;
+  const { orderDetailsId } = req.body as { orderDetailsId: string };
+  console.log('orderDetailsId', orderDetailsId);
   const { data, error } = await supabase.from('order_details').select('*').eq('order_id', orderDetailsId);
   if (error) {
     console.error(error);
@@ -91,7 +92,7 @@ app.post(route + '/stripe-session-id', async (req: Request, res: Response) => {
     shipping_address_collection: {
       allowed_countries: ['IT'],
     },
-    success_url: process.env.STRIPE_SUCCESS_URL,
+    success_url: `${process.env.STRIPE_SUCCESS_URL}/${orderDetailsId}`,
     cancel_url: process.env.STRIPE_CANCEL_URL,
   });
   console.log('SESSION ', session.payment_status);
@@ -136,6 +137,84 @@ app.post(route + '/create-transfers', async (req: Request, res: Response) => {
       console.error('Error creating transfer:', error);
     }
   });
+});
+
+app.post(route + '/stripe-success', async (req: Request, res: Response) => {
+  try {
+    // 1 get orderId from req.body;
+    const { orderId } = req.body;
+    // 2 get currently logged in user from req.body;
+    const user = req.body.user;
+    //console.log('USER', user);
+
+    // 3 retrieve stripe session, based on session id we previously save in profiles table in the db;
+    const { data: stripe_session } = await supabase.from('profiles').select('stripeSession').eq('id', user);
+
+    if (stripe_session?.[0].stripeSession.id) {
+      const sessionId = stripe_session?.[0].stripeSession.id;
+      const session = await stripe?.checkout?.sessions?.retrieve(sessionId);
+
+      // 4 If session payment status is paid, transfer fund to the sellers and create order
+      console.log(session);
+      if (session.payment_status === 'paid') {
+        // check if order with that session id already exist by query orders collections
+
+        const { data: stripeSessionData, error } = await supabase.from('orders').select('stripeSession');
+        if (error) console.error(error);
+
+        const stripeSessionIdExist = stripeSessionData?.find((stripe) => stripe.stripeSession && stripe.stripeSession.id === session.id);
+
+        const orderExist = !!stripeSessionIdExist;
+        if (orderExist) {
+          // 6 send success true
+          res.json({ success: true });
+        } else {
+          // 7 else create new order and send success true
+
+          const { data, error: orderDetailsError } = await supabase.from('order_details').select('*').eq('order_id', orderId);
+          if (orderDetailsError) {
+            console.error(orderDetailsError);
+          }
+
+          const customerAddress = {
+            city: session.shipping_details.address.city,
+            country: session.shipping_details.address.country,
+            street: session.shipping_details.address.line1,
+            postal_code: session.shipping_details.address.postal_code,
+            state: session.shipping_details.address.state,
+          };
+
+          const order = {
+            order_id: orderId,
+            customer_id: user,
+            customer_email: session.customer_details.email,
+            order_details: data,
+            amount: session.amount_total / 100,
+            payment_status: session.payment_status,
+            created_at: new Date(session.created * 1000),
+            name: session.shipping_details.name,
+            address: customerAddress,
+            session,
+          };
+
+          console.log('ORDER', order);
+          const { error } = await supabase.from('orders').insert(order);
+          if (error) {
+            console.log(error);
+          }
+          // 8 remove user' s  stripeSession
+          const { error: profilesError } = await supabase.from('profiles').update({ stripeSession: null }).eq('id', user);
+          if (profilesError) {
+            console.log(profilesError);
+          }
+
+          return res.status(200).json({ success: true });
+        }
+      }
+    }
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 app.post(route + '/payout-setting', async (req: Request, res: Response) => {
