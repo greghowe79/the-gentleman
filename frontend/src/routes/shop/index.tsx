@@ -18,6 +18,7 @@ import {
   priceStyle,
   priceWrapStyle,
   addToCartButton,
+  textDescription,
 } from './styles.css';
 import { Link } from '@builder.io/qwik-city';
 import { limitDescription } from './actions/actions';
@@ -56,7 +57,7 @@ const ShopProducts = component$(({ data }: any) => {
                       <div class={pdName}>{product.name}</div>
                       <div class={pdDesc}> - {product.category} - </div>
                       <div class={pdDesc}>
-                        <p>{limitDescription(product.description)}</p>
+                        <p class={textDescription}>{limitDescription(product.description)}</p>
                       </div>
                       <div class={priceWrapStyle}>
                         <strong class={priceStyle}>EUR {product.price}</strong>
