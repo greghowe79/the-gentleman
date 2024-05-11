@@ -2,6 +2,7 @@ import { component$, useContext, useVisibleTask$ } from '@builder.io/qwik';
 import { useLocation, useNavigate } from '@builder.io/qwik-city';
 import { UserSessionContext } from '~/root';
 import { stripeSuccessRequest } from '~/utils/stripe';
+import { supabase } from '~/utils/supabase';
 
 const StripeSuccess = component$(() => {
   const location = useLocation();
@@ -11,13 +12,15 @@ const StripeSuccess = component$(() => {
 
   useVisibleTask$(async ({ track }) => {
     track(() => userSession.userId);
-    //location.params.orederId
-    console.log('USER', userSession.userId);
-    console.log('orderId', orderId);
-    const res = await stripeSuccessRequest(userSession, orderId);
-    // console.log('Stripe Success response ', res);
+    console.log(userSession.userId);
+    if (userSession.userId) {
+      const { data } = await supabase.from('profiles').select('transfer_group').eq('id', userSession.userId);
 
-    await nav(res.success ? '/' : '/stripe/cancel');
+      const uniqueIdentifier = data?.[0]?.transfer_group;
+      console.log(uniqueIdentifier);
+      const res = await stripeSuccessRequest(userSession, orderId, uniqueIdentifier);
+      await nav(res.success ? '/' : '/stripe/cancel');
+    }
   });
 
   return (

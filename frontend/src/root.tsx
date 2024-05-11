@@ -70,7 +70,7 @@ export default component$(() => {
       userSession.userId = '';
       userSession.isLoggedIn = false;
     }
-    if (userProfile.stripe_seller) {
+    if (userProfile && userProfile.stripe_seller) {
       userSession.stripe_seller = userProfile.stripe_seller;
       userSession.charges_enabled = userProfile.stripe_seller.charges_enabled;
     } else {
