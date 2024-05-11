@@ -54,21 +54,11 @@ export const getSessionId = $(async (userSession: UserSess, orderDetailsId: stri
   return res.data;
 });
 
-export const createTransfers = $(
-  async (sellerTotals: { seller_id: string; total_amount: number }[], uniqueTransferGroupIdentifier: string) => {
-    const bodyContent = {
-      sellerTotals,
-      uniqueTransferGroupIdentifier,
-    };
-    const res = await axios.post('/api_v1/create-transfers', bodyContent);
-    return res.data;
-  }
-);
-
-export const stripeSuccessRequest = $(async (userSession: UserSess, orderId: string) => {
+export const stripeSuccessRequest = $(async (userSession: UserSess, orderId: string, uniqueIdentifier: string) => {
   const bodyContent = {
     user: userSession.userId,
     orderId,
+    uniqueIdentifier,
   };
 
   const res = await axios.post('/api_v1/stripe-success', bodyContent);

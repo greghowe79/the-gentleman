@@ -75,12 +75,6 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
     //4000000000000077
     await nav(res?.sessionUrl);
     isLoading.value = false;
-    // console.log('PAYMENT STATUS', res?.paymentStatus);
-    // if (res?.paymentStatus === 'unpaid') {
-    //   return;
-    // } else {
-    //   await createTransfers(res?.totalsSeller, res?.uniqueTransferGroupIdentifier);
-    // }
   });
 
   return (
