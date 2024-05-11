@@ -18,6 +18,7 @@ import {
   priceStyle,
   priceWrapStyle,
   addToCartButton,
+  textDescription,
 } from '../styles.css';
 import { limitDescription } from '../actions/actions';
 
@@ -71,7 +72,7 @@ const ProductListPage = component$(() => {
                     <div class={detail}>
                       <div class={pdName}>{product.name}</div>
                       <div class={pdDesc}>
-                        <p>{limitDescription(product.description)}</p>
+                        <p class={textDescription}>{limitDescription(product.description)}</p>
                       </div>
                       <div class={priceWrapStyle}>
                         <strong class={priceStyle}>EUR {product.price}</strong>

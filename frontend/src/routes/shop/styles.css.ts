@@ -110,6 +110,7 @@ export const stickyImageContainer = style({
 
 export const spacer = style({
   marginTop: '41.7px',
+  wordWrap: 'break-word',
 });
 
 export const spacerFirst = style({
@@ -371,7 +372,7 @@ export const addToCartButton = style({
   ':hover': {
     border: '3px solid var(--default-text-color)',
   },
-  marginTop: '15px',
+  marginTop: '45px',
 });
 
 export const cartButtonWrapper = style({
@@ -392,4 +393,9 @@ export const Wrap = style({
 
 export const priceWrapStyle = style({
   marginTop: 'auto',
+});
+
+export const textDescription = style({
+  width: '100%',
+  height: '80px',
 });
