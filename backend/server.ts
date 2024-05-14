@@ -67,6 +67,13 @@ app.post(route + '/stripe-session-id', async (req: Request, res: Response) => {
   }
 
   const session = await stripe.checkout.sessions.create({
+    billing_address_collection: 'required',
+    shipping_address_collection: {
+      allowed_countries: ['IT'],
+    },
+    phone_number_collection: {
+      enabled: true,
+    },
     line_items: data?.map((item) => {
       return {
         price_data: {
@@ -83,11 +90,8 @@ app.post(route + '/stripe-session-id', async (req: Request, res: Response) => {
     payment_intent_data: {
       transfer_group: uniqueTransferIdentifier,
     },
+
     mode: 'payment',
-    billing_address_collection: 'required',
-    shipping_address_collection: {
-      allowed_countries: ['IT'],
-    },
     success_url: `${process.env.STRIPE_SUCCESS_URL}/${orderDetailsId}`,
     cancel_url: process.env.STRIPE_CANCEL_URL,
   });

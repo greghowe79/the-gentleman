@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { type ShopTableProduct, type ItemProps, type ShopCategoriesTableProduct } from '~/routes/shop/types/types';
 import { getSellerProducts } from '~/components/connected/data/data';
 import type { SellerProduct } from '~/components/seller-products/types/types';
+import { createSlug } from '~/components/select-categories/actions/actions';
 
 export const rootDomain = 'http://localhost';
 
@@ -16,8 +17,9 @@ export const validateEmail = (email: string) => {
   return false;
 };
 
-export const handleChange = $((e: QwikChangeEvent<HTMLInputElement>, input: Signal<string>) => {
+export const handleChange = $((e: QwikChangeEvent<HTMLInputElement>, input: Signal<string>, productSlug?: Signal<string>) => {
   input.value = e.target.value;
+  if (productSlug) createSlug(input.value, productSlug);
 
   if (input.value.includes('.') && input.value.split('.')[1].length > 2) {
     e.target.value = parseFloat(input.value).toFixed(2);
