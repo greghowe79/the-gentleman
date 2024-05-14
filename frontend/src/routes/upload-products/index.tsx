@@ -205,21 +205,7 @@ const UploadProducts = component$(() => {
                     placeholder="Product name"
                     class={styles['input']}
                     required
-                    onChange$={(e) => handleChange(e, productName)}
-                  />
-                </label>
-              </div>
-
-              <div class={prodNameInputWrap}>
-                <label for="slug" class={styles['label']}>
-                  <input
-                    type="text"
-                    id="slug"
-                    name="slug"
-                    placeholder="Slug"
-                    class={styles['input']}
-                    required
-                    onChange$={(e) => handleChange(e, productSlug)}
+                    onChange$={(e) => handleChange(e, productName, productSlug)}
                   />
                 </label>
               </div>
@@ -233,7 +219,7 @@ const UploadProducts = component$(() => {
                     type="number"
                     id="price"
                     name="price"
-                    placeholder="Price"
+                    placeholder="Price including taxes (VAT - GST)"
                     class={styles['input']}
                     required
                     onChange$={(e) => handleChange(e, productPrice)}
