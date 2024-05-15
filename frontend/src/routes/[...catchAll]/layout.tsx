@@ -33,12 +33,13 @@ import {
 import { Arrow } from '~/components/starter/icons/arrow';
 import { Link, routeLoader$, useLocation } from '@builder.io/qwik-city';
 import { BodyContext, CartContext, UserSessionContext } from '~/root';
-import { addToCart, calculateCategoryPath } from './utils';
 import { Image } from '@unpic/qwik';
 import ProductDetailImage from '~/components/product-detail-image/component/ProductDetailImage';
 import CustomSelect from '~/components/select-categories/component/customSelect';
 import { quantityOptions } from '~/components/select-categories/data/data';
-import type { Service } from './types';
+import type { Service } from '~/utils/product_detail_page_utils/types';
+import { addToCart } from '~/utils/product_detail_page_utils/actions_product_detail_page';
+import { calculateCategoryPath } from '~/utils/product_detail_page_utils/pdp_utils';
 
 export const useService = routeLoader$(async (requestEvent) => {
   const res = await fetch(`http://localhost:3005/api_v1/${requestEvent.params.catchAll}`);

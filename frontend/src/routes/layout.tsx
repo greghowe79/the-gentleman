@@ -6,10 +6,14 @@ import Footer from '~/components/starter/footer/footer';
 import styles from './styles.css?inline';
 import IconsPanel from '~/components/starter/icons-panel/iconsPanel';
 import { CartContext, ModalContext, UserSessionContext } from '~/root';
-
-import { checkProductAlreadyExist, deleteAllRows, insertProduct, updateTable } from './[...catchAll]/actions';
-import { type ProductDetailsProps } from './[...catchAll]/types';
 import Modal from '~/components/Modal/component/Modal';
+import type { ProductDetailsProps } from '~/utils/product_detail_page_utils/types';
+import {
+  checkProductAlreadyExist,
+  deleteAllRows,
+  insertProduct,
+  updateTable,
+} from '~/utils/product_detail_page_utils/actions_product_detail_page';
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
   // Control caching for this request for best performance and to reduce hosting costs:

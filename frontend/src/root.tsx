@@ -5,9 +5,9 @@ import { RouterHead } from './components/router-head/router-head';
 import './global.css';
 import { supabase } from './utils/supabase';
 import axios from 'axios';
-import { type CartProps } from './routes/[...catchAll]/types';
 import type { ItemProps } from './routes/shop/types/types';
 import type { SellerProduct } from './components/seller-products/types/types';
+import type { CartProps } from './utils/product_detail_page_utils/types';
 
 export type UserSess = {
   userId: string;

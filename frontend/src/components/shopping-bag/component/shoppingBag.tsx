@@ -25,7 +25,6 @@ import {
   line,
   sbHeader,
   customBtn,
-  // linkBtn,
   topBag,
   topBagTitle,
   total,
@@ -33,15 +32,16 @@ import {
   totalAmount,
   customBtnWrapper,
 } from '../styles/style.css';
-import { type CartProps, type ProductDetailsProps } from '~/routes/[...catchAll]/types';
-import { addToCart, deleteProduct } from '~/routes/[...catchAll]/utils';
-//import { createTransfers, getSessionId } from '~/utils/stripe';
+
 import { getSessionId } from '~/utils/stripe';
+import type { CartProps, ProductDetailsProps } from '~/utils/product_detail_page_utils/types';
+import { addToCart, deleteProduct } from '~/utils/product_detail_page_utils/actions_product_detail_page';
 
 export const ShoppingBag = component$((props: { text: string; closed: QRL<() => void>; cart?: Signal<CartProps>; openPanel?: any }) => {
   const backgroundColor = useContext(BodyContext);
   const userSession = useContext(UserSessionContext);
   const isLoading = useSignal(false);
+  const isCheckoutLoading = useSignal(false);
   const nav = useNavigate();
 
   useResource$(async () => {
@@ -67,14 +67,14 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
       alert('PLEASE LOGIN');
       return;
     }
-    isLoading.value = true;
+    isCheckoutLoading.value = true;
     const orederId = userSession.userId.split('').reverse().join('');
 
     const res = await getSessionId(userSession, orederId);
 
     //4000000000000077
     await nav(res?.sessionUrl);
-    isLoading.value = false;
+    isCheckoutLoading.value = false;
   });
 
   return (
@@ -199,7 +199,7 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
             <div class={styles['custom-button-container']}>
               <div class={customBtnWrapper}>
                 <button class={customBtn} onClick$={(e) => handleClick(e)} disabled={isLoading.value}>
-                  {isLoading.value ? 'Loading...' : userSession.isLoggedIn ? 'Check out' : 'Login to checkout'}
+                  {isCheckoutLoading.value ? 'Loading...' : userSession.isLoggedIn ? 'Check out' : 'Login to checkout'}
                 </button>
               </div>
             </div>
