@@ -16,6 +16,14 @@ export type UserSess = {
   charges_enabled: boolean;
 };
 
+export type OpenPanel = {
+  isOpen: boolean;
+};
+
+export type IkonKey = {
+  number: string;
+};
+
 export const BodyContext = createContextId<Signal<string>>('body-context');
 export const UserSessionContext = createContextId<UserSess>('user-session');
 export const CartContext = createContextId<Signal<CartProps>>('cart-context');
@@ -24,6 +32,8 @@ export const ImagesContext = createContextId<Signal<any>>('images-context');
 export const ImageIndexContext = createContextId<Signal<number>>('image-index-context');
 export const ProductsTableContext = createContextId<Signal<ItemProps[]>>('product-table-context');
 export const ProductsSellerContext = createContextId<Signal<SellerProduct[]>>('seller-products-context');
+export const OpenPanelContext = createContextId<OpenPanel>('panel-context');
+export const IconKeyContext = createContextId<IkonKey>('iconKey-context');
 
 export default component$(() => {
   const currentIndex = useSignal(0);
@@ -32,12 +42,17 @@ export default component$(() => {
   const imageIndex: Signal<number> = useSignal(0);
   const productsTable: Signal<ItemProps[]> = useSignal([]);
   const products = useSignal<SellerProduct[]>([]);
+  const iconKey = useStore<IkonKey>({ number: '' });
 
   const userSession = useStore<UserSess>({
     userId: '',
     isLoggedIn: false,
     stripe_seller: {},
     charges_enabled: false,
+  });
+
+  const openPanel = useStore<OpenPanel>({
+    isOpen: false,
   });
 
   const getUserProfile = $(async () => {
@@ -138,6 +153,8 @@ export default component$(() => {
   useContextProvider(ImageIndexContext, imageIndex);
   useContextProvider(ProductsTableContext, productsTable);
   useContextProvider(ProductsSellerContext, products);
+  useContextProvider(OpenPanelContext, openPanel);
+  useContextProvider(IconKeyContext, iconKey);
   return (
     <QwikCityProvider>
       <head>

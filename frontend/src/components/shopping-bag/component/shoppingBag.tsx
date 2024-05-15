@@ -1,5 +1,5 @@
 import { type QRL, component$, useContext, type Signal, $, useResource$, useSignal, type QwikMouseEvent } from '@builder.io/qwik';
-import { BodyContext, type UserSess, UserSessionContext } from '~/root';
+import { BodyContext, type UserSess, UserSessionContext, OpenPanelContext } from '~/root';
 
 import styles from '../styles/shopping-bag.module.css';
 import { Link, useNavigate } from '@builder.io/qwik-city';
@@ -37,9 +37,10 @@ import { getSessionId } from '~/utils/stripe';
 import type { CartProps, ProductDetailsProps } from '~/utils/product_detail_page_utils/types';
 import { addToCart, deleteProduct } from '~/utils/product_detail_page_utils/actions_product_detail_page';
 
-export const ShoppingBag = component$((props: { text: string; closed: QRL<() => void>; cart?: Signal<CartProps>; openPanel?: any }) => {
+export const ShoppingBag = component$((props: { text: string; closed: QRL<() => void>; cart?: Signal<CartProps> }) => {
   const backgroundColor = useContext(BodyContext);
   const userSession = useContext(UserSessionContext);
+  const openPanel = useContext(OpenPanelContext);
   const isLoading = useSignal(false);
   const isCheckoutLoading = useSignal(false);
   const nav = useNavigate();
@@ -85,7 +86,7 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
             <div>
               <h2 class={topBagTitle}>Your cart</h2>
             </div>
-            <button onClick$={() => (props.openPanel.isOpen = false)} class={closeButton}>
+            <button onClick$={() => (openPanel.isOpen = false)} class={closeButton}>
               <CloseIcon />
             </button>
           </div>
@@ -112,7 +113,7 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
                                   <div class={line}>
                                     <Link
                                       class={nameStyle}
-                                      onClick$={() => (props.openPanel.isOpen = false)}
+                                      onClick$={() => (openPanel.isOpen = false)}
                                       href={'/shop/' + product.category_slug + '/' + product.slug}
                                     >
                                       {product.product_name}

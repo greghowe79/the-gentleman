@@ -4,13 +4,15 @@ import styles from './header.module.css';
 import { Link } from '@builder.io/qwik-city';
 import { IconsMenu } from '~/components/icons-menu/component/iconsMenu';
 import { ListMenu } from '~/components/list-menu/component/listMenu';
-import { UserSessionContext } from '~/root';
+import { OpenPanelContext, UserSessionContext } from '~/root';
 import ButtonAddProduct from '~/components/button-add-product/component/button_add_product';
 import { isDashboardSeller } from './actions/actions';
 import type { ToggleProps } from './types/types';
 
-export const Header = component$<ToggleProps>(({ openPanel, iconKey, location }) => {
+export const Header = component$<ToggleProps>(({ location }) => {
   const userSession = useContext(UserSessionContext);
+  const openPanel = useContext(OpenPanelContext);
+
   const open = $(() => {
     openPanel.isOpen = true;
   });
@@ -35,7 +37,7 @@ export const Header = component$<ToggleProps>(({ openPanel, iconKey, location })
           <ListMenu userSession={userSession} />
         </div>
         <div class={styles['icons-container']} style={{ display: displayListAndIcons }}>
-          <IconsMenu open={open} iconKey={iconKey} />
+          <IconsMenu open={open} />
         </div>
       </nav>
     </header>

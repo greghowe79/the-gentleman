@@ -8,12 +8,14 @@ import { Login } from '~/components/login/component/login';
 import { SignUp } from '~/components/signup/component/signup';
 import { LogoutButton } from '~/components/logout-button/component/logoutButton';
 import { type ToggleProps } from './types';
-import { UserSessionContext } from '~/root';
+import { IconKeyContext, OpenPanelContext, UserSessionContext } from '~/root';
 import { supabase } from '~/utils/supabase';
 import { useNavigate } from '@builder.io/qwik-city';
 
-export const IconsPanel = component$<ToggleProps>(({ openPanel, iconKey, cart }) => {
+export const IconsPanel = component$<ToggleProps>(({ cart }) => {
   const userSession = useContext(UserSessionContext);
+  const openPanel = useContext(OpenPanelContext);
+  const iconKey = useContext(IconKeyContext);
   const isSession = useSignal(false);
   const nav = useNavigate();
 
@@ -22,7 +24,7 @@ export const IconsPanel = component$<ToggleProps>(({ openPanel, iconKey, cart })
   });
   const isLoginForm = useStore({ active: false });
 
-  const { number } = iconKey || {};
+  const { number } = iconKey;
 
   // Handle Logout
   const handleLogout = $(async () => {
@@ -45,7 +47,7 @@ export const IconsPanel = component$<ToggleProps>(({ openPanel, iconKey, cart })
   const TogglePanelStyles = {
     transform: openPanel.isOpen ? 'translateX(0%)' : 'translateX(100%)',
     boxShadow: openPanel.isOpen ? '-10px 0 10px rgba(0, 0, 0, 0.5)' : 'none',
-    justifyContent: iconKey?.number === '2' ? 'center' : 'unset',
+    justifyContent: iconKey.number === '2' ? 'center' : 'unset',
   };
 
   return (
@@ -54,9 +56,9 @@ export const IconsPanel = component$<ToggleProps>(({ openPanel, iconKey, cart })
         <LogoutButton handleLogout={handleLogout} />
       ) : (
         <>
-          <Overlay openPanel={openPanel} closed={closed} />
+          <Overlay closed={closed} />
           <div class={styles['toggle-panel']} style={TogglePanelStyles}>
-            {number === '0' && <ShoppingBag text={'Your Shopping Bag is empty'} closed={closed} cart={cart} openPanel={openPanel} />}
+            {number === '0' && <ShoppingBag text={'Your Shopping Bag is empty'} closed={closed} cart={cart} />}
             {number === '1' && <SearchBar />}
             {number === '2' && (isLoginForm.active ? <Login isLoginForm={isLoginForm} /> : <SignUp isLoginForm={isLoginForm} />)}
             {number === '3' && <MenuLanguages />}
