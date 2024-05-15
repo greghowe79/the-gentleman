@@ -32,7 +32,7 @@ import {
 } from '../shop/styles.css';
 import { Arrow } from '~/components/starter/icons/arrow';
 import { Link, routeLoader$, useLocation } from '@builder.io/qwik-city';
-import { BodyContext, CartContext, UserSessionContext } from '~/root';
+import { BodyContext, CartContext, IconKeyContext, OpenPanelContext, UserSessionContext } from '~/root';
 import { Image } from '@unpic/qwik';
 import ProductDetailImage from '~/components/product-detail-image/component/ProductDetailImage';
 import CustomSelect from '~/components/select-categories/component/customSelect';
@@ -55,6 +55,8 @@ const ShopDetailLayout = component$(() => {
   const selectedOption = useSignal('1');
   const userSession = useContext(UserSessionContext);
   const cart = useContext(CartContext);
+  const openPanel = useContext(OpenPanelContext);
+  const iconKey = useContext(IconKeyContext);
 
   return (
     <div class={shopArea}>
@@ -151,7 +153,7 @@ const ShopDetailLayout = component$(() => {
                 </div>
                 <div class={cartButtonWrapper}>
                   <button
-                    onClick$={() =>
+                    onClick$={() => [
                       addToCart({
                         isFromPdp: true,
                         userSession,
@@ -159,8 +161,10 @@ const ShopDetailLayout = component$(() => {
                         product: null,
                         selectedOption,
                         service,
-                      })
-                    }
+                      }),
+                      (iconKey.number = '0'),
+                      (openPanel.isOpen = true),
+                    ]}
                     class={cartButtonStyle}
                   >
                     Add to Cart

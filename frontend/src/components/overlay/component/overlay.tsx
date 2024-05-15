@@ -1,8 +1,10 @@
-import { component$ } from '@builder.io/qwik';
+import { component$, useContext } from '@builder.io/qwik';
 import styles from '../styles/overlay.module.css';
 import { type ToggleProps } from '~/components/starter/icons-panel/types';
+import { OpenPanelContext } from '~/root';
 
-export const Overlay = component$<ToggleProps>(({ openPanel, closed }) => {
+export const Overlay = component$<ToggleProps>(({ closed }) => {
+  const openPanel = useContext(OpenPanelContext);
   return (
     <div
       class={styles['overlay']}

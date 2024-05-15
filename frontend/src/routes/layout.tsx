@@ -1,4 +1,4 @@
-import { component$, createContextId, type Signal, Slot, useStore, useStyles$, useContext, useResource$ } from '@builder.io/qwik';
+import { component$, createContextId, type Signal, Slot, useStyles$, useContext, useResource$ } from '@builder.io/qwik';
 import { routeLoader$, useLocation } from '@builder.io/qwik-city';
 import type { RequestHandler } from '@builder.io/qwik-city';
 import { Header } from '~/components/starter/header/header';
@@ -36,8 +36,6 @@ export const LoaderContext = createContextId<Signal<boolean>>('loader-context');
 
 export default component$(() => {
   const loc = useLocation();
-  const openPanel = useStore({ isOpen: false });
-  const iconKey = useStore({ number: '' });
   const cart = useContext(CartContext);
   const userSession = useContext(UserSessionContext);
   const isModalVisible = useContext(ModalContext);
@@ -75,8 +73,8 @@ export default component$(() => {
   return (
     <>
       {isModalVisible.value && <Modal />}
-      <IconsPanel openPanel={openPanel} iconKey={iconKey} cart={cart} />
-      <Header openPanel={openPanel} iconKey={iconKey} location={loc.url.href} />
+      <IconsPanel cart={cart} />
+      <Header location={loc.url.href} />
 
       <div class="scrollable-content">
         <main>
