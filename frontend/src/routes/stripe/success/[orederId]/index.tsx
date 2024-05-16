@@ -12,12 +12,10 @@ const StripeSuccess = component$(() => {
 
   useVisibleTask$(async ({ track }) => {
     track(() => userSession.userId);
-    console.log(userSession.userId);
     if (userSession.userId) {
       const { data } = await supabase.from('profiles').select('transfer_group').eq('id', userSession.userId);
 
       const uniqueIdentifier = data?.[0]?.transfer_group;
-      console.log(uniqueIdentifier);
       const res = await stripeSuccessRequest(userSession, orderId, uniqueIdentifier);
       await nav(res.success ? '/' : '/stripe/cancel');
     }

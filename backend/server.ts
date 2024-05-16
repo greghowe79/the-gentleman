@@ -95,7 +95,7 @@ app.post(route + '/stripe-session-id', async (req: Request, res: Response) => {
     success_url: `${process.env.STRIPE_SUCCESS_URL}/${orderDetailsId}`,
     cancel_url: process.env.STRIPE_CANCEL_URL,
   });
-  console.log('SESSION ', session.payment_status);
+
   const { error: stripeSessionError } = await supabase
     .from('profiles')
     .update({ stripeSession: session, transfer_group: uniqueTransferIdentifier })
@@ -129,7 +129,7 @@ app.post(route + '/stripe-success', async (req: Request, res: Response) => {
       const session = await stripe?.checkout?.sessions?.retrieve(sessionId);
 
       // 4 If session payment status is paid, transfer fund to the sellers and create order
-      console.log(session);
+      console.log('SESSION ', session);
       if (session.payment_status === 'paid') {
         // check if order with that session id already exist by query orders collections
 
@@ -144,8 +144,14 @@ app.post(route + '/stripe-success', async (req: Request, res: Response) => {
           res.json({ success: true });
         } else {
           // 7 else create new order and send success true
+          const uuid = uuidv4();
 
-          const { data, error: orderDetailsError } = await supabase.from('order_details').select('*').eq('order_id', orderId);
+          const { error: replaceOrderIdError } = await supabase.from('order_details').update({ order_id: uuid }).eq('order_id', orderId);
+          if (replaceOrderIdError) {
+            console.error(replaceOrderIdError);
+          }
+
+          const { data, error: orderDetailsError } = await supabase.from('order_details').select('*').eq('order_id', uuid);
           if (orderDetailsError) {
             console.error(orderDetailsError);
           }
@@ -160,10 +166,11 @@ app.post(route + '/stripe-success', async (req: Request, res: Response) => {
             street: session.shipping_details.address.line1,
             postal_code: session.shipping_details.address.postal_code,
             state: session.shipping_details.address.state,
+            phone: session.customer_details.phone,
           };
 
           const order = {
-            order_id: orderId,
+            order_id: uuid,
             customer_id: user,
             customer_email: session.customer_details.email,
             order_details: data,
@@ -175,7 +182,6 @@ app.post(route + '/stripe-success', async (req: Request, res: Response) => {
             stripeSession: session,
           };
 
-          console.log('ORDER', order);
           const { error } = await supabase.from('orders').insert(order);
           if (error) {
             console.log(error);
