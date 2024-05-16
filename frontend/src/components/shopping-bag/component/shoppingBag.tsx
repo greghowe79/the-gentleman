@@ -69,9 +69,9 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
       return;
     }
     isCheckoutLoading.value = true;
-    const orederId = userSession.userId.split('').reverse().join('');
+    const orderId = userSession.userId.split('').reverse().join('');
 
-    const res = await getSessionId(userSession, orederId);
+    const res = await getSessionId(userSession, orderId);
 
     //4000000000000077
     await nav(res?.sessionUrl);
