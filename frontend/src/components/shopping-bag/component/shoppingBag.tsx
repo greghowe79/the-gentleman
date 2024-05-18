@@ -70,12 +70,10 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
     }
     isCheckoutLoading.value = true;
     const orderId = userSession.userId.split('').reverse().join('');
-
     const res = await getSessionId(userSession, orderId);
-
-    //4000000000000077
     await nav(res?.sessionUrl);
     isCheckoutLoading.value = false;
+    //4000000000000077
   });
 
   return (

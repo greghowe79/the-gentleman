@@ -355,26 +355,6 @@ export const cartButtonStyle = style({
   },
 });
 
-export const addToCartButton = style({
-  display: 'inline-flex',
-  width: 'calc(100% - 30px)',
-  backgroundColor: 'transparent',
-  color: 'var(--default-text-color)',
-  borderRadius: '25px',
-  justifyContent: 'center',
-  alignItems: 'center',
-  padding: '20px 16px',
-  fontFamily: 'var(--font-family-secondary)',
-  fontSize: 'var(--font-size-md)',
-  height: 'var(--cta-add-to-cart)',
-  alignSelf: 'center',
-  border: '2px solid var(--default-text-color)',
-  ':hover': {
-    border: '3px solid var(--default-text-color)',
-  },
-  marginTop: '45px',
-});
-
 export const cartButtonWrapper = style({
   display: 'flex',
   alignItems: 'center',
@@ -397,5 +377,5 @@ export const priceWrapStyle = style({
 
 export const textDescription = style({
   width: '100%',
-  height: '80px',
+  height: '70px',
 });
