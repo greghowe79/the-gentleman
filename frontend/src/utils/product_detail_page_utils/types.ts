@@ -4,6 +4,7 @@ import { type UserSess } from '~/root';
 export interface Service {
   id: string;
   url: string;
+  user_id: string;
   name: string;
   slug: string;
   price: number;
@@ -13,6 +14,7 @@ export interface Service {
   sku: string;
   categorySlug: string;
   seller: string;
+  images_url: string[];
 }
 
 export interface ProductDetailsProps {

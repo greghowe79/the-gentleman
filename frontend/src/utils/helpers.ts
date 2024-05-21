@@ -56,6 +56,24 @@ export const uploadImage = $(
   }
 );
 
+export const uploadExtraImage = $(
+  async (e: QwikChangeEvent<HTMLInputElement>, currentFiles: Signal<File[]>, selectedFiles: Signal<string[]>) => {
+    const files = e.target.files;
+
+    const fileNames: string[] = [];
+    if (files) {
+      const filesArray = Array.from(files);
+      currentFiles.value = filesArray;
+
+      // console.log('CURRENT FILES ', currentFiles.value);
+      filesArray.map((file: any) => {
+        fileNames.push(file.name);
+      });
+    }
+    selectedFiles.value = fileNames;
+  }
+);
+
 export const handlePriceKeyPress = $((e: QwikKeyboardEvent<HTMLInputElement> & any) => {
   const invalidKeys = ['-', '+', '.'];
 
@@ -91,6 +109,53 @@ export const uploadImgStorage = $(
     } else {
       console.log(error);
     }
+  }
+);
+
+// export const uploadExtraPicturesStorage = $(
+//   async (newProductId: string, currentFiles: Signal<any>, imgUrl: Signal<string>, images: Signal<any>, CDNURL: string) => {
+//     const { data, error } = await supabase.storage.from('shop').upload(newProductId + '/' + uuidv4(), currentFile.value);
+
+//     if (data) {
+//       imgUrl.value = CDNURL + data.path;
+//       // await getImages(userSession, images);
+//     } else {
+//       console.log(error);
+//     }
+//   }
+// );
+
+export const uploadExtraPicturesStorage = $(
+  async (newProductId: string, currentFiles: Signal<File[]>, imgUrls: Signal<string[]>, CDNURL_SHOP: string) => {
+    console.log(typeof currentFiles);
+
+    // console.log('currentFiles', currentFiles.value);
+    // console.log('newProductId', newProductId);
+    // console.log('imgUrls', imgUrls.value);
+    // console.log('imgUrls', CDNURL);
+    const uploadPromises = currentFiles.value.map(async (file: any) => {
+      const { data, error } = await supabase.storage.from('products').upload(newProductId + '/' + uuidv4(), file);
+
+      if (data) {
+        return CDNURL_SHOP + data.path;
+      } else {
+        console.log(error);
+        return null;
+      }
+    });
+
+    const uploadedPaths = await Promise.all(uploadPromises);
+    console.log('uploadedPaths ', uploadedPaths);
+    uploadedPaths.forEach((path) => {
+      if (path) {
+        console.log('PATH ', path);
+        imgUrls.value.push(path);
+        //console.log('IMAGES URL VALUE ', imgUrls.value);
+      }
+    });
+
+    // Call getImages only once after all uploads are completed
+    // await getImages(userSession, images);
   }
 );
 
