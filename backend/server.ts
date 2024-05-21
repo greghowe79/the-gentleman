@@ -345,8 +345,17 @@ app.get(route + '/shop/:category/:serviceId', async (req: Request, res: Response
   const { data, error } = await supabase.from('shop_categories').select('products').eq('slug', category).limit(1);
 
   const filteredProduct = data?.[0].products.filter((product: Product) => product.slug === serviceId);
-
   if (error) return res.status(400).json({ error: error.message });
+
+  const { data: imagesUrl, error: ErrorImagesUrl } = await supabase
+    .from('products')
+    .select('images_url')
+    .eq('id', filteredProduct?.[0]?.id);
+  if (ErrorImagesUrl) return res.status(400).json({ error: ErrorImagesUrl.message });
+
+  imagesUrl?.[0]?.images_url?.splice(0, 0, filteredProduct?.[0].url);
+  filteredProduct[0].images_url = imagesUrl?.[0]?.images_url;
+
   return res.json(filteredProduct);
 });
 

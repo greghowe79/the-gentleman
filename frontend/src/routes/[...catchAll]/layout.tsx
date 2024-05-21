@@ -8,7 +8,7 @@ import {
   shopHeaderArea,
   shopHeaderContainer,
   shopBreadcrumb,
-  detailImage,
+  //detailImage,
   detailDescription,
   titlePrice,
   titleDetail,
@@ -16,9 +16,9 @@ import {
   categoryWrapper,
   categoryStyle,
   shopWrapperDetailContent,
-  thumbnailsWrapper,
-  thumbnail,
-  svgDivThumbnail,
+  // thumbnailsWrapper,
+  // thumbnail,
+  // svgDivThumbnail,
   stickyImageContainer,
   leftWrapperDetail,
   priceDetail,
@@ -29,17 +29,20 @@ import {
   cartButtonWrapper,
   Wrap,
   spacerFirst,
+  buyItNowButtonStyle,
+  butItNowButtonWrapper,
 } from '../shop/styles.css';
 import { Arrow } from '~/components/starter/icons/arrow';
 import { Link, routeLoader$, useLocation } from '@builder.io/qwik-city';
 import { BodyContext, CartContext, IconKeyContext, OpenPanelContext, UserSessionContext } from '~/root';
-import { Image } from '@unpic/qwik';
+//import { Image } from '@unpic/qwik';
 import ProductDetailImage from '~/components/product-detail-image/component/ProductDetailImage';
 import CustomSelect from '~/components/select-categories/component/customSelect';
 import { quantityOptions } from '~/components/select-categories/data/data';
 import type { Service } from '~/utils/product_detail_page_utils/types';
 import { addToCart } from '~/utils/product_detail_page_utils/actions_product_detail_page';
 import { calculateCategoryPath } from '~/utils/product_detail_page_utils/pdp_utils';
+import { Carousel } from '~/components/carousel/component/carousel';
 
 export const useService = routeLoader$(async (requestEvent) => {
   const res = await fetch(`http://localhost:3005/api_v1/${requestEvent.params.catchAll}`);
@@ -103,7 +106,7 @@ const ShopDetailLayout = component$(() => {
         <div class={shopWrapperDetailContent}>
           <div class={stickyImageContainer}>
             <div class={Wrap}>
-              <div class={thumbnailsWrapper}>
+              {/* <div class={thumbnailsWrapper}>
                 <div class={thumbnail}>
                   <div class={svgDivThumbnail}>CIAO</div>
                 </div>
@@ -113,10 +116,10 @@ const ShopDetailLayout = component$(() => {
                 <div class={thumbnail}>
                   <div class={svgDivThumbnail}>CIAO</div>
                 </div>
-              </div>
+              </div> */}
               <ProductDetailImage>
                 <div q:slot="image" style={{ margin: '0 auto' }}>
-                  <Image
+                  {/* <Image
                     objectFit="contain"
                     src={service.value[0]?.url}
                     layout="constrained"
@@ -124,7 +127,8 @@ const ShopDetailLayout = component$(() => {
                     loading="lazy"
                     alt="A lovely bath"
                     class={detailImage}
-                  />
+                  /> */}
+                  <Carousel images={service.value[0]?.images_url} />
                 </div>
               </ProductDetailImage>
             </div>
@@ -168,6 +172,11 @@ const ShopDetailLayout = component$(() => {
                     class={cartButtonStyle}
                   >
                     Add to Cart
+                  </button>
+                </div>
+                <div class={butItNowButtonWrapper}>
+                  <button onClick$={() => console.log('CHECKOUT')} class={buyItNowButtonStyle}>
+                    Buy it now
                   </button>
                 </div>
               </div>

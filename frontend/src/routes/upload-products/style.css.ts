@@ -63,6 +63,12 @@ export const preview = style({
   border: 'none',
 });
 
+export const previewExtraPictures = style({
+  margin: '0',
+  border: 'none',
+  wordBreak: 'break-word',
+});
+
 export const labelWrapper = style({
   display: 'inline-flex',
   alignItems: 'center',

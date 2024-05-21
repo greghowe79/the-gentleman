@@ -37,6 +37,7 @@ export interface ItemProps {
   slug: string;
   file_name: string;
   category_slug: string;
+  images_url: string[];
 }
 
 export interface ShopCategoriesTableProduct {

@@ -20,6 +20,7 @@ import {
   prodDescrTextWrap,
   textAreaStyle,
   buttonIcon,
+  previewExtraPictures,
 } from './style.css';
 import styles from '../../components/search-bar/styles/search-bar.module.css';
 import { supabase } from '~/utils/supabase';
@@ -38,6 +39,8 @@ import {
   insertIntoTheProductTable,
   uploadImage,
   uploadImgStorage,
+  uploadExtraImage,
+  uploadExtraPicturesStorage,
 } from '~/utils/helpers';
 import { Image } from '@unpic/qwik';
 import CustomSelect from '~/components/select-categories/component/customSelect';
@@ -46,7 +49,7 @@ import type { ShopCategoriesTableProduct, ItemProps } from '../shop/types/types'
 import BinIcon from '~/components/starter/icons/bin';
 
 const CDNURL = 'https://oukztwgobbpvjuhlvpft.supabase.co/storage/v1/object/public/shop/';
-
+const CDNURL_SHOP = 'https://oukztwgobbpvjuhlvpft.supabase.co/storage/v1/object/public/products/';
 const UploadProducts = component$(() => {
   const productName = useSignal('');
   const productSlug = useSignal('');
@@ -54,10 +57,13 @@ const UploadProducts = component$(() => {
   const productDescription = useSignal('');
   const productPrice = useSignal('');
   const imgUrl = useSignal('');
+  const imgUrls = useSignal<string[]>([]);
   const userSession = useContext(UserSessionContext);
   const images = useContext(ImagesContext);
-  const selectedFile = useSignal('No file currently selected for upload');
+  const selectedFile = useSignal('Upload your product cover');
+  const selectedFiles = useSignal<string[]>(['Extra pictures']);
   const currentFile: Signal<any> = useSignal();
+  const currentFiles: Signal<File[] | any> = useSignal([]);
   const isPreview = useSignal(false);
   const selectedOption = useSignal('');
   const sequence = useSignal(1);
@@ -78,6 +84,7 @@ const UploadProducts = component$(() => {
 
     // Genera un nuovo ID univoco utilizzando uuid
     const newProductId = uuidv4();
+    await uploadExtraPicturesStorage(newProductId, currentFiles, imgUrls, CDNURL_SHOP);
 
     const newSKU = await generateSku(newProductId, productName.value, productDescription.value, sequence);
 
@@ -114,6 +121,7 @@ const UploadProducts = component$(() => {
       slug: productSlug.value,
       file_name: selectedFile.value,
       category_slug: categorySlug.value,
+      images_url: imgUrls.value,
     };
 
     await insertIntoTheProductTable(itemToInsert, productsTable);
@@ -192,6 +200,30 @@ const UploadProducts = component$(() => {
                   <div class={previewContainer}>
                     <div class={prevWrap}>
                       <p class={preview}>{selectedFile.value}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class={prodNameInputWrap}>
+                <div class={flexWrapper}>
+                  <div class={labelWrapper}>
+                    <label for="extra_pictures_uploads" class={label}>
+                      <div>Upload</div>
+                    </label>
+                    <input
+                      multiple
+                      class={input}
+                      type="file"
+                      id="extra_pictures_uploads"
+                      name="extra_pictures_uploads"
+                      accept=".png, .jpg, .jpeg, .avif"
+                      onChange$={(e) => uploadExtraImage(e, currentFiles, selectedFiles)}
+                      required
+                    />
+                  </div>
+                  <div class={previewContainer}>
+                    <div class={prevWrap}>
+                      <p class={previewExtraPictures}>{selectedFiles.value}</p>
                     </div>
                   </div>
                 </div>

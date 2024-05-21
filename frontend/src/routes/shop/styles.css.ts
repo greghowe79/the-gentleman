@@ -101,7 +101,9 @@ export const leftWrapper = style({
 
 export const stickyImageContainer = style({
   width: '55%',
-  padding: '0 30px 0 0',
+  display: 'flex',
+  justifyContent: 'center',
+  padding: '0 30px',
   fontFamily: 'var(--font-family-primary)',
   position: 'sticky',
   top: 'calc((100vh - var(--header-height) - var(--top-bar-height)) / 2)',
@@ -350,8 +352,30 @@ export const cartButtonStyle = style({
   fontSize: 'var(--font-size-md)',
   height: 'var(--cta-add-to-cart)',
   border: '2px solid var(--default-text-color)',
+  transition: 'all 0.3s ease',
   ':hover': {
-    border: '3px solid var(--default-text-color)',
+    boxShadow: '0 0 0 1px var(--default-text-color)',
+  },
+});
+
+export const buyItNowButtonStyle = style({
+  display: 'inline-flex',
+  width: '85%',
+  backgroundColor: 'var(--title-color)',
+  color: '#ffffff',
+  borderRadius: '25px',
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: '20px 16px',
+  fontFamily: 'var(--font-family-secondary)',
+  fontSize: 'var(--font-size-md)',
+  height: 'var(--cta-add-to-cart)',
+  border: '2px solid var(--title-color)',
+  transition: 'all 0.3s ease', // Aggiunta la transizione per un effetto fluido
+  ':hover': {
+    boxShadow: '0 0 0 1px var(--product-name-color)', // Box-shadow per espandere verso l'esterno
+    backgroundColor: 'var(--product-name-color)',
+    border: '2px solid var(--product-name-color)',
   },
 });
 
@@ -362,6 +386,14 @@ export const cartButtonWrapper = style({
   marginTop: '30px',
 });
 
+export const butItNowButtonWrapper = style({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-start',
+  top: '10px',
+  position: 'relative',
+});
+
 export const Wrap = style({
   display: 'flex',
   flexDirection: 'row',
@@ -369,6 +401,8 @@ export const Wrap = style({
   alignItems: 'center',
   justifyContent: 'stretch',
   userSelect: 'none',
+  background: 'rgba(0, 0, 0, 0.03)',
+  maxWidth: '500px',
 });
 
 export const priceWrapStyle = style({
