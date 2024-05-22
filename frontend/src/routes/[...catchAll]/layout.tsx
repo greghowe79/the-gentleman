@@ -145,9 +145,8 @@ const ShopDetailLayout = component$(() => {
                     <strong class={categoryStyle}>{service.value[0]?.category}</strong>
                   </div>
                 </div>
-
-                <div class={priceDetail}>EUR {service.value[0]?.price}</div>
               </div>
+              <div class={priceDetail}>{service.value[0]?.price} €</div>
               <div class={spacerFirst}>
                 <div class={quantityWrapper}>
                   <div class={label}>Choose the quantity</div>
