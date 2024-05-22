@@ -103,10 +103,10 @@ export const stickyImageContainer = style({
   width: '55%',
   display: 'flex',
   justifyContent: 'center',
-  padding: '0 30px',
+  padding: '30px',
   fontFamily: 'var(--font-family-primary)',
   position: 'sticky',
-  top: 'calc((100vh - var(--header-height) - var(--top-bar-height)) / 2)',
+  height: 'calc((100vh - var(--header-height) - var(--top-bar-height)))',
   alignSelf: 'flex-start',
 });
 
@@ -116,7 +116,6 @@ export const spacer = style({
 });
 
 export const spacerFirst = style({
-  marginTop: '41.7px',
   letterSpacing: '0.06rem',
 });
 
@@ -146,6 +145,8 @@ export const priceDetail = style({
   fontFamily: 'var(--font-family-secondary)',
   fontSize: 'var(--font-size-lg)',
   letterSpacing: '-0.15px',
+  marginTop: '41.7px',
+  fontWeight: '600',
 });
 
 export const pdName = style({
@@ -247,7 +248,7 @@ export const imageStyle = style({
 export const detailImage = style({
   height: '100%',
   userSelect: 'none',
-  maxWidth: '300px',
+  // maxWidth: '300px',
 });
 
 export const detailDescription = style({
@@ -403,6 +404,7 @@ export const Wrap = style({
   userSelect: 'none',
   background: 'rgba(0, 0, 0, 0.03)',
   maxWidth: '500px',
+  borderRadius: '10px',
 });
 
 export const priceWrapStyle = style({

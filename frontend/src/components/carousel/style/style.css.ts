@@ -29,13 +29,13 @@ export const carouselControl = style({
   position: 'absolute',
   top: '50%',
   transform: 'translateY(-50%)',
-  background: 'rgba(0, 0, 0, 0.5)',
+  background: 'rgba(0, 0, 0, 0.2)',
   border: 'none',
   color: 'white',
   fontSize: '2em',
   cursor: 'pointer',
   zIndex: 1,
-  padding: '15px 20px',
+  padding: '7.5px 10px',
 });
 
 export const carouselControlPrev = style({
