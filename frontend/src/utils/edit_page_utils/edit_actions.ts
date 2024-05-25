@@ -5,11 +5,17 @@ import type { UserSess } from '~/root';
 
 const replaceImageInBucket = $(async (imageBucketReplacementParams: ImageBucketReplacementProps) => {
   const { userSession, imageName, currentFile } = imageBucketReplacementParams;
-  const { data: updatedImage, error } = await supabase.storage.from('shop').update(userSession.userId + '/' + imageName, currentFile.value);
+  const { data: updatedImage, error } = await supabase.storage
+    .from('shop')
+    .update(userSession.userId + '/' + imageName, currentFile.value, {
+      cacheControl: 'no-cache',
+      upsert: true, // Sovrascrivi se il file esiste già
+    });
   if (error) {
     console.error('Error replacing image:', error.message);
     return;
   }
+
   console.log('UPDATED IMAGE', updatedImage);
 });
 

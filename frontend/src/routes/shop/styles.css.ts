@@ -248,7 +248,6 @@ export const imageStyle = style({
 export const detailImage = style({
   height: '100%',
   userSelect: 'none',
-  // maxWidth: '300px',
 });
 
 export const detailDescription = style({
