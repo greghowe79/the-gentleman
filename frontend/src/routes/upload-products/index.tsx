@@ -48,7 +48,7 @@ import { categoryOptions } from '../../components/select-categories/data/data';
 import type { ShopCategoriesTableProduct, ItemProps } from '../shop/types/types';
 import BinIcon from '~/components/starter/icons/bin';
 
-const CDNURL = 'https://oukztwgobbpvjuhlvpft.supabase.co/storage/v1/object/public/shop/';
+export const CDNURL = 'https://oukztwgobbpvjuhlvpft.supabase.co/storage/v1/object/public/shop/';
 const CDNURL_SHOP = 'https://oukztwgobbpvjuhlvpft.supabase.co/storage/v1/object/public/products/';
 const UploadProducts = component$(() => {
   const productName = useSignal('');
