@@ -2,7 +2,7 @@ import { type Signal, component$, useContext, useSignal, $, useTask$ } from '@bu
 import { routeLoader$ } from '@builder.io/qwik-city';
 import CustomSelect from '~/components/select-categories/component/customSelect';
 import { categoryOptions } from '~/components/select-categories/data/data';
-import { ImageIndexContext, ImageNameContext, ImagesContext, UserSessionContext } from '~/root';
+import { ImageNameContext, ImagesContext, UserSessionContext } from '~/root';
 import {
   button,
   containerBlock,
@@ -78,7 +78,7 @@ const EditPage = component$(() => {
   const imageUrl = useSignal<string>(product.value.productDetail[0]?.url);
   const userSession = useContext(UserSessionContext);
   const images = useContext(ImagesContext);
-  const imageIndex = useContext(ImageIndexContext);
+  //const imageIndex = useContext(ImageIndexContext);
   const imageHasBeenChanged = useSignal(false);
   const imageName = useContext(ImageNameContext);
   useTask$(async ({ track }) => {
@@ -110,7 +110,13 @@ const EditPage = component$(() => {
   };
 
   const handleSubmit = $(async () => {
-    console.log('IMAGE NAME', images.value?.[imageIndex.value]?.name);
+    imageHasBeenChanged.value = await checkImageHasBeenChanged(imageChangeCheckerArgs);
+    imageHasBeenChanged.value
+      ? (await deleteImage(userSession, imageName.value, images),
+        await uploadImgStorage(userSession, currentFile, imageUrl, images, CDNURL),
+        (imageChangeCheckerArgs.receivedFileName = selectedFile.value))
+      : null;
+
     const productUpdateArgs: ProductUpdateProps = {
       name: productName.value,
       slug: productSlug.value,
@@ -119,12 +125,6 @@ const EditPage = component$(() => {
       url: imageUrl.value,
     };
 
-    imageHasBeenChanged.value = await checkImageHasBeenChanged(imageChangeCheckerArgs);
-    imageHasBeenChanged.value
-      ? (deleteImage(userSession, imageName.value, images),
-        await uploadImgStorage(userSession, currentFile, imageUrl, images, CDNURL),
-        (imageChangeCheckerArgs.receivedFileName = selectedFile.value))
-      : null;
     updateProductTable(productTableUpdateArgs);
     updateShopCategoryTable(categorySlug, userSession, product.value.productDetail[0]?.id, productUpdateArgs);
     updateShopTable(userSession, product.value.productDetail[0]?.id, productUpdateArgs);

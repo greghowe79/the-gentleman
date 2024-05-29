@@ -21,4 +21,5 @@ export interface Column {
 export interface SellerProductsProps {
   products: Signal<SellerProduct[]>;
   columns: Column[];
+  hasBeenFetch?: Signal<boolean>;
 }
