@@ -1,16 +1,25 @@
-import { component$, useContext } from '@builder.io/qwik';
+import { $, component$, useContext } from '@builder.io/qwik';
 import { imgWrap } from '~/components/shopping-bag/styles/style.css';
 import { Image } from '@unpic/qwik';
 import type { SellerProductsProps } from '../types/types';
 import { buttonIcon } from '~/routes/upload-products/style.css';
 import BinIcon from '~/components/starter/icons/bin';
-import { ModalContext, ImageIndexContext } from '~/root';
+import { ModalContext, ImageNameContext, ImageIndexContext } from '~/root';
 import EditIcon from '~/components/starter/icons/edit';
 import { Link } from '@builder.io/qwik-city';
 
 const SellerProducts = component$<SellerProductsProps>(({ products, columns }) => {
   const isModalVisible = useContext(ModalContext);
   const imageIndex = useContext(ImageIndexContext);
+  const imageName = useContext(ImageNameContext);
+
+  const getImageName = $((imageUrl: string) => {
+    const url = imageUrl.split('/').pop();
+    if (url) {
+      imageName.value = url;
+      return imageName.value;
+    }
+  });
 
   return (
     <div class="Table">
@@ -43,11 +52,18 @@ const SellerProducts = component$<SellerProductsProps>(({ products, columns }) =
                 {product.category}
               </div>
               <div class="Table-row-item" data-header="Actions">
-                <button class={buttonIcon} onClick$={() => [(isModalVisible.value = true), (imageIndex.value = index)]}>
+                <button
+                  class={buttonIcon}
+                  onClick$={() => [(isModalVisible.value = true), getImageName(product.url), (imageIndex.value = index)]}
+                >
                   <BinIcon />
                 </button>
 
-                <Link class={buttonIcon} href={`/edit-product/${product.id}`} onClick$={() => (imageIndex.value = index)}>
+                <Link
+                  class={buttonIcon}
+                  href={`/edit-product/${product.id}`}
+                  onClick$={() => [getImageName(product.url), (imageIndex.value = index)]}
+                >
                   <EditIcon />
                 </Link>
               </div>

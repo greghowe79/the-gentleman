@@ -93,6 +93,7 @@ export const getImages = $(async (userSession: UserSess, images: Signal<any>) =>
 
   if (data !== null) {
     images.value = data;
+    return data;
   } else {
     alert('Error loading images');
     console.log(error);
@@ -112,27 +113,10 @@ export const uploadImgStorage = $(
   }
 );
 
-// export const uploadExtraPicturesStorage = $(
-//   async (newProductId: string, currentFiles: Signal<any>, imgUrl: Signal<string>, images: Signal<any>, CDNURL: string) => {
-//     const { data, error } = await supabase.storage.from('shop').upload(newProductId + '/' + uuidv4(), currentFile.value);
-
-//     if (data) {
-//       imgUrl.value = CDNURL + data.path;
-//       // await getImages(userSession, images);
-//     } else {
-//       console.log(error);
-//     }
-//   }
-// );
-
 export const uploadExtraPicturesStorage = $(
   async (newProductId: string, currentFiles: Signal<File[]>, imgUrls: Signal<string[]>, CDNURL_SHOP: string) => {
     console.log(typeof currentFiles);
 
-    // console.log('currentFiles', currentFiles.value);
-    // console.log('newProductId', newProductId);
-    // console.log('imgUrls', imgUrls.value);
-    // console.log('imgUrls', CDNURL);
     const uploadPromises = currentFiles.value.map(async (file: any) => {
       const { data, error } = await supabase.storage.from('products').upload(newProductId + '/' + uuidv4(), file);
 

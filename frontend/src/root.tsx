@@ -34,6 +34,7 @@ export const ProductsTableContext = createContextId<Signal<ItemProps[]>>('produc
 export const ProductsSellerContext = createContextId<Signal<SellerProduct[]>>('seller-products-context');
 export const OpenPanelContext = createContextId<OpenPanel>('panel-context');
 export const IconKeyContext = createContextId<IkonKey>('iconKey-context');
+export const ImageNameContext = createContextId<Signal<string>>('image-name-context');
 
 export default component$(() => {
   const currentIndex = useSignal(0);
@@ -43,6 +44,7 @@ export default component$(() => {
   const productsTable: Signal<ItemProps[]> = useSignal([]);
   const products = useSignal<SellerProduct[]>([]);
   const iconKey = useStore<IkonKey>({ number: '' });
+  const imageName = useSignal('');
 
   const userSession = useStore<UserSess>({
     userId: '',
@@ -155,6 +157,7 @@ export default component$(() => {
   useContextProvider(ProductsSellerContext, products);
   useContextProvider(OpenPanelContext, openPanel);
   useContextProvider(IconKeyContext, iconKey);
+  useContextProvider(ImageNameContext, imageName);
   return (
     <QwikCityProvider>
       <head>

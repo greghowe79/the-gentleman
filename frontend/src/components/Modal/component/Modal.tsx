@@ -1,6 +1,14 @@
 import { component$, useContext, useSignal, useTask$ } from '@builder.io/qwik';
 import { buttonsWrapper, modalOverlay, modalText, modalWrapper, cancelButtonStyle, deleteButtonStyle } from '../styles/styles.css';
-import { ImageIndexContext, ImagesContext, ModalContext, ProductsSellerContext, ProductsTableContext, UserSessionContext } from '~/root';
+import {
+  ImageIndexContext,
+  ImageNameContext,
+  ImagesContext,
+  ModalContext,
+  ProductsSellerContext,
+  ProductsTableContext,
+  UserSessionContext,
+} from '~/root';
 import { cancelButtonText, deleteButtonText } from '../data/data';
 import ModalText from '~/components/modal-text/component/ModalText';
 import { deleteImage, deleteProductsProduct, deleteShopCategoryProduct, deleteShopProduct, getImages } from '~/utils/helpers';
@@ -14,6 +22,7 @@ const Modal = component$(() => {
   const products = useContext(ProductsSellerContext);
   const isLoading = useSignal(false);
   const { id, category } = products.value[imageIndex.value];
+  const imageName = useContext(ImageNameContext);
 
   useTask$(async ({ track }) => {
     track(() => userSession.userId);
@@ -36,7 +45,7 @@ const Modal = component$(() => {
             class={deleteButtonStyle}
             onclick$={(e) => [
               e.stopPropagation(),
-              deleteImage(userSession, images.value?.[imageIndex.value]?.name, images),
+              deleteImage(userSession, imageName.value, images),
               deleteShopProduct(1, id),
               deleteShopCategoryProduct(category, id),
               deleteProductsProduct(id, productsTable, userSession, products, isLoading, isModalVisible),

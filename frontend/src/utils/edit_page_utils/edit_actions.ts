@@ -1,23 +1,7 @@
 import { $, type Signal } from '@builder.io/qwik';
 import { supabase } from '../supabase';
-import type { ImageBucketReplacementProps, ImageChangeCheckerProps, Product, ProductTableUpdateProps, ProductUpdateProps } from './types';
+import type { ImageChangeCheckerProps, Product, ProductTableUpdateProps, ProductUpdateProps } from './types';
 import type { UserSess } from '~/root';
-
-const replaceImageInBucket = $(async (imageBucketReplacementParams: ImageBucketReplacementProps) => {
-  const { userSession, imageName, currentFile } = imageBucketReplacementParams;
-  const { data: updatedImage, error } = await supabase.storage
-    .from('shop')
-    .update(userSession.userId + '/' + imageName, currentFile.value, {
-      cacheControl: 'no-cache',
-      upsert: true, // Sovrascrivi se il file esiste già
-    });
-  if (error) {
-    console.error('Error replacing image:', error.message);
-    return;
-  }
-
-  console.log('UPDATED IMAGE', updatedImage);
-});
 
 const checkImageHasBeenChanged = $(async (imageChangeCheckerParams: ImageChangeCheckerProps): Promise<boolean> => {
   const { selectedFile, receivedFileName } = imageChangeCheckerParams;
@@ -25,7 +9,7 @@ const checkImageHasBeenChanged = $(async (imageChangeCheckerParams: ImageChangeC
 });
 
 const updateProductTable = $(async (productTableUpdateParams: ProductTableUpdateProps) => {
-  const { id, selectedFile, productName, productPrice, productDescription, productSlug } = productTableUpdateParams;
+  const { id, selectedFile, productName, productPrice, productDescription, productSlug, imageUrl } = productTableUpdateParams;
   const { error } = await supabase
     .from('products')
     .update({
@@ -34,6 +18,7 @@ const updateProductTable = $(async (productTableUpdateParams: ProductTableUpdate
       price: parseFloat(productPrice.value),
       description: productDescription.value,
       slug: productSlug.value,
+      url: imageUrl.value,
     })
     .eq('id', id);
 
@@ -46,7 +31,7 @@ const updateProductTable = $(async (productTableUpdateParams: ProductTableUpdate
 
 const updateShopCategoryTable = $(
   async (categorySlug: Signal<string>, userSession: UserSess, id: string, productUpdateParams: ProductUpdateProps) => {
-    const { name, slug, price, description } = productUpdateParams;
+    const { name, slug, price, description, url } = productUpdateParams;
     const { data: categoryProducts, error: newCategoryError } = await supabase
       .from('shop_categories')
       .select('products')
@@ -66,6 +51,7 @@ const updateShopCategoryTable = $(
       product.slug = slug;
       product.price = price;
       product.description = description;
+      product.url = url;
 
       const { error: updateCategoryError } = await supabase
         .from('shop_categories')
@@ -81,7 +67,7 @@ const updateShopCategoryTable = $(
 );
 
 const updateShopTable = $(async (userSession: UserSess, id: string, productUpdateParams: ProductUpdateProps) => {
-  const { name, slug, price, description } = productUpdateParams;
+  const { name, slug, price, description, url } = productUpdateParams;
   const { data: shopProducts, error: newShopError } = await supabase.from('shop').select('products').eq('id', 1);
 
   if (newShopError) {
@@ -98,6 +84,7 @@ const updateShopTable = $(async (userSession: UserSess, id: string, productUpdat
     product.slug = slug;
     product.price = price;
     product.description = description;
+    product.url = url;
 
     const { error: updateShopError } = await supabase.from('shop').update({ products: shopProducts[0].products }).eq('id', 1);
 
@@ -108,4 +95,4 @@ const updateShopTable = $(async (userSession: UserSess, id: string, productUpdat
   }
 });
 
-export { checkImageHasBeenChanged, updateProductTable, replaceImageInBucket, updateShopCategoryTable, updateShopTable };
+export { checkImageHasBeenChanged, updateProductTable, updateShopCategoryTable, updateShopTable };

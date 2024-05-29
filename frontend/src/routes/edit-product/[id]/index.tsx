@@ -2,7 +2,7 @@ import { type Signal, component$, useContext, useSignal, $, useTask$ } from '@bu
 import { routeLoader$ } from '@builder.io/qwik-city';
 import CustomSelect from '~/components/select-categories/component/customSelect';
 import { categoryOptions } from '~/components/select-categories/data/data';
-import { ImageIndexContext, ImagesContext, UserSessionContext } from '~/root';
+import { ImageIndexContext, ImageNameContext, ImagesContext, UserSessionContext } from '~/root';
 import {
   button,
   containerBlock,
@@ -26,7 +26,15 @@ import {
   editDesc,
   editFormContainer,
 } from '~/routes/upload-products/style.css';
-import { getImages, handleChange, handlePriceKeyPress, handleTextAreaChange, uploadImage } from '~/utils/helpers';
+import {
+  deleteImage,
+  getImages,
+  handleChange,
+  handlePriceKeyPress,
+  handleTextAreaChange,
+  uploadImage,
+  uploadImgStorage,
+} from '~/utils/helpers';
 import { supabase } from '~/utils/supabase';
 import { Image } from '@unpic/qwik';
 import styles from '../../../components/search-bar/styles/search-bar.module.css';
@@ -34,17 +42,17 @@ import { pdDesc, pdName, priceStyle } from '~/routes/shop/styles.css';
 import { limitDescription } from '~/routes/shop/actions/actions';
 import {
   checkImageHasBeenChanged,
-  replaceImageInBucket,
   updateProductTable,
   updateShopCategoryTable,
   updateShopTable,
 } from '~/utils/edit_page_utils/edit_actions';
 import type {
-  ImageBucketReplacementProps,
+  //ImageBucketReplacementProps,
   ImageChangeCheckerProps,
   ProductTableUpdateProps,
   ProductUpdateProps,
 } from '~/utils/edit_page_utils/types';
+import { CDNURL } from '~/routes/upload-products';
 
 export const useProductDetails = routeLoader$(async (requestEvent) => {
   const { data, error } = await supabase.from('products').select('*').eq('id', requestEvent.params.id);
@@ -72,7 +80,7 @@ const EditPage = component$(() => {
   const images = useContext(ImagesContext);
   const imageIndex = useContext(ImageIndexContext);
   const imageHasBeenChanged = useSignal(false);
-
+  const imageName = useContext(ImageNameContext);
   useTask$(async ({ track }) => {
     track(() => userSession.userId);
     if (userSession.isLoggedIn) {
@@ -85,11 +93,11 @@ const EditPage = component$(() => {
     receivedFileName: product.value.productDetail[0]?.file_name,
   };
 
-  const ImageBucketReplacementArgs: ImageBucketReplacementProps = {
-    userSession,
-    imageName: images.value?.[imageIndex.value]?.name,
-    currentFile,
-  };
+  // const ImageBucketReplacementArgs: ImageBucketReplacementProps = {
+  //   userSession,
+  //   imageName: images.value?.[imageIndex.value]?.name,
+  //   currentFile,
+  // };
 
   const productTableUpdateArgs: ProductTableUpdateProps = {
     id: product.value.productDetail[0]?.id,
@@ -98,19 +106,24 @@ const EditPage = component$(() => {
     productPrice,
     productDescription,
     productSlug,
+    imageUrl,
   };
 
   const handleSubmit = $(async () => {
+    console.log('IMAGE NAME', images.value?.[imageIndex.value]?.name);
     const productUpdateArgs: ProductUpdateProps = {
       name: productName.value,
       slug: productSlug.value,
       price: parseFloat(productPrice.value),
       description: productDescription.value,
+      url: imageUrl.value,
     };
 
     imageHasBeenChanged.value = await checkImageHasBeenChanged(imageChangeCheckerArgs);
     imageHasBeenChanged.value
-      ? (await replaceImageInBucket(ImageBucketReplacementArgs), (imageChangeCheckerArgs.receivedFileName = selectedFile.value))
+      ? (deleteImage(userSession, imageName.value, images),
+        await uploadImgStorage(userSession, currentFile, imageUrl, images, CDNURL),
+        (imageChangeCheckerArgs.receivedFileName = selectedFile.value))
       : null;
     updateProductTable(productTableUpdateArgs);
     updateShopCategoryTable(categorySlug, userSession, product.value.productDetail[0]?.id, productUpdateArgs);
