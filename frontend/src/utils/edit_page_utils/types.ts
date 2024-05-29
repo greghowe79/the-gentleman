@@ -19,6 +19,7 @@ export interface ProductTableUpdateProps {
   productPrice: Signal<string>;
   productDescription: Signal<string>;
   productSlug: Signal<string>;
+  imageUrl: Signal<string>;
 }
 
 export interface ProductUpdateProps {
@@ -26,6 +27,7 @@ export interface ProductUpdateProps {
   slug: string;
   price: number;
   description: string;
+  url: string;
 }
 
 export interface Product {
