@@ -240,7 +240,7 @@ export const imageStyle = style({
   transition: 'transform 0.6s cubic-bezier(0.57, 0.05, 0, 1.32)',
   selectors: {
     [`${pdInnerWrap}:hover &`]: {
-      transform: 'translate(-50%, -50%) scale(1.5)',
+      transform: 'translate(-50%, -50%) scale(1.1)',
     },
   },
 });

@@ -19,7 +19,7 @@ const handleClickDashboard = $((customProp: any) => {
   console.log('Dashboard clicked with customProp:', customProp);
 });
 
-export const getSellerProducts = $(async (userSession: UserSess, sellerProducts: Signal<any>) => {
+export const getSellerProducts = $(async (userSession: UserSess, sellerProducts: Signal<any>, hasBeenFetch?: Signal<boolean>) => {
   console.log('sellerProducts', sellerProducts);
 
   const { data } = await supabase
@@ -29,7 +29,7 @@ export const getSellerProducts = $(async (userSession: UserSess, sellerProducts:
     .order('created_at', { ascending: true });
   console.log('DATA', data);
   sellerProducts.value = data;
-
+  if (hasBeenFetch) hasBeenFetch.value = true;
   return sellerProducts.value;
 });
 
@@ -55,8 +55,14 @@ export const dashboardList = (propsArray: any) => {
       id: 1,
       label: 'Products',
       type: <FaProducts />,
-      onClick: $(() => getSellerProducts(propsArray[1].userSession, propsArray[1].seller_products)),
-      component: <SellerProducts products={propsArray[1]?.seller_products} columns={propsArray[1]?.columns} />,
+      onClick: $(() => getSellerProducts(propsArray[1].userSession, propsArray[1].seller_products, propsArray[1].hasBeenFetch)),
+      component: (
+        <SellerProducts
+          products={propsArray[1]?.seller_products}
+          columns={propsArray[1]?.columns}
+          hasBeenFetch={propsArray[1].hasBeenFetch}
+        />
+      ),
     },
     {
       id: 2,

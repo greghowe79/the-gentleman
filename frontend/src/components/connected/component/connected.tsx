@@ -13,14 +13,14 @@ const Connected = component$<ConnectedProps>(({ balance }) => {
   // const products = useSignal<SellerProduct[]>([]);
   const products = useContext(ProductsSellerContext);
   const clickedIndex = useSignal(0);
-
+  const hasBeenFetch = useSignal(false);
   useTask$(() => {
     clickedIndex.value = 0;
   });
 
   const propsArray = [
     { customProp1: 'valore personalizzato 0' },
-    { userSession: userSession, seller_products: products, columns: columns },
+    { userSession: userSession, seller_products: products, columns: columns, hasBeenFetch: hasBeenFetch },
     { customProp2: 'valore personalizzato 2' },
     { customProp2: 'valore personalizzato 3' },
     { customProp2: 'valore personalizzato 4' },
