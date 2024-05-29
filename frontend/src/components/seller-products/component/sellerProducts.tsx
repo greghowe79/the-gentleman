@@ -1,4 +1,4 @@
-import { $, component$, useContext } from '@builder.io/qwik';
+import { component$, useContext } from '@builder.io/qwik';
 import { imgWrap } from '~/components/shopping-bag/styles/style.css';
 import { Image } from '@unpic/qwik';
 import type { SellerProductsProps } from '../types/types';
@@ -7,19 +7,12 @@ import BinIcon from '~/components/starter/icons/bin';
 import { ModalContext, ImageNameContext, ImageIndexContext } from '~/root';
 import EditIcon from '~/components/starter/icons/edit';
 import { Link } from '@builder.io/qwik-city';
+import { getImageName } from '~/utils/seller_products_components_utils/seller_products';
 
 const SellerProducts = component$<SellerProductsProps>(({ products, columns }) => {
   const isModalVisible = useContext(ModalContext);
   const imageIndex = useContext(ImageIndexContext);
   const imageName = useContext(ImageNameContext);
-
-  const getImageName = $((imageUrl: string) => {
-    const url = imageUrl.split('/').pop();
-    if (url) {
-      imageName.value = url;
-      return imageName.value;
-    }
-  });
 
   return (
     <div class="Table">
@@ -54,7 +47,7 @@ const SellerProducts = component$<SellerProductsProps>(({ products, columns }) =
               <div class="Table-row-item" data-header="Actions">
                 <button
                   class={buttonIcon}
-                  onClick$={() => [(isModalVisible.value = true), getImageName(product.url), (imageIndex.value = index)]}
+                  onClick$={() => [(isModalVisible.value = true), getImageName(product.url, imageName), (imageIndex.value = index)]}
                 >
                   <BinIcon />
                 </button>
@@ -62,7 +55,7 @@ const SellerProducts = component$<SellerProductsProps>(({ products, columns }) =
                 <Link
                   class={buttonIcon}
                   href={`/edit-product/${product.id}`}
-                  onClick$={() => [getImageName(product.url), (imageIndex.value = index)]}
+                  onClick$={() => [getImageName(product.url, imageName), (imageIndex.value = index)]}
                 >
                   <EditIcon />
                 </Link>
