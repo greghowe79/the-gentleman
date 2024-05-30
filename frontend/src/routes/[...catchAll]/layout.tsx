@@ -8,7 +8,6 @@ import {
   shopHeaderArea,
   shopHeaderContainer,
   shopBreadcrumb,
-  //detailImage,
   detailDescription,
   titlePrice,
   titleDetail,
@@ -106,28 +105,8 @@ const ShopDetailLayout = component$(() => {
         <div class={shopWrapperDetailContent}>
           <div class={stickyImageContainer}>
             <div class={Wrap}>
-              {/* <div class={thumbnailsWrapper}>
-                <div class={thumbnail}>
-                  <div class={svgDivThumbnail}>CIAO</div>
-                </div>
-                <div class={thumbnail}>
-                  <div class={svgDivThumbnail}>CIAO</div>
-                </div>
-                <div class={thumbnail}>
-                  <div class={svgDivThumbnail}>CIAO</div>
-                </div>
-              </div> */}
               <ProductDetailImage>
                 <div q:slot="image" style={{ margin: '0 auto' }}>
-                  {/* <Image
-                    objectFit="contain"
-                    src={service.value[0]?.url}
-                    layout="constrained"
-                    decoding="async"
-                    loading="lazy"
-                    alt="A lovely bath"
-                    class={detailImage}
-                  /> */}
                   <Carousel images={service.value[0]?.images_url} />
                 </div>
               </ProductDetailImage>

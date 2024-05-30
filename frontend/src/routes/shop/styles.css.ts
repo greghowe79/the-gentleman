@@ -101,12 +101,13 @@ export const leftWrapper = style({
 
 export const stickyImageContainer = style({
   width: '55%',
-  display: 'flex',
+  // display: 'flex',
+  maxWidth: '680px',
   justifyContent: 'center',
-  padding: '30px',
+  padding: '30px 17px',
   fontFamily: 'var(--font-family-primary)',
   position: 'sticky',
-  height: 'calc((100vh - var(--header-height) - var(--top-bar-height)))',
+  //height: 'calc((100vh - var(--header-height) - var(--top-bar-height)))',
   alignSelf: 'flex-start',
 });
 
@@ -121,7 +122,7 @@ export const spacerFirst = style({
 
 export const leftWrapperDetail = style({
   width: '45%',
-  padding: '0 30px',
+  padding: '0 17px',
   display: 'flex',
   justifyContent: 'flex-start',
   flexWrap: 'wrap',
@@ -247,7 +248,10 @@ export const imageStyle = style({
 
 export const detailImage = style({
   height: '100%',
+  maxHeight: '680px',
+  maxWidth: '680px',
   userSelect: 'none',
+  borderRadius: '20px',
 });
 
 export const detailDescription = style({
@@ -301,11 +305,13 @@ export const categoryStyle = style({
 export const shopWrapperDetailContent = style({
   paddingTop: '0',
   paddingBottom: '60px',
-  marginLeft: '0',
-  marginRight: '0',
+  width: '1224px',
+  // marginLeft: '0',
+  // marginRight: '0',
   position: 'relative',
-  marginTop: 'var(--top-bar-height)',
+  margin: 'var(--top-bar-height) auto 0 auto',
   display: 'flex',
+  justifyContent: 'space-evenly',
   alignItems: 'center',
   color: 'var(--description-color)',
 });
@@ -395,15 +401,16 @@ export const butItNowButtonWrapper = style({
 });
 
 export const Wrap = style({
-  display: 'flex',
+  // display: 'flex',
   flexDirection: 'row',
   height: '100%',
+  maxHeight: '680px',
   alignItems: 'center',
   justifyContent: 'stretch',
   userSelect: 'none',
   background: 'rgba(0, 0, 0, 0.03)',
-  maxWidth: '500px',
-  borderRadius: '10px',
+  // maxWidth: '500px',
+  borderRadius: '20px',
 });
 
 export const priceWrapStyle = style({
