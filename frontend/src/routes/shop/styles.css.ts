@@ -306,8 +306,6 @@ export const shopWrapperDetailContent = style({
   paddingTop: '0',
   paddingBottom: '60px',
   width: '1224px',
-  // marginLeft: '0',
-  // marginRight: '0',
   position: 'relative',
   margin: 'var(--top-bar-height) auto 0 auto',
   display: 'flex',
@@ -401,7 +399,6 @@ export const butItNowButtonWrapper = style({
 });
 
 export const Wrap = style({
-  // display: 'flex',
   flexDirection: 'row',
   height: '100%',
   maxHeight: '680px',
@@ -409,7 +406,6 @@ export const Wrap = style({
   justifyContent: 'stretch',
   userSelect: 'none',
   background: 'rgba(0, 0, 0, 0.03)',
-  // maxWidth: '500px',
   borderRadius: '20px',
 });
 
