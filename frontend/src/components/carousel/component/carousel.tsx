@@ -27,7 +27,7 @@ export const Carousel = component$<CarouselProps>(({ images }) => {
         {images.map((image, index) => (
           <div class={`${carouselItem} ${index === currentIndex.value ? 'active' : ''}`} key={index}>
             <Image
-              objectFit="contain"
+              objectFit="cover"
               src={image}
               layout="constrained"
               decoding="async"
