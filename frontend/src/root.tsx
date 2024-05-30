@@ -76,7 +76,7 @@ export default component$(() => {
 
   useVisibleTask$(async () => {
     const { data } = await supabase.auth.getUser();
-    /////////NUOVO CODICE////////////////////
+
     const userProfile = await getUserProfile();
     if (data.user?.id) {
       // Set Auth State Context

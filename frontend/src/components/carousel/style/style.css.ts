@@ -4,7 +4,6 @@ import { style } from '@vanilla-extract/css';
 export const carousel = style({
   position: 'relative',
   width: '100%',
-  // maxWidth: '600px',
   margin: 'auto',
   overflow: 'hidden',
 });
@@ -18,7 +17,6 @@ export const carouselItem = style({
   minWidth: '100%',
   transition: 'opacity 0.5s ease-in-out',
   textAlign: 'center',
-  //alignSelf: 'center',
 });
 
 export const carouselItemImage = style({
