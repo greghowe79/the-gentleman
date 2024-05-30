@@ -79,11 +79,9 @@ export default component$(() => {
 
     const userProfile = await getUserProfile();
     if (data.user?.id) {
-      // Set Auth State Context
       userSession.userId = data.user.id;
       userSession.isLoggedIn = true;
     } else {
-      // Set Auth State Context
       userSession.userId = '';
       userSession.isLoggedIn = false;
     }
