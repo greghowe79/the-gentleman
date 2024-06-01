@@ -14,6 +14,7 @@ import {
   img_accessories,
   wrapper,
   title,
+  unorderList,
 } from './styles.css';
 import Connected from '~/components/connected/component/connected';
 import type { BalanceProps } from '~/components/connected/types/types';
@@ -61,7 +62,14 @@ const SellerPage = component$(() => {
             <div class={wrap}>
               <h2 class={title}>Increase Your Revenue.</h2>
               <h3 class={subtitle}>Reach Thousands of Potential Customers for Men's Accessories Every Day</h3>
-              <div class={advantages_container}></div>
+              <div class={advantages_container}>
+                <ul class={unorderList}>
+                  <li>Expand your business by reaching a network of continually growing buyers</li>
+                  <li>Display your accessories in a marketplace dedicated to excellence and refinement</li>
+                  <li>Receive personalized assistance to optimize your sales and grow with us</li>
+                  <li>Sell without long-term commitments, with the option to modify or cancel at any time</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
