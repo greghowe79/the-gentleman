@@ -45,6 +45,8 @@ export const wrap = style({
   zIndex: '1',
   fontFamily: 'var(--font-family-primary)',
   letterSpacing: '1px',
+  display: 'flex',
+  flexDirection: 'column',
 });
 
 export const overlay = style({
@@ -74,14 +76,21 @@ export const imgAccessoriesWrap = style({
   height: '100%',
   width: '100%',
 });
+export const unorderList = style({
+  listStyle: 'none',
+});
 
 export const advantages_container = style({
   backgroundColor: '#f3f3f3',
   padding: '20px',
-  textAlign: 'center',
+  textAlign: 'left',
   borderRadius: '10px',
   height: '200px',
   marginTop: '50px',
+  color: 'var(--default-text-color)',
+  fontFamily: 'var(--font-family-secondary)',
+  alignSelf: 'center',
+  maxWidth: '680px',
   '@media': {
     'screen and (max-width: 820px)': {
       height: '150px',
