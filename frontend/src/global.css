@@ -116,6 +116,8 @@
   --font-size-lg: 20px;
   --font-size-xl: 24px;
   --font-size-xxl: 30px;
+  --font-size-xxlmd: 35px;
+  --font-size-xxlg: 45px;
   --font-size-xxl1: 50px;
   --font-size-xxl2: 54px;
 
@@ -133,7 +135,7 @@
   --font-family-primary: 'FjallaOne', sans-serif;
 }
 ::selection {
-  background-color: transparent;
+  background-color: blue;
 }
 
 html {

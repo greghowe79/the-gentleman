@@ -208,7 +208,7 @@ export const detail = style({
 
 export const imgWrap = style({
   position: 'relative',
-  borderRadius: '50%',
+  borderRadius: '10px',
   overflow: 'hidden',
   background: '#e8e9eb',
   backgroundPosition: 'center center',
@@ -232,12 +232,12 @@ export const contPad = style({
 });
 
 export const imageStyle = style({
-  width: '60% !important',
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%,-50%)',
-  borderRadius: '50%',
+  borderRadius: '10px',
+  height: '100%',
   transition: 'transform 0.6s cubic-bezier(0.57, 0.05, 0, 1.32)',
   selectors: {
     [`${pdInnerWrap}:hover &`]: {
@@ -305,7 +305,8 @@ export const categoryStyle = style({
 export const shopWrapperDetailContent = style({
   paddingTop: '0',
   paddingBottom: '60px',
-  width: '1224px',
+  width: '1300px',
+  maxWidth: '100%',
   position: 'relative',
   margin: 'var(--top-bar-height) auto 0 auto',
   display: 'flex',
@@ -345,7 +346,7 @@ export const svgDivThumbnail = style({
 
 export const cartButtonStyle = style({
   display: 'inline-flex',
-  width: '85%',
+  width: '100%',
   backgroundColor: 'transparent',
   color: 'var(--default-text-color)',
   borderRadius: '25px',
@@ -364,7 +365,7 @@ export const cartButtonStyle = style({
 
 export const buyItNowButtonStyle = style({
   display: 'inline-flex',
-  width: '85%',
+  width: '100%',
   backgroundColor: 'var(--title-color)',
   color: '#ffffff',
   borderRadius: '25px',
@@ -375,9 +376,9 @@ export const buyItNowButtonStyle = style({
   fontSize: 'var(--font-size-md)',
   height: 'var(--cta-add-to-cart)',
   border: '2px solid var(--title-color)',
-  transition: 'all 0.3s ease', // Aggiunta la transizione per un effetto fluido
+  transition: 'all 0.3s ease',
   ':hover': {
-    boxShadow: '0 0 0 1px var(--product-name-color)', // Box-shadow per espandere verso l'esterno
+    boxShadow: '0 0 0 1px var(--product-name-color)',
     backgroundColor: 'var(--product-name-color)',
     border: '2px solid var(--product-name-color)',
   },
