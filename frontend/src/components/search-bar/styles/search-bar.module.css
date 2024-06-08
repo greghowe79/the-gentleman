@@ -74,6 +74,33 @@
   border-radius: 8px;
 }
 
+.seller_input {
+  border-radius: 8px;
+  background: #fcfcfc;
+  padding: 0 15px;
+  flex: 1;
+  font-size: var(--font-size-sm);
+  font-family: var(--font-family-secondary);
+  font-weight: 100;
+  letter-spacing: inherit;
+  color: inherit;
+  height: 100%;
+  border: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  opacity: 1;
+}
+
+.seller_input:focus {
+  outline: none;
+  box-shadow: 0 0 0 1.5px hsla(0, 0%, 47%);
+  border-radius: 8px;
+}
+
 input::placeholder {
-  opacity: 0.4;
+  opacity: 0.6;
 }

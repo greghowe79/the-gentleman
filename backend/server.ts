@@ -11,6 +11,8 @@ import querystring from 'node:querystring';
 import { v4 as uuidv4 } from 'uuid';
 import { calculateTotalAmountBySeller } from './actions';
 const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY);
+import { Shippo } from 'shippo';
+const shippo = new Shippo({ apiKeyHeader: process.env.SHIPPO_TEST_API_TOKEN });
 
 // Determine root domain
 
@@ -74,6 +76,48 @@ app.post(route + '/stripe-session-id', async (req: Request, res: Response) => {
     phone_number_collection: {
       enabled: true,
     },
+    shipping_options: [
+      // {
+      //   shipping_rate_data: {
+      //     type: 'fixed_amount',
+      //     fixed_amount: {
+      //       amount: 0,
+      //       currency: 'eur',
+      //     },
+      //     display_name: 'Free shipping',
+      //     delivery_estimate: {
+      //       minimum: {
+      //         unit: 'business_day',
+      //         value: 5,
+      //       },
+      //       maximum: {
+      //         unit: 'business_day',
+      //         value: 7,
+      //       },
+      //     },
+      //   },
+      // },
+      {
+        shipping_rate_data: {
+          type: 'fixed_amount',
+          fixed_amount: {
+            amount: 1500,
+            currency: 'eur',
+          },
+          display_name: 'Next day air',
+          delivery_estimate: {
+            minimum: {
+              unit: 'business_day',
+              value: 1,
+            },
+            maximum: {
+              unit: 'business_day',
+              value: 1,
+            },
+          },
+        },
+      },
+    ],
     line_items: data?.map((item) => {
       return {
         price_data: {
@@ -408,6 +452,23 @@ app.post(route + '/store-auth', async (req: Request, res: Response) => {
 
   // Return response
   return res.status(200).json({ message: 'Tokens stored' });
+});
+
+app.post(route + '/address', async (req: Request, res: Response) => {
+  //const deleted = await stripe.accounts.del('acct_1POGQxP6XVsIXoCE');
+  const addressFrom = await shippo.addresses.create({
+    name: 'Shawn Ippotle',
+    company: 'Shippo',
+    street1: '215 Clayton St.',
+    city: 'San Francisco',
+    state: 'CA',
+    zip: '94117',
+    country: 'US', // iso2 country code
+    phone: '+1 555 341 9393',
+    email: 'shippotle@shippo.com',
+  });
+  console.log('addressFrom', addressFrom);
+  return res.status(200).json(addressFrom);
 });
 
 app.listen(port, () => {

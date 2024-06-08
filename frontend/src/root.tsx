@@ -35,6 +35,8 @@ export const ProductsSellerContext = createContextId<Signal<SellerProduct[]>>('s
 export const OpenPanelContext = createContextId<OpenPanel>('panel-context');
 export const IconKeyContext = createContextId<IkonKey>('iconKey-context');
 export const ImageNameContext = createContextId<Signal<string>>('image-name-context');
+export const sellerFormContext = createContextId<Signal<boolean>>('seller-form-context');
+export const HasErrorContext = createContextId<Signal<boolean>>('has-error-context');
 
 export default component$(() => {
   const currentIndex = useSignal(0);
@@ -45,6 +47,8 @@ export default component$(() => {
   const products = useSignal<SellerProduct[]>([]);
   const iconKey = useStore<IkonKey>({ number: '' });
   const imageName = useSignal('');
+  const sellerFormIsCompleted = useSignal(false);
+  const hasError = useSignal(false);
 
   const userSession = useStore<UserSess>({
     userId: '',
@@ -156,6 +160,9 @@ export default component$(() => {
   useContextProvider(OpenPanelContext, openPanel);
   useContextProvider(IconKeyContext, iconKey);
   useContextProvider(ImageNameContext, imageName);
+  useContextProvider(sellerFormContext, sellerFormIsCompleted);
+  useContextProvider(HasErrorContext, hasError);
+
   return (
     <QwikCityProvider>
       <head>

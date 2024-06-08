@@ -160,7 +160,7 @@ export const pdName = style({
 });
 
 export const pdMainWrap = style({
-  width: '33.33%',
+  width: '25%',
   marginTop: '60px',
 });
 
@@ -202,7 +202,7 @@ export const catDescWrapper = style({
 export const detail = style({
   display: 'flex',
   flexDirection: 'column',
-  height: '150px',
+  /* height: '150px', */
   marginTop: '30px',
 });
 

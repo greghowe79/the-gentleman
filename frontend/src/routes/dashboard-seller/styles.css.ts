@@ -106,3 +106,44 @@ export const title = style({
     },
   },
 });
+
+export const sellerForm = style({
+  padding: '30px',
+  overflowY: 'auto',
+  backgroundColor: 'rgb(58 0 30 / 40%)',
+  backgroundImage: 'linear-gradient(to top, rgba(58, 0, 30, 0.4) 0, rgba(58, 0, 30, 1) 60%, rgba(58, 0, 30, 0.4) 100%)',
+  borderRadius: '20px',
+  position: 'relative',
+  width: '400px',
+});
+
+export const formWrap = style({
+  display: 'flex',
+  alignItems: 'center',
+  margin: '0 auto',
+  width: '100%',
+  maxWidth: '1100px',
+});
+
+export const formInstruction = style({
+  fontSize: 'var(--font-size-title)',
+  color: 'var(--description-color)',
+  width: '45%',
+  maxWidth: '480px',
+  textAlign: 'center',
+  margin: '20px',
+  position: 'fixed',
+  top: 'calc((100vh / 2) - (var(--header-height)) / 2)',
+  fontFamily: 'var(--font-family-secondary)',
+});
+
+export const sellerFormWrap = style({
+  display: 'flex',
+  justifyContent: 'flex-end',
+  alignItems: 'center',
+  padding: '30px',
+});
+
+export const wrapperSeller = style({
+  width: '100%',
+});

@@ -32,7 +32,7 @@ body {
 }
 
 .scrollable-content::-webkit-scrollbar {
-  width: 10px;
+  width: 0px;
   max-height: 100px;
 }
 .scrollable-content::-webkit-scrollbar-track {

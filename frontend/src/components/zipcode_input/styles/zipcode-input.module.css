@@ -1,0 +1,55 @@
+.input {
+  background-color: #e5e5e5; /* valore di variables.$gray-200 */
+  border-radius: 4px;
+  font-size: var(--font-size-custom);
+  padding: 16px;
+  overflow: hidden;
+  letter-spacing: 1.5px;
+  background-color: transparent;
+  transition: all 200ms ease;
+  color: #fcfcfc; /* valore di variables.$gray-400 */
+  width: 100%;
+  font-family: var(--font-family-primary);
+  border: 1px solid grey;
+}
+
+.input:focus {
+  outline: none;
+  transition: all 200ms ease;
+  color: #fcfcfc; /* valore di variables.$black-500 */
+  border-color: #fcfcfc; /* valore di variables.$black-500 */
+  box-shadow: 0 2.5px 15px rgba(252, 252, 252, 0.5);
+}
+
+.input.hasError {
+  border-color: #ff0000; /* valore di variables.$error */
+  color: #ff0000; /* valore di variables.$error */
+}
+
+.input.hasError:focus {
+  box-shadow: 0 5px 30px rgba(255, 0, 0, 0.5); /* valore di variables.$error-opaque */
+}
+
+.input.hasSuccess {
+  border-color: #fcfcfc; /* valore di variables.$success */
+  color: #fcfcfc; /* valore di variables.$success */
+}
+
+.input.hasSuccess:focus {
+  box-shadow: 0 2.5px 15px rgba(252, 252, 252, 0.5); /* valore di variables.$success-opaque */
+}
+
+.input::placeholder {
+  color: #fcfcfc; /* valore di variables.$gray-400 */
+  letter-spacing: 1px;
+}
+
+.errorMessage {
+  color: #ff0000;
+}
+
+.override:focus {
+  outline: none;
+  border-color: grey;
+  box-shadow: none;
+}
