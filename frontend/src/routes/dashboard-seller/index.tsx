@@ -1,5 +1,5 @@
 import { component$, useContext, $, useSignal, useTask$ } from '@builder.io/qwik';
-import { UserSessionContext } from '~/root';
+import { UserSessionContext, sellerFormContext } from '~/root';
 import { createConnectAccount, getAccountBalance } from '~/utils/stripe';
 import { useLocation, useNavigate } from '@builder.io/qwik-city';
 import Loader from '~/components/loader/component/Loader';
@@ -27,6 +27,7 @@ const SellerPage = component$(() => {
   const nav = useNavigate();
   const loading = useSignal(false);
   const userSession = useContext(UserSessionContext);
+  const sellerFormIsCompleted = useContext(sellerFormContext);
 
   useTask$(async ({ track }) => {
     const value = await track(() => userSession.userId && getAccountBalance(userSession));
@@ -53,7 +54,7 @@ const SellerPage = component$(() => {
             src={imageUrl}
             layout="constrained"
             decoding="async"
-            loading="lazy"
+            loading="eager"
             alt={`Men's Accessories`}
             class={img_accessories}
           />
@@ -95,7 +96,11 @@ const SellerPage = component$(() => {
     <div>
       {loading.value ? (
         <Loader />
-      ) : userSession.userId && userSession.isLoggedIn && userSession.stripe_seller && userSession.charges_enabled ? (
+      ) : sellerFormIsCompleted.value &&
+        userSession.userId &&
+        userSession.isLoggedIn &&
+        userSession.stripe_seller &&
+        userSession.charges_enabled ? (
         <Connected balance={balance.value} />
       ) : (
         notConnected()
