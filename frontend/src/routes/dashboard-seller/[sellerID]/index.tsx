@@ -23,23 +23,31 @@ export const useSellerInformation = routeAction$(
       .from('profiles')
       .update({ seller_info: sellerInfo })
       .eq('stripe_account_id', requestContext.params.sellerID);
+
     if (error) {
       console.error(error);
     }
 
-    return {
-      sellerInfo,
-    };
+    const { data: sellerInformation, error: sellerInformationError } = await supabase
+      .from('profiles')
+      .select('seller_info')
+      .eq('stripe_account_id', requestContext.params.sellerID);
+
+    if (sellerInformationError) {
+      console.error(sellerInformationError);
+    }
+    return { success: true, sellerInformation };
   },
   zod$({
-    name: z.string().min(5, { message: 'Must be 5 or more characters long' }),
+    name: z.string(),
     company: z.string(),
-    street1: z.string(),
+    street: z.string(),
     city: z.string(),
     state: z.string(),
     zip: z.coerce.number().min(10000),
     country: z.string(),
-    phone: z.string().regex(/^\d{10}$/),
+    prefix: z.string(),
+    phone: z.string().regex(/^\(\d{3}\) \d{3}-\d{4}$/),
     email: z.string().email().trim(),
   })
 );

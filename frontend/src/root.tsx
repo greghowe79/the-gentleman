@@ -37,6 +37,7 @@ export const IconKeyContext = createContextId<IkonKey>('iconKey-context');
 export const ImageNameContext = createContextId<Signal<string>>('image-name-context');
 export const sellerFormContext = createContextId<Signal<boolean>>('seller-form-context');
 export const HasErrorContext = createContextId<Signal<boolean>>('has-error-context');
+export const HasPhoneErrorContext = createContextId<Signal<boolean>>('has-phone-error-context');
 
 export default component$(() => {
   const currentIndex = useSignal(0);
@@ -49,6 +50,7 @@ export default component$(() => {
   const imageName = useSignal('');
   const sellerFormIsCompleted = useSignal(false);
   const hasError = useSignal(false);
+  const hasPhoneError = useSignal(false);
 
   const userSession = useStore<UserSess>({
     userId: '',
@@ -162,6 +164,7 @@ export default component$(() => {
   useContextProvider(ImageNameContext, imageName);
   useContextProvider(sellerFormContext, sellerFormIsCompleted);
   useContextProvider(HasErrorContext, hasError);
+  useContextProvider(HasPhoneErrorContext, hasPhoneError);
 
   return (
     <QwikCityProvider>
