@@ -96,11 +96,12 @@ const SellerPage = component$(() => {
     <div>
       {loading.value ? (
         <Loader />
-      ) : sellerFormIsCompleted.value &&
-        userSession.userId &&
-        userSession.isLoggedIn &&
-        userSession.stripe_seller &&
-        userSession.charges_enabled ? (
+      ) : sellerFormIsCompleted.value ||
+        (userSession.seller_info &&
+          userSession.userId &&
+          userSession.isLoggedIn &&
+          userSession.stripe_seller &&
+          userSession.charges_enabled) ? (
         <Connected balance={balance.value} />
       ) : (
         notConnected()

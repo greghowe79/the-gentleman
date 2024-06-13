@@ -1,4 +1,4 @@
-import { $, component$, useContext, useSignal, useTask$ } from '@builder.io/qwik';
+import { component$, useContext, useSignal, useTask$ } from '@builder.io/qwik';
 import { button, ctaWrap, prodNameInputWrap } from '~/routes/upload-products/style.css';
 import styles from '../../../components/search-bar/styles/search-bar.module.css';
 import zip_styles from '../../zipcode_input/styles/zipcode-input.module.css';
@@ -8,6 +8,8 @@ import { useGeoCode, useSellerEmail, useSellerInformation } from '~/routes/dashb
 import ZipCodeInput from '~/components/zipcode_input/component/zipcode_input';
 import { HasErrorContext, sellerFormContext } from '~/root';
 import PhoneInput from '~/components/phone-input/component/phone-input';
+
+import { getPrefixFromCountryCode } from '~/utils/seller_form_component_utils/utils';
 
 const SellerForm = component$(() => {
   const sellerData = useSellerInformation();
@@ -20,30 +22,9 @@ const SellerForm = component$(() => {
   const sellerFormIsCompleted = useContext(sellerFormContext);
   const prefix = useSignal('');
 
-  interface CountryCallingCodes {
-    [key: string]: string;
-  }
-  const countryCallingCodes: CountryCallingCodes = {
-    US: '1',
-    CA: '1',
-    GB: '44',
-    IT: '39',
-    // Aggiungi altri country code e prefissi telefonici qui
-  };
-
-  // const getPrefixFromCountryCode = $((countryCode: string) => {
-  //   return countryCallingCodes[countryCode.toUpperCase()] ? `+${countryCallingCodes[countryCode.toUpperCase()]}` : null;
-  // });
-  const getPrefixFromCountryCode = $((countryCode: string): string => {
-    const prefix = countryCallingCodes[countryCode.toUpperCase()];
-    return prefix ? `+${prefix}` : '';
-  });
-
   useTask$(async () => {
     prefix.value = await getPrefixFromCountryCode(geoCode.value.country_code);
   });
-
-  console.log('PREFIX ', prefix.value);
 
   if (sellerData.value?.success) {
     sellerFormIsCompleted.value = true;

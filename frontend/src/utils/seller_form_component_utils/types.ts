@@ -7,3 +7,7 @@ export interface ZipCodeProps {
   hasSuccess: Signal<boolean>;
   ZIP_CODE_LENGTH: number;
 }
+
+export interface CountryCallingCodes {
+  [key: string]: string;
+}

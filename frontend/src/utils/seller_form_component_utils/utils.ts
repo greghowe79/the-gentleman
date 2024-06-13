@@ -1,5 +1,6 @@
 import { $ } from '@builder.io/qwik';
 import type { ZipCodeProps } from './types';
+import { countryCallingCodes } from '~/components/seller-form/data/data';
 
 const cleanInputValue = $((value: string): string => {
   return value.replace(/[^0-9]/g, '');
@@ -33,4 +34,9 @@ const updateInputState = $((zipCodeParams: ZipCodeProps): void => {
   hasSuccess.value = cleanedValue.length === ZIP_CODE_LENGTH;
 });
 
-export { cleanInputValue, updateInputState, formatPhoneNumber, cleanPhoneInputValue };
+const getPrefixFromCountryCode = $((countryCode: string): string => {
+  const prefix = countryCallingCodes[countryCode.toUpperCase()];
+  return prefix ? `+${prefix}` : '';
+});
+
+export { cleanInputValue, updateInputState, formatPhoneNumber, cleanPhoneInputValue, getPrefixFromCountryCode };
