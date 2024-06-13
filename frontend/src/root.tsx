@@ -14,6 +14,7 @@ export type UserSess = {
   isLoggedIn: boolean;
   stripe_seller: any;
   charges_enabled: boolean;
+  seller_info: any;
 };
 
 export type OpenPanel = {
@@ -57,6 +58,7 @@ export default component$(() => {
     isLoggedIn: false,
     stripe_seller: {},
     charges_enabled: false,
+    seller_info: {},
   });
 
   const openPanel = useStore<OpenPanel>({
@@ -94,9 +96,11 @@ export default component$(() => {
     if (userProfile && userProfile.stripe_seller) {
       userSession.stripe_seller = userProfile.stripe_seller;
       userSession.charges_enabled = userProfile.stripe_seller.charges_enabled;
+      userSession.seller_info = userProfile.seller_info;
     } else {
       userSession.stripe_seller = {};
       userSession.charges_enabled = false;
+      userSession.seller_info = {};
     }
   });
 

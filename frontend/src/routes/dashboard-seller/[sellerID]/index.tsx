@@ -3,11 +3,12 @@ import { routeAction$, routeLoader$, z, zod$ } from '@builder.io/qwik-city';
 import { formInstruction, formWrap, wrapperSeller } from '../styles.css';
 import { supabase } from '~/utils/supabase';
 import SellerForm from '~/components/seller-form/component/sellerForm';
+import type { LocationData } from '~/utils/dashboard_seller_seller_id/types/types';
 
 export const useGeoCode = routeLoader$(async () => {
   const res = await fetch(`https://get.geojs.io/v1/ip/geo.json`);
   const geoInfo = await res.json();
-  return geoInfo as any;
+  return geoInfo as LocationData;
 });
 
 export const useSellerEmail = routeLoader$(async (requestContext) => {
