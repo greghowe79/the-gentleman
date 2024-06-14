@@ -1,16 +1,26 @@
 import { component$ } from '@builder.io/qwik';
-import { type DocumentHead } from '@builder.io/qwik-city';
+import { routeLoader$, type DocumentHead } from '@builder.io/qwik-city';
 
 import Counter from '~/components/starter/counter/counter';
 import Hero from '~/components/starter/hero/hero';
 import Infobox from '~/components/starter/infobox/infobox';
 import Starter from '~/components/starter/next-steps/next-steps';
+import type { Category } from '~/utils/homepage/types/types';
+import { supabase } from '~/utils/supabase';
+
+export const useShopCategories = routeLoader$(async () => {
+  const { data, error } = await supabase.from('shop_categories').select().order('id', { ascending: true });
+  if (error) console.error(error);
+  const categories = data as Category[];
+  return categories;
+});
 
 export default component$(() => {
+  const shop_categories = useShopCategories();
   return (
     <>
       <Hero />
-      <Starter />
+      <Starter shopCategories={shop_categories.value} />
 
       <div role="presentation" class="ellipsis"></div>
       <div role="presentation" class="ellipsis ellipsis-purple"></div>
