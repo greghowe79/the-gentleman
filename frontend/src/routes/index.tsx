@@ -4,7 +4,7 @@ import { routeLoader$, type DocumentHead } from '@builder.io/qwik-city';
 import Counter from '~/components/starter/counter/counter';
 import Hero from '~/components/starter/hero/hero';
 import Infobox from '~/components/starter/infobox/infobox';
-import Starter from '~/components/starter/next-steps/next-steps';
+import Presentation from '~/components/starter/presentation/presentation';
 import type { Category } from '~/utils/homepage/types/types';
 import { supabase } from '~/utils/supabase';
 
@@ -20,7 +20,7 @@ export default component$(() => {
   return (
     <>
       <Hero />
-      <Starter shopCategories={shop_categories.value} />
+      <Presentation shopCategories={shop_categories.value} />
 
       <div role="presentation" class="ellipsis"></div>
       <div role="presentation" class="ellipsis ellipsis-purple"></div>
