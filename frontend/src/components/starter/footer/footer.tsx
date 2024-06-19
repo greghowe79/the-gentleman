@@ -1,7 +1,19 @@
 import { component$ } from '@builder.io/qwik';
 //import { useServerTimeLoader } from '~/routes/layout';
 //import styles from './footer.module.css';
-import { bgColor, link, flexContainer, flexParentWrap, paragraph, section } from './styles/styless.css';
+import {
+  bgColor,
+  link,
+  flexContainer,
+  flexParentWrap,
+  paragraph,
+  section,
+  legalAreaWrap,
+  socialButton,
+  socialIconWrap,
+} from './styles/styless.css';
+import { Link } from '@builder.io/qwik-city';
+import FacebookIcon from '../icons/facebook';
 //import { QwikLogo } from '../icons/qwik';
 
 export default component$(() => {
@@ -45,8 +57,31 @@ export default component$(() => {
             </p>
           </div>
           <div class={section}>Buy on The Gentleman</div>
-          <div class={section}>Sell on The Gentleman</div>
-          <div class={section}>customer service</div>
+          <div class={section}>
+            Sell on The Gentleman
+            <p class={paragraph}>
+              <Link href="#" class={link}>
+                Sell as a merchant
+              </Link>
+            </p>
+          </div>
+          <div class={section}>
+            Secure Purchase
+            <p class={paragraph}>
+              <Link href="#" class={link}>
+                Payment
+              </Link>
+              <br />
+              <Link href="#" class={link}>
+                Shipping and delivery
+              </Link>
+              <br />
+              <Link href="#" class={link}>
+                Returns and refunds
+              </Link>
+            </p>
+          </div>
+
           <div class={section}>
             Customer Service
             <p class={paragraph}>
@@ -59,7 +94,24 @@ export default component$(() => {
               <a href="tel:00393714200848" class={link}>
                 +39 371 420 0848
               </a>
+              <br />
+              <Link href="#" class={link}>
+                FAQ
+              </Link>
             </p>
+          </div>
+        </div>
+        <div class={legalAreaWrap}>
+          <div>DIV 1</div>
+          <div>
+            {' '}
+            <Link href="#" class={link}>
+              <button class={socialButton}>
+                <div class={socialIconWrap}>
+                  <FacebookIcon />
+                </div>
+              </button>
+            </Link>
           </div>
         </div>
       </div>
