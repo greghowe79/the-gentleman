@@ -38,9 +38,22 @@ export const paragraph = style({
   fontSize: 'var(--font-size-sm)',
 });
 
+export const iconContainer = style({
+  display: 'flex',
+  gap: '1rem',
+});
+
+export const legalConainer = style({
+  display: 'flex',
+  fontFamily: 'var(--font-family-secondary)',
+  fontSize: 'var(--font-size-sm)',
+  gap: '1rem',
+});
+
 export const link = style({
   color: '#fcfcfc',
   opacity: '0.9',
+  display: 'inline-flex',
   ':hover': {
     opacity: '1',
     textDecoration: 'underline',

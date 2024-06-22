@@ -11,9 +11,16 @@ import {
   legalAreaWrap,
   socialButton,
   socialIconWrap,
+  iconContainer,
+  legalConainer,
 } from './styles/styless.css';
 import { Link } from '@builder.io/qwik-city';
 import FacebookIcon from '../icons/facebook';
+import InstagramIcon from '../icons/instagram';
+import LinkedinIcon from '../icons/linkedin';
+import TwitterIcon from '../icons/twitter';
+import YouTubeIcon from '../icons/youtube';
+import { useServerTimeLoader } from '~/routes/layout';
 //import { QwikLogo } from '../icons/qwik';
 
 export default component$(() => {
@@ -23,7 +30,7 @@ export default component$(() => {
     isDone.value = newValue;
   }); */
 
-  //const serverTime = useServerTimeLoader();
+  const serverTime = useServerTimeLoader();
 
   return (
     <footer class={bgColor}>
@@ -102,16 +109,55 @@ export default component$(() => {
           </div>
         </div>
         <div class={legalAreaWrap}>
-          <div>DIV 1</div>
-          <div>
-            {' '}
+          <div class={legalConainer}>
+            <span>© {serverTime.value.year} Professione Corsa</span>
+
             <Link href="#" class={link}>
+              Terms & Conditions
+            </Link>
+            <Link href="#" class={link}>
+              Privacy Policy
+            </Link>
+            <Link href="#" class={link}>
+              Cookie Policy
+            </Link>
+          </div>
+          <div class={iconContainer}>
+            <a href="https://www.facebook.com/professionecorsa/" class={link} target="_blank">
               <button class={socialButton}>
                 <div class={socialIconWrap}>
                   <FacebookIcon />
                 </div>
               </button>
-            </Link>
+            </a>
+            <a href="#" class={link} target="_blank">
+              <button class={socialButton}>
+                <div class={socialIconWrap}>
+                  <InstagramIcon />
+                </div>
+              </button>
+            </a>
+            <a href="https://www.linkedin.com/in/alessandro-mosca-b4631b86/" class={link} target="_blank">
+              <button class={socialButton}>
+                <div class={socialIconWrap}>
+                  <LinkedinIcon />
+                </div>
+              </button>
+            </a>
+            <a href="https://x.com/alessandrovelma" class={link} target="_blank">
+              <button class={socialButton}>
+                <div class={socialIconWrap}>
+                  <TwitterIcon />
+                </div>
+              </button>
+            </a>
+            <a href="https://www.youtube.com/channel/UCM8EVGwfrBV3IFMNHh7X9rg" class={link} target="_blank">
+              <button class={socialButton}>
+                <div class={socialIconWrap}>
+                  <YouTubeIcon />
+                </div>
+              </button>
+            </a>
           </div>
         </div>
       </div>
