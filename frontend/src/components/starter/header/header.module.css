@@ -20,7 +20,7 @@
 }
 
 .header ul {
-  color: white;
+  color: #fcfcfc;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -38,14 +38,14 @@
 }
 
 .header li a {
-  color: white;
+  color: #fcfcfc;
   display: inline-block;
   padding: 0;
   text-decoration: none;
 }
 
 .header li a:hover {
-  color: var(--link-color-hover);
+  text-decoration: underline;
 }
 
 .list-container {
@@ -58,9 +58,9 @@
   cursor: pointer;
 }
 
-.icons-container li:hover {
+/* .icons-container li:hover {
   color: var(--link-color-hover);
-}
+} */
 
 @media (min-width: 450px) {
   .header li {

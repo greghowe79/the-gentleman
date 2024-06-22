@@ -6,7 +6,7 @@ export function FaGlobe(props: QwikIntrinsicElements['svg'], key: string) {
       viewBox="0 0 24 24"
       preserveAspectRatio="xMidYMid meet"
       focusable="false"
-      style="pointer-events: none; width: 24px; height: 24px; fill: #ffffff;"
+      style="pointer-events: none; width: 24px; height: 24px; fill: #fcfcfc;"
       {...props}
       key={key}
     >
