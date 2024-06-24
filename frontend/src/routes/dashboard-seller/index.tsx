@@ -54,7 +54,7 @@ const SellerPage = component$(() => {
             src={imageUrl}
             layout="constrained"
             decoding="async"
-            loading="eager"
+            loading="lazy"
             alt={`Men's Accessories`}
             class={img_accessories}
           />
@@ -76,7 +76,7 @@ const SellerPage = component$(() => {
         </div>
         <div class={notConnWrap}>
           <h3 class={title_h3}>Setup payouts to post your products</h3>
-          <div style={{ color: 'black' }}>THE GENTLEMAN partners with stripe to transfer earning to your bank account</div>
+          <div style={{ color: 'black' }}>PROFESSIONE CORSA partners with stripe to transfer earning to your bank account</div>
 
           <button
             disabled={loading.value}

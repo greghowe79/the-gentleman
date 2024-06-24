@@ -7,6 +7,10 @@
   height: 450px;
   justify-content: center;
   gap: 40px;
+  position: relative;
+  /* background: url('https://oukztwgobbpvjuhlvpft.supabase.co/storage/v1/object/public/hero/hero.png') no-repeat center center fixed;
+  background-size: cover;
+  overflow: hidden; */
 }
 
 .hero-image {

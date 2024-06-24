@@ -1,97 +1,37 @@
 import { component$ } from '@builder.io/qwik';
 import styles from './hero.module.css';
+import { Image } from '@unpic/qwik';
+import { hero_image } from '~/routes/dashboard-seller/styles.css';
 
-import ImgThunder from '~/media/watch.png?jsx';
+//import ImgThunder from '~/media/watch.png?jsx';
 
 export default component$(() => {
   return (
     <div class={['container', styles.hero]}>
+      <Image
+        objectFit="cover"
+        src={'https://oukztwgobbpvjuhlvpft.supabase.co/storage/v1/object/public/hero/hero.avif'}
+        layout="constrained"
+        decoding="async"
+        loading="eager"
+        alt={`Professione Corsa`}
+        class={hero_image}
+      />
       <div class={'home'}>
         <h3 id="resizing-h3" class="">
           <span>
             <div class="stage">
               <div class="cubespinner">
-                <div class="face1">Innovative</div>
-                <div class="face2">Creative</div>
-                <div class="face3">Unbeatable</div>
-                <div class="face4">Exceptional</div>
+                <div class="face1">Joy</div>
+                <div class="face2">Endurance</div>
+                <div class="face3">Competition</div>
+                <div class="face4">Passion</div>
               </div>
             </div>
           </span>
         </h3>
       </div>
-      <ImgThunder class={styles['hero-image']} alt="principale" loading="eager" />
-      {/* <h1>
-        So <span class="highlight">fantastic</span>
-        <br />
-        to have <span class="highlight">you</span> here
-      </h1>
-      <p>Have fun building your App with Qwik.</p> */}
-      {/* <div class={styles['button-group']}>
-        <button
-          onClick$={async () => {
-            const defaults = {
-              spread: 360,
-              ticks: 70,
-              gravity: 0,
-              decay: 0.95,
-              startVelocity: 30,
-              colors: ['006ce9', 'ac7ff4', '18b6f6', '713fc2', 'ffffff'],
-              origin: {
-                x: 0.5,
-                y: 0.35,
-              },
-            };
-
-            function loadConfetti() {
-              return new Promise<(opts: any) => void>((resolve, reject) => {
-                if ((globalThis as any).confetti) {
-                  return resolve((globalThis as any).confetti as any);
-                }
-                const script = document.createElement('script');
-                script.src =
-                  'https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js';
-                script.onload = () =>
-                  resolve((globalThis as any).confetti as any);
-                script.onerror = reject;
-                document.head.appendChild(script);
-                script.remove();
-              });
-            }
-
-            const confetti = await loadConfetti();
-
-            function shoot() {
-              confetti({
-                ...defaults,
-                particleCount: 80,
-                scalar: 1.2,
-              });
-
-              confetti({
-                ...defaults,
-                particleCount: 60,
-                scalar: 0.75,
-              });
-            }
-
-            setTimeout(shoot, 0);
-            setTimeout(shoot, 100);
-            setTimeout(shoot, 200);
-            setTimeout(shoot, 300);
-            setTimeout(shoot, 400);
-          }}
-        >
-          Time to celebrate
-        </button>
-        <a
-          href="https://qwik.builder.io/docs"
-          target="_blank"
-          class="button button-dark"
-        >
-          Explore the docs
-        </a>
-      </div> */}
+      {/*  <ImgThunder class={styles['hero-image']} alt="principale" loading="eager" /> */}
     </div>
   );
 });
