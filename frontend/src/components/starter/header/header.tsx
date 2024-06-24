@@ -24,9 +24,9 @@ export const Header = component$<ToggleProps>(({ location }) => {
   return (
     <header>
       <nav class={styles.header}>
-        <div class={styles.logo} aria-label="The Gentleman">
-          <Link href="/" title="TG TheGentleman" aria-label="The Gentleman">
-            <QwikLogo height={90} width={110} />
+        <div class={styles.logo} aria-label="Professione Corsa">
+          <Link href="/" title="Professione Corsa" aria-label="Professione Corsa" style={{ display: 'flex' }}>
+            <QwikLogo height={120} width={120} />
           </Link>
         </div>
         <div class={styles['button-wrap']} style={{ display: displayButton }}>

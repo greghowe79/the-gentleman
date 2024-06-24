@@ -28,6 +28,11 @@ export const img_accessories = style({
   maxHeight: 'calc(100vh - var(--header-height))',
   display: 'flex',
 });
+
+export const hero_image = style({
+  height: '100%',
+});
+
 export const wrapper = style({
   margin: 'auto',
   display: 'flex',

@@ -50,7 +50,7 @@ export default component$(() => {
           <div class={section}>
             <div>Address</div>
             <p class={paragraph}>
-              The Gentleman LLC
+              Professione Corsa LLC
               <br />
               1234 Elm Street
               <br />
@@ -63,9 +63,9 @@ export default component$(() => {
               EIN: 12-3456789
             </p>
           </div>
-          <div class={section}>Buy on The Gentleman</div>
+          <div class={section}>Buy on Professione Corsa</div>
           <div class={section}>
-            Sell on The Gentleman
+            Sell on Professione Corsa
             <p class={paragraph}>
               <Link href="#" class={link}>
                 Sell as a merchant
@@ -93,8 +93,8 @@ export default component$(() => {
             Customer Service
             <p class={paragraph}>
               e:{' '}
-              <a href="mailto:velmarcor79@gmail.com" class={link}>
-                velmarcor79@gmail.com
+              <a href="mailto:am.professionecorsa@gmail.com" class={link}>
+                am.professionecorsa@gmail.com
               </a>
               <br />
               t:{' '}
@@ -124,35 +124,35 @@ export default component$(() => {
           </div>
           <div class={iconContainer}>
             <a href="https://www.facebook.com/professionecorsa/" class={link} target="_blank">
-              <button class={socialButton}>
+              <button class={socialButton} aria-label="Visit our Facebook page">
                 <div class={socialIconWrap}>
                   <FacebookIcon />
                 </div>
               </button>
             </a>
             <a href="#" class={link} target="_blank">
-              <button class={socialButton}>
+              <button class={socialButton} aria-label="Visit our Instagram page">
                 <div class={socialIconWrap}>
                   <InstagramIcon />
                 </div>
               </button>
             </a>
             <a href="https://www.linkedin.com/in/alessandro-mosca-b4631b86/" class={link} target="_blank">
-              <button class={socialButton}>
+              <button class={socialButton} aria-label="Visit our Linkedin page">
                 <div class={socialIconWrap}>
                   <LinkedinIcon />
                 </div>
               </button>
             </a>
             <a href="https://x.com/alessandrovelma" class={link} target="_blank">
-              <button class={socialButton}>
+              <button class={socialButton} aria-label="Visit our Twitter page">
                 <div class={socialIconWrap}>
                   <TwitterIcon />
                 </div>
               </button>
             </a>
             <a href="https://www.youtube.com/channel/UCM8EVGwfrBV3IFMNHh7X9rg" class={link} target="_blank">
-              <button class={socialButton}>
+              <button class={socialButton} aria-label="Visit our YouTube page">
                 <div class={socialIconWrap}>
                   <YouTubeIcon />
                 </div>
