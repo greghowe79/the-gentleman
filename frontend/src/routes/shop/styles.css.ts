@@ -70,7 +70,6 @@ export const shopTitleStyle = style({
 });
 
 export const shopWrapperContent = style({
-  paddingTop: '60px',
   paddingBottom: '60px',
   marginLeft: '60px',
   marginRight: '60px',
@@ -153,14 +152,14 @@ export const priceDetail = style({
 export const pdName = style({
   fontFamily: 'var(--font-family-primary)',
   color: 'var(--product-name-color)',
-  fontSize: 'var(--font-size-xl)',
+  fontSize: 'var(--font-size-lg)',
   lineHeight: ' var(--line-height-sm)',
   fontWeight: 'normal',
-  letterSpacing: '-1px',
+  letterSpacing: '-0.5px',
 });
 
 export const pdMainWrap = style({
-  width: '25%',
+  width: '33.33333333333333%',
   marginTop: '60px',
 });
 
@@ -170,12 +169,13 @@ export const pdInnerWrap = style({
   flexDirection: 'column',
   height: '100%',
   position: 'relative',
-  textAlign: 'center',
+  textAlign: 'left',
 });
 
 export const pdDesc = style({
-  fontSize: ' var(--font-size-xs)',
+  fontSize: ' var(--font-size-standard)',
   lineHeight: 'var(--line-height-md)',
+  color: 'var(--description-color)',
   letterSpacing: ' 1px',
   wordWrap: 'break-word',
 });
@@ -202,8 +202,7 @@ export const catDescWrapper = style({
 export const detail = style({
   display: 'flex',
   flexDirection: 'column',
-  /* height: '150px', */
-  marginTop: '30px',
+  padding: '12px 0 2px 0',
 });
 
 export const imgWrap = style({
@@ -416,5 +415,5 @@ export const priceWrapStyle = style({
 
 export const textDescription = style({
   width: '100%',
-  height: '70px',
+  margin: '0',
 });

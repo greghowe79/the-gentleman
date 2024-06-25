@@ -1,5 +1,5 @@
 export const categoryOptions = [
-  { value: 'exclusiveTravel', label: 'Exclusive Travel' },
+  { value: 'shoes', label: 'Shoes' },
   { value: 'fineDining', label: 'Fine Dining' },
   { value: 'highEndFashion', label: 'High-End Fashion' },
   { value: 'exclusiveWellness', label: 'Exclusive Wellness' },

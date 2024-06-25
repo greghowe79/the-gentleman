@@ -236,7 +236,7 @@ const EditPage = component$(() => {
                   <p>{limitDescription(productDescription.value)}</p>
                 </div>
                 <div>
-                  <strong class={priceStyle}>EUR {productPrice.value}</strong>
+                  <strong class={priceStyle}>€ {productPrice.value}</strong>
                 </div>
               </div>
             </div>
