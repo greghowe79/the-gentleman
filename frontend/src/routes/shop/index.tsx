@@ -59,7 +59,7 @@ const ShopProducts = component$(({ data }: any) => {
                         <p class={textDescription}>{limitDescription(product.description)}</p>
                       </div>
                       <div class={priceWrapStyle}>
-                        <strong class={priceStyle}>EUR {product.price}</strong>
+                        <strong class={priceStyle}>€ {product.price}</strong>
                       </div>
                     </div>
                   </Link>

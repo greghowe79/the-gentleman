@@ -6,9 +6,9 @@ import {
   pdInnerWrap,
   pdMainWrap,
   pdName,
-  catDesc,
+  /*  catDesc,
   titleWrapper,
-  catDescWrapper,
+  catDescWrapper, */
   detail,
   imgWrap,
   image,
@@ -44,10 +44,10 @@ const ProductListPage = component$(() => {
     <>
       {category.value && category.value.length > 0 && (
         <>
-          <div class={catDescWrapper}>
+          {/*  <div class={catDescWrapper}>
             <h1 class={titleWrapper}>{category.value[0]?.category_title}</h1>
             <p class={catDesc}>{category.value[0]?.category_description}</p>
-          </div>
+          </div> */}
           {category.value[0]?.products.map((product: Product) => {
             return (
               <div key={product.id} class={pdMainWrap}>
@@ -74,7 +74,7 @@ const ProductListPage = component$(() => {
                         <p class={textDescription}>{limitDescription(product.description)}</p>
                       </div>
                       <div class={priceWrapStyle}>
-                        <strong class={priceStyle}>EUR {product.price}</strong>
+                        <strong class={priceStyle}>€ {product.price}</strong>
                       </div>
                     </div>
                   </Link>

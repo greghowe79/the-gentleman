@@ -116,7 +116,7 @@ export const ShoppingBag = component$((props: { text: string; closed: QRL<() => 
                                     >
                                       {product.product_name}
                                     </Link>
-                                    <div class={priceSmall}>EUR {product.price}</div>
+                                    <div class={priceSmall}>€ {product.price}</div>
                                   </div>
                                   <div class={controlsContainer}>
                                     <button
