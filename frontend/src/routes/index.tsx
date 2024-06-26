@@ -111,12 +111,12 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-  title: 'The Gentleman: Elevate Your Lifestyle with Luxury Offerings',
+  title: 'Professione Corsa: Elevate Your Lifestyle with Luxury Offerings',
   meta: [
     {
       name: 'description',
       content:
-        'The Gentleman Services. Explore a world of refined offerings including tailored experiences, high-end fashion, exclusive travel, VIP entertainment, personalized financial services, and luxury properties.',
+        'Professione Corsa Services. Explore a world of refined offerings including tailored experiences, supplements, exclusive travel, VIP entertainment, personalized financial services, and luxury properties.',
     },
   ],
 };

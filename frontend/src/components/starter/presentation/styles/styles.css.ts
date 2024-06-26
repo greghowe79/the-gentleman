@@ -1,9 +1,5 @@
 import { style } from '@vanilla-extract/css';
 
-export const categoryImage = style({
-  width: '75% !important',
-});
-
 export const shopCategoryButton = style({
   marginTop: '2rem',
   display: 'inline-flex',

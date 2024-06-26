@@ -1,7 +1,6 @@
 import { component$ } from '@builder.io/qwik';
 import { Image } from '@unpic/qwik';
 import {
-  categoryImage,
   descriptionWrapper,
   imageWrapper,
   innerWrapper,
@@ -23,15 +22,7 @@ const Presentation = component$<ShopCategoriesProps>(({ shopCategories }) => {
             {index % 2 === 0 ? (
               <>
                 <div class={imageWrapper}>
-                  <Image
-                    objectFit="contain"
-                    src={category.image_url}
-                    layout="constrained"
-                    decoding="async"
-                    loading="lazy"
-                    alt={'image'}
-                    class={categoryImage}
-                  />
+                  <Image objectFit="contain" src={category.image_url} layout="constrained" decoding="async" loading="lazy" alt={'image'} />
                 </div>
                 <div class={descriptionWrapper}>
                   <div class={innerWrapper}>
@@ -57,15 +48,7 @@ const Presentation = component$<ShopCategoriesProps>(({ shopCategories }) => {
                   </div>
                 </div>
                 <div class={imageWrapper}>
-                  <Image
-                    objectFit="contain"
-                    src={category.image_url}
-                    layout="constrained"
-                    decoding="async"
-                    loading="lazy"
-                    alt={'image'}
-                    class={categoryImage}
-                  />
+                  <Image objectFit="contain" src={category.image_url} layout="constrained" decoding="async" loading="lazy" alt={'image'} />
                 </div>
               </>
             )}

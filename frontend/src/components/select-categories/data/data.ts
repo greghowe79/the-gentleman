@@ -1,8 +1,8 @@
 export const categoryOptions = [
   { value: 'shoes', label: 'Shoes' },
-  { value: 'fineDining', label: 'Fine Dining' },
-  { value: 'highEndFashion', label: 'High-End Fashion' },
-  { value: 'exclusiveWellness', label: 'Exclusive Wellness' },
+  { value: 'wearables', label: 'Wearables' },
+  { value: 'supplements', label: 'Supplements' },
+  { value: 'clothing', label: 'Clothing' },
   { value: 'vipEntertainment', label: 'VIP Entertainment' },
   { value: 'supercarTours', label: 'Supercar Tours' },
   { value: 'personalizedFinancialServices', label: 'Personalized Financial Services' },

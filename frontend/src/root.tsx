@@ -109,7 +109,7 @@ export default component$(() => {
       body.style.background = colors[currentIndex.value];
       backgroundColor.value = colors[(currentIndex.value + 1) % colors.length];
       currentIndex.value = (currentIndex.value + 1) % colors.length;
-    }, 6000);
+    }, 8000);
     taskContext.cleanup(() => clearInterval(interval));
   });
 

@@ -304,7 +304,7 @@ export const categoryStyle = style({
 export const shopWrapperDetailContent = style({
   paddingTop: '0',
   paddingBottom: '60px',
-  width: '1300px',
+  /* width: '1300px', */
   maxWidth: '100%',
   position: 'relative',
   margin: 'var(--top-bar-height) auto 0 auto',
