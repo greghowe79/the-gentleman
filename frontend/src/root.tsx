@@ -39,6 +39,7 @@ export const ImageNameContext = createContextId<Signal<string>>('image-name-cont
 export const sellerFormContext = createContextId<Signal<boolean>>('seller-form-context');
 export const HasErrorContext = createContextId<Signal<boolean>>('has-error-context');
 export const HasPhoneErrorContext = createContextId<Signal<boolean>>('has-phone-error-context');
+export const CarouselIndexContext = createContextId<Signal<number>>('carousel-index-context');
 
 export default component$(() => {
   const currentIndex = useSignal(0);
@@ -52,6 +53,7 @@ export default component$(() => {
   const sellerFormIsCompleted = useSignal(false);
   const hasError = useSignal(false);
   const hasPhoneError = useSignal(false);
+  const carouselIndex = useSignal(0);
 
   const userSession = useStore<UserSess>({
     userId: '',
@@ -169,7 +171,7 @@ export default component$(() => {
   useContextProvider(sellerFormContext, sellerFormIsCompleted);
   useContextProvider(HasErrorContext, hasError);
   useContextProvider(HasPhoneErrorContext, hasPhoneError);
-
+  useContextProvider(CarouselIndexContext, carouselIndex);
   return (
     <QwikCityProvider>
       <head>

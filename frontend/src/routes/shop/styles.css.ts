@@ -99,15 +99,30 @@ export const leftWrapper = style({
 });
 
 export const stickyImageContainer = style({
-  width: '55%',
-  // display: 'flex',
-  maxWidth: '680px',
-  justifyContent: 'center',
-  padding: '30px 17px',
-  fontFamily: 'var(--font-family-primary)',
+  height: 'auto',
+  display: 'flex',
+  flexDirection: 'row',
+  gap: '16px',
   position: 'sticky',
-  //height: 'calc((100vh - var(--header-height) - var(--top-bar-height)))',
-  alignSelf: 'flex-start',
+  top: '40px',
+  paddingLeft: '48px',
+  marginLeft: '8px',
+  minHeight: '455px',
+  marginTop: '48px',
+  marginRight: '8px',
+  fontFamily: 'var(--font-family-primary)',
+});
+
+export const imageThumbnailsWrap = style({
+  display: 'flex',
+  position: 'relative',
+  flexDirection: 'column',
+  gap: '8px',
+  flexGrow: '1',
+  minWidth: '60px',
+  maxWidth: '60px',
+  height: '100%',
+  overflowY: 'scroll',
 });
 
 export const spacer = style({
@@ -120,14 +135,9 @@ export const spacerFirst = style({
 });
 
 export const leftWrapperDetail = style({
-  width: '45%',
-  padding: '0 17px',
-  display: 'flex',
-  justifyContent: 'flex-start',
-  flexWrap: 'wrap',
-  fontFamily: 'var(--font-family-tertiary)',
-  alignSelf: 'flex-start',
+  width: '456px',
 });
+
 export const quantityWrapper = style({
   display: 'flex',
   alignItems: 'center',
@@ -247,10 +257,8 @@ export const imageStyle = style({
 
 export const detailImage = style({
   height: '100%',
-  maxHeight: '680px',
-  maxWidth: '680px',
   userSelect: 'none',
-  borderRadius: '20px',
+  borderRadius: '8px',
 });
 
 export const detailDescription = style({
@@ -280,7 +288,7 @@ export const titleContainer = style({
   display: 'inline-flex',
   color: 'var(--title-color)',
   fontFamily: 'var(--font-family-primary)',
-  fontSize: 'var(--font-size-xxl1)',
+  fontSize: 'var(--font-size-xxlmd)',
   lineHeight: 'var(--line-height-xs)',
   letterSpacing: '0',
   fontWeight: '400',
@@ -302,16 +310,16 @@ export const categoryStyle = style({
 });
 
 export const shopWrapperDetailContent = style({
-  paddingTop: '0',
-  paddingBottom: '60px',
-  /* width: '1300px', */
-  maxWidth: '100%',
-  position: 'relative',
+  height: 'auto',
+  maxWidth: '1200px',
   margin: 'var(--top-bar-height) auto 0 auto',
   display: 'flex',
-  justifyContent: 'space-evenly',
-  alignItems: 'center',
   color: 'var(--description-color)',
+  paddingBottom: '48px',
+});
+
+export const leftContainer = style({
+  width: 'calc(100% - 456px)',
 });
 
 export const thumbnailsWrapper = style({
@@ -331,6 +339,34 @@ export const thumbnail = style({
   margin: '5px 10px',
   minHeight: '8px',
   transition: 'all 0.3s ease',
+});
+
+export const divThumb = style({
+  height: '60px',
+  borderRadius: '5px',
+  position: 'relative',
+  display: 'inline-block',
+});
+
+export const thumbnailImage = style({
+  height: '60px',
+  width: '60px',
+  borderRadius: '4px',
+});
+
+export const thumbnailOverlay = style({
+  position: 'absolute',
+  top: '0',
+  left: '0',
+  width: '100%',
+  height: '100%',
+  background: 'rgba(0, 0, 0, 0.3)',
+  opacity: '0',
+  transition: 'opacity 0.3s ease',
+  borderRadius: '5px',
+  ':hover': {
+    opacity: '1',
+  },
 });
 
 export const svgDivThumbnail = style({
@@ -399,14 +435,15 @@ export const butItNowButtonWrapper = style({
 });
 
 export const Wrap = style({
-  flexDirection: 'row',
+  width: '535px',
+  maxWidth: '535px',
   height: '100%',
-  maxHeight: '680px',
-  alignItems: 'center',
-  justifyContent: 'stretch',
   userSelect: 'none',
   background: 'rgba(0, 0, 0, 0.03)',
-  borderRadius: '20px',
+  borderRadius: '8px',
+  overflow: 'hidden',
+  position: 'relative',
+  flexGrow: '1',
 });
 
 export const priceWrapStyle = style({

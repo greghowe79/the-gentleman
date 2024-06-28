@@ -1,31 +1,34 @@
-import { component$, useSignal, $ } from '@builder.io/qwik';
+import { component$, $, useContext } from '@builder.io/qwik';
 import { detailImage } from '~/routes/shop/styles.css';
 import { Image } from '@unpic/qwik';
 import { carousel, carouselControl, carouselControlNext, carouselControlPrev, carouselInner, carouselItem } from '../style/style.css';
+import RightArrow from '~/components/starter/icons/carousel_right_icon';
+import LeftArrow from '~/components/starter/icons/carousel_left_icon';
+import { CarouselIndexContext } from '~/root';
 
 type CarouselProps = {
   images: string[];
 };
 
 export const Carousel = component$<CarouselProps>(({ images }) => {
-  const currentIndex = useSignal(0);
+  const carouselIndex = useContext(CarouselIndexContext);
 
   const nextSlide = $(() => {
-    currentIndex.value = (currentIndex.value + 1) % images.length;
+    carouselIndex.value = (carouselIndex.value + 1) % images.length;
   });
 
   const prevSlide = $(() => {
-    currentIndex.value = (currentIndex.value - 1 + images.length) % images.length;
+    carouselIndex.value = (carouselIndex.value - 1 + images.length) % images.length;
   });
 
   return (
     <div class={carousel}>
       <button onClick$={prevSlide} class={`${carouselControl} ${carouselControlPrev}`}>
-        &lt;
+        <LeftArrow />
       </button>
-      <div class={carouselInner} style={{ transform: `translateX(-${currentIndex.value * 100}%)` }}>
+      <div class={carouselInner} style={{ transform: `translateX(-${carouselIndex.value * 100}%)` }}>
         {images.map((image, index) => (
-          <div class={`${carouselItem} ${index === currentIndex.value ? 'active' : ''}`} key={index}>
+          <div class={`${carouselItem} ${index === carouselIndex.value ? 'active' : ''}`} key={index}>
             <Image
               objectFit="cover"
               src={image}
@@ -39,7 +42,7 @@ export const Carousel = component$<CarouselProps>(({ images }) => {
         ))}
       </div>
       <button onClick$={nextSlide} class={`${carouselControl} ${carouselControlNext}`}>
-        &gt;
+        <RightArrow />
       </button>
     </div>
   );
