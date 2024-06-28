@@ -30,10 +30,15 @@ import {
   spacerFirst,
   buyItNowButtonStyle,
   butItNowButtonWrapper,
+  imageThumbnailsWrap,
+  leftContainer,
+  thumbnailImage,
+  divThumb,
+  thumbnailOverlay,
 } from '../shop/styles.css';
 import { Arrow } from '~/components/starter/icons/arrow';
 import { Link, routeLoader$, useLocation } from '@builder.io/qwik-city';
-import { BodyContext, CartContext, IconKeyContext, OpenPanelContext, UserSessionContext } from '~/root';
+import { BodyContext, CarouselIndexContext, CartContext, IconKeyContext, OpenPanelContext, UserSessionContext } from '~/root';
 //import { Image } from '@unpic/qwik';
 import ProductDetailImage from '~/components/product-detail-image/component/ProductDetailImage';
 import CustomSelect from '~/components/select-categories/component/customSelect';
@@ -42,6 +47,7 @@ import type { Service } from '~/utils/product_detail_page_utils/types';
 import { addToCart } from '~/utils/product_detail_page_utils/actions_product_detail_page';
 import { calculateCategoryPath } from '~/utils/product_detail_page_utils/pdp_utils';
 import { Carousel } from '~/components/carousel/component/carousel';
+import { Image } from '@unpic/qwik';
 
 export const useService = routeLoader$(async (requestEvent) => {
   const res = await fetch(`http://localhost:3005/api_v1/${requestEvent.params.catchAll}`);
@@ -59,7 +65,7 @@ const ShopDetailLayout = component$(() => {
   const cart = useContext(CartContext);
   const openPanel = useContext(OpenPanelContext);
   const iconKey = useContext(IconKeyContext);
-
+  const carouselIndex = useContext(CarouselIndexContext);
   return (
     <div class={shopArea}>
       <div class={shopContainer}>
@@ -103,13 +109,33 @@ const ShopDetailLayout = component$(() => {
           </div>
         </div>
         <div class={shopWrapperDetailContent}>
-          <div class={stickyImageContainer}>
-            <div class={Wrap}>
-              <ProductDetailImage>
-                <div q:slot="image" style={{ margin: '0 auto' }}>
-                  <Carousel images={service.value[0]?.images_url} />
-                </div>
-              </ProductDetailImage>
+          <div class={leftContainer}>
+            <div class={stickyImageContainer}>
+              <div class={[imageThumbnailsWrap, 'thumbnailsWrap']}>
+                {service.value[0]?.images_url.map((url: string, index: number) => {
+                  return (
+                    <div key={index} onMouseOver$={() => (carouselIndex.value = index)} class={divThumb}>
+                      <div class={thumbnailOverlay}></div>
+                      <Image
+                        objectFit="cover"
+                        src={url}
+                        layout="constrained"
+                        decoding="async"
+                        loading="lazy"
+                        alt={`Slide ${index + 1}`}
+                        class={thumbnailImage}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+              <div class={Wrap}>
+                <ProductDetailImage>
+                  <div q:slot="image" style={{ margin: '0 auto' }}>
+                    <Carousel images={service.value[0]?.images_url} />
+                  </div>
+                </ProductDetailImage>
+              </div>
             </div>
           </div>
 

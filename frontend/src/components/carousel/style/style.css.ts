@@ -26,21 +26,23 @@ export const carouselItemImage = style({
 
 export const carouselControl = style({
   position: 'absolute',
-  top: '50%',
+  top: '10%',
   transform: 'translateY(-50%)',
-  background: 'rgba(0, 0, 0, 0.2)',
+  background: '#fcfcfc',
   border: 'none',
-  color: 'white',
-  fontSize: '2em',
+  color: 'black',
   cursor: 'pointer',
   zIndex: 1,
-  padding: '7.5px 10px',
+  padding: '0',
+  height: '36px',
+  width: '36px',
+  borderRadius: '999px',
 });
 
 export const carouselControlPrev = style({
-  left: '0',
+  right: '68px',
 });
 
 export const carouselControlNext = style({
-  right: '0',
+  right: '25px',
 });

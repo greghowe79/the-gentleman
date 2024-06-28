@@ -24,6 +24,10 @@ body {
   overflow-x: hidden;
 }
 
+.thumbnailsWrap::-webkit-scrollbar {
+  display: none;
+}
+
 .scrollable-content {
   overflow-y: auto;
   height: calc(100vh - var(--header-height));
