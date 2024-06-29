@@ -1,4 +1,4 @@
-import { component$, useContext, useSignal } from '@builder.io/qwik';
+import { component$, useContext, useSignal, useTask$ } from '@builder.io/qwik';
 import {
   linkStyle,
   pointStyle,
@@ -39,7 +39,6 @@ import {
 import { Arrow } from '~/components/starter/icons/arrow';
 import { Link, routeLoader$, useLocation } from '@builder.io/qwik-city';
 import { BodyContext, CarouselIndexContext, CartContext, IconKeyContext, OpenPanelContext, UserSessionContext } from '~/root';
-//import { Image } from '@unpic/qwik';
 import ProductDetailImage from '~/components/product-detail-image/component/ProductDetailImage';
 import CustomSelect from '~/components/select-categories/component/customSelect';
 import { quantityOptions } from '~/components/select-categories/data/data';
@@ -66,6 +65,11 @@ const ShopDetailLayout = component$(() => {
   const openPanel = useContext(OpenPanelContext);
   const iconKey = useContext(IconKeyContext);
   const carouselIndex = useContext(CarouselIndexContext);
+
+  useTask$(() => {
+    carouselIndex.value = 0;
+  });
+
   return (
     <div class={shopArea}>
       <div class={shopContainer}>
@@ -115,7 +119,7 @@ const ShopDetailLayout = component$(() => {
                 {service.value[0]?.images_url.map((url: string, index: number) => {
                   return (
                     <div key={index} onMouseOver$={() => (carouselIndex.value = index)} class={divThumb}>
-                      <div class={thumbnailOverlay}></div>
+                      <div class={thumbnailOverlay} style={{ opacity: `${carouselIndex.value === index ? 1 : 0}` }}></div>
                       <Image
                         objectFit="cover"
                         src={url}
