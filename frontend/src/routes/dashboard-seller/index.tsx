@@ -19,7 +19,7 @@ import {
 import Connected from '~/components/connected/component/connected';
 import type { BalanceProps } from '~/components/connected/types/types';
 import { Image } from '@unpic/qwik';
-import imageUrl from '~/media/accessories.jpg';
+import imageUrl from '~/media/accessories.webp';
 
 const SellerPage = component$(() => {
   const balance = useSignal<BalanceProps | undefined>();
@@ -62,13 +62,13 @@ const SellerPage = component$(() => {
           <div class={wrapper}>
             <div class={wrap}>
               <h2 class={title}>Increase Your Revenue.</h2>
-              <h3 class={subtitle}>Reach Thousands of Potential Customers for Men's Accessories Every Day</h3>
+              <h3 class={subtitle}>Reach Thousands of Potential Customers for Running Gear Every Day</h3>
               <div class={advantages_container}>
                 <ul class={unorderList}>
-                  <li>Expand your business by reaching a network of continually growing buyers</li>
-                  <li>Display your accessories in a marketplace dedicated to excellence and refinement</li>
-                  <li>Receive personalized assistance to optimize your sales and grow with us</li>
-                  <li>Sell without long-term commitments, with the option to modify or cancel at any time</li>
+                  <li>Expand your business by connecting with a rapidly growing community of runners</li>
+                  <li>Showcase your running gear in a marketplace dedicated to performance and quality</li>
+                  <li>Receive personalized support to optimize your sales and grow with us</li>
+                  <li>Sell without long-term commitments, with the flexibility to modify or cancel at any time</li>
                 </ul>
               </div>
             </div>

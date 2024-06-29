@@ -19,7 +19,7 @@ export const form = style({
   left: '15px',
   top: '30px',
   width: 'calc(100% - 90px)',
-  height: 'calc(100% - var(--header-height) - 15px)',
+  height: 'calc(100% - var(--header-height) - 35px)',
 });
 
 export const flexWrapper = style({

@@ -66,7 +66,17 @@ export const overlay = style({
   backgroundImage: 'linear-gradient(to top, rgba(0, 0, 0, 0.4) 0, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.4) 100%)',
 });
 
+export const title = style({
+  color: '#fcfcfc',
+  '@media': {
+    'screen and (max-width: 1024px)': {
+      fontSize: 'var(--font-size-xxlmd)',
+    },
+  },
+});
+
 export const subtitle = style({
+  color: '#fcfcfc',
   fontSize: 'var(--font-size-xl)',
   '@media': {
     'screen and (max-width: 1024px)': {
@@ -86,28 +96,20 @@ export const unorderList = style({
 });
 
 export const advantages_container = style({
-  backgroundColor: '#f3f3f3',
+  backgroundColor: '#fcfcfc',
   padding: '20px',
   textAlign: 'left',
   borderRadius: '10px',
   height: '200px',
   marginTop: '50px',
   color: 'var(--default-text-color)',
-  fontFamily: 'var(--font-family-secondary)',
+  fontFamily: 'var(--font-family-primary)',
   alignSelf: 'center',
   maxWidth: '680px',
   '@media': {
     'screen and (max-width: 820px)': {
       height: '150px',
       marginTop: '40px',
-    },
-  },
-});
-
-export const title = style({
-  '@media': {
-    'screen and (max-width: 1024px)': {
-      fontSize: 'var(--font-size-xxlmd)',
     },
   },
 });

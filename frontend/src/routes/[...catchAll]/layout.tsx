@@ -121,7 +121,7 @@ const ShopDetailLayout = component$(() => {
                     <div key={index} onMouseOver$={() => (carouselIndex.value = index)} class={divThumb}>
                       <div class={thumbnailOverlay} style={{ opacity: `${carouselIndex.value === index ? 1 : 0}` }}></div>
                       <Image
-                        objectFit="cover"
+                        objectFit="fill"
                         src={url}
                         layout="constrained"
                         decoding="async"
