@@ -27,6 +27,9 @@ export const carouselItemImage = style({
 export const carouselControl = style({
   position: 'absolute',
   top: '10%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
   transform: 'translateY(-50%)',
   background: '#fcfcfc',
   border: 'none',

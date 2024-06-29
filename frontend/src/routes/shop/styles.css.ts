@@ -360,13 +360,10 @@ export const thumbnailOverlay = style({
   left: '0',
   width: '100%',
   height: '100%',
-  background: 'rgba(0, 0, 0, 0.3)',
+  background: 'rgba(0, 0, 0, 0.2)',
   opacity: '0',
   transition: 'opacity 0.3s ease',
   borderRadius: '5px',
-  ':hover': {
-    opacity: '1',
-  },
 });
 
 export const svgDivThumbnail = style({
