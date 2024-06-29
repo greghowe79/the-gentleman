@@ -26,7 +26,7 @@ export const Header = component$<ToggleProps>(({ location }) => {
       <nav class={styles.header}>
         <div class={styles.logo} aria-label="Professione Corsa">
           <Link href="/" title="Professione Corsa" aria-label="Professione Corsa" style={{ display: 'flex' }}>
-            <QwikLogo height={120} width={120} />
+            <QwikLogo height={100} width={100} />
           </Link>
         </div>
         <div class={styles['button-wrap']} style={{ display: displayButton }}>

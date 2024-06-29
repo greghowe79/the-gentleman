@@ -349,9 +349,10 @@ export const divThumb = style({
 });
 
 export const thumbnailImage = style({
-  height: '60px',
-  width: '60px',
   borderRadius: '4px',
+  background: 'rgb(245, 245, 245)',
+  width: '100%',
+  height: '100%',
 });
 
 export const thumbnailOverlay = style({
