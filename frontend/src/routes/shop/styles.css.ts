@@ -99,7 +99,7 @@ export const leftWrapper = style({
 });
 
 export const stickyImageContainer = style({
-  height: 'auto',
+  height: '669px',
   display: 'flex',
   flexDirection: 'row',
   gap: '16px',
@@ -246,7 +246,6 @@ export const imageStyle = style({
   left: '50%',
   transform: 'translate(-50%,-50%)',
   borderRadius: '10px',
-  height: '100%',
   transition: 'transform 0.6s cubic-bezier(0.57, 0.05, 0, 1.32)',
   selectors: {
     [`${pdInnerWrap}:hover &`]: {
@@ -256,7 +255,6 @@ export const imageStyle = style({
 });
 
 export const detailImage = style({
-  height: '100%',
   userSelect: 'none',
   borderRadius: '8px',
 });
@@ -437,7 +435,6 @@ export const Wrap = style({
   maxWidth: '535px',
   height: '100%',
   userSelect: 'none',
-  background: 'rgba(0, 0, 0, 0.03)',
   borderRadius: '8px',
   overflow: 'hidden',
   position: 'relative',
