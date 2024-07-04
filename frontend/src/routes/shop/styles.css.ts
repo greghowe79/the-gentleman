@@ -17,6 +17,7 @@ export const shopHeaderArea = style({
   height: 'var(--top-bar-height)',
   width: 'var(--shop-container-width)',
   zIndex: '1',
+  top: 'var(--header-height)',
 });
 
 export const shopHeaderContainer = style({

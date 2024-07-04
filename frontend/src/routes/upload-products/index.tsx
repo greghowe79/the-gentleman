@@ -284,7 +284,7 @@ const UploadProducts = component$(() => {
               </div>
             </form>
           </div>
-          <div class={[slidingContainer, 'sliding-container']}>
+          <div class={[slidingContainer, 'sliding-container']} style={{ position: 'fixed' }}>
             {isPreview.value ? (
               <div style={{ background: 'red' }}>Ciao</div>
             ) : (

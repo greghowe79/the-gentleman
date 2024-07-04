@@ -77,10 +77,10 @@ export default component$(() => {
     }
   });
 
-  const backgroundColor = useSignal('rgb(0, 0, 0)');
+  const backgroundColor = useSignal('rgb(31, 31, 33)');
   const cart: Signal<CartProps> = useSignal({ products: [], total: 0 });
 
-  const colors = ['rgb(0, 0, 0)', 'rgb(139,43,39)'];
+  const colors = ['rgb(31, 31, 33)', 'rgb(139,43,39)'];
 
   const body = document.body;
 
@@ -193,6 +193,7 @@ export default component$(() => {
         lang="en"
         style={{
           background: `${colors[currentIndex.value]}`,
+          overflow: openPanel.isOpen ? 'hidden' : 'visible',
         }}
       >
         <RouterOutlet />

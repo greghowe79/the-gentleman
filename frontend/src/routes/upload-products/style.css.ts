@@ -192,7 +192,7 @@ export const imageContainer = style({
 });
 
 export const imgStyle = style({
-  width: '50% !important',
+  width: '40% !important',
   maxWidth: '600px',
 });
 export const editContainer = style({

@@ -4,7 +4,7 @@ import styles from './header.module.css';
 import { Link } from '@builder.io/qwik-city';
 import { IconsMenu } from '~/components/icons-menu/component/iconsMenu';
 import { ListMenu } from '~/components/list-menu/component/listMenu';
-import { OpenPanelContext, UserSessionContext } from '~/root';
+import { BodyContext, OpenPanelContext, UserSessionContext } from '~/root';
 import ButtonAddProduct from '~/components/button-add-product/component/button_add_product';
 import { isDashboardSeller } from './actions/actions';
 import type { ToggleProps } from './types/types';
@@ -12,6 +12,7 @@ import type { ToggleProps } from './types/types';
 export const Header = component$<ToggleProps>(({ location }) => {
   const userSession = useContext(UserSessionContext);
   const openPanel = useContext(OpenPanelContext);
+  const backgroundColor = useContext(BodyContext);
 
   const open = $(() => {
     openPanel.isOpen = true;
@@ -23,7 +24,7 @@ export const Header = component$<ToggleProps>(({ location }) => {
 
   return (
     <header>
-      <nav class={styles.header}>
+      <nav class={styles.header} style={{ backgroundColor: backgroundColor.value }}>
         <div class={styles.logo} aria-label="Professione Corsa">
           <Link href="/" title="Professione Corsa" aria-label="Professione Corsa" style={{ display: 'flex' }}>
             <QwikLogo height={100} width={100} />
