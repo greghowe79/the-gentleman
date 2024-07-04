@@ -1,21 +1,12 @@
 import type { QwikIntrinsicElements } from '@builder.io/qwik';
 
-export function FaSolidShoppingBag(
-  props: QwikIntrinsicElements['svg'],
-  key: string
-) {
+export function FaSolidShoppingBag(props: QwikIntrinsicElements['svg'], key: string) {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="1.05rem"
-      height="1.05rem"
-      viewBox="0 0 448 512"
-      {...props}
-      key={key}
-    >
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" role="img" width="24px" height="24px" fill="none" {...props} key={key}>
       <path
-        fill="currentColor"
-        d="M352 160v-32C352 57.42 294.579 0 224 0C153.42 0 96 57.42 96 128v32H0v272c0 44.183 35.817 80 80 80h288c44.183 0 80-35.817 80-80V160h-96zm-192-32c0-35.29 28.71-64 64-64s64 28.71 64 64v32H160v-32zm160 120c-13.255 0-24-10.745-24-24s10.745-24 24-24s24 10.745 24 24s-10.745 24-24 24zm-192 0c-13.255 0-24-10.745-24-24s10.745-24 24-24s24 10.745 24 24s-10.745 24-24 24z"
+        stroke="currentColor"
+        stroke-width="1.5"
+        d="M8.25 8.25V6a2.25 2.25 0 012.25-2.25h3a2.25 2.25 0 110 4.5H3.75v8.25a3.75 3.75 0 003.75 3.75h9a3.75 3.75 0 003.75-3.75V8.25H17.5"
       ></path>
     </svg>
   );

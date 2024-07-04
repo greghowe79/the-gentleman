@@ -2,17 +2,11 @@ import type { QwikIntrinsicElements } from '@builder.io/qwik';
 
 export function FaSearch(props: QwikIntrinsicElements['svg'], key: string) {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="1.05rem"
-      height="1.05rem"
-      viewBox="0 0 1664 1664"
-      {...props}
-      key={key}
-    >
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" role="img" width="24px" height="24px" fill="none" {...props} key={key}>
       <path
-        fill="currentColor"
-        d="M1152 704q0-185-131.5-316.5T704 256T387.5 387.5T256 704t131.5 316.5T704 1152t316.5-131.5T1152 704zm512 832q0 52-38 90t-90 38q-54 0-90-38l-343-342q-179 124-399 124q-143 0-273.5-55.5t-225-150t-150-225T0 704t55.5-273.5t150-225t225-150T704 0t273.5 55.5t225 150t150 225T1408 704q0 220-124 399l343 343q37 37 37 90z"
+        stroke="currentColor"
+        stroke-width="1.5"
+        d="M13.962 16.296a6.716 6.716 0 01-3.462.954 6.728 6.728 0 01-4.773-1.977A6.728 6.728 0 013.75 10.5c0-1.864.755-3.551 1.977-4.773A6.728 6.728 0 0110.5 3.75c1.864 0 3.551.755 4.773 1.977A6.728 6.728 0 0117.25 10.5a6.726 6.726 0 01-.921 3.407c-.517.882-.434 1.988.289 2.711l3.853 3.853"
       ></path>
     </svg>
   );

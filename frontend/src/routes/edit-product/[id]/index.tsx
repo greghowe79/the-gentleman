@@ -220,7 +220,7 @@ const EditPage = component$(() => {
               </div>
             </form>
           </div>
-          <div class={[slidingContainer, editContainer, 'sliding-container']}>
+          <div class={[slidingContainer, editContainer, 'sliding-container']} style={{ position: 'absolute' }}>
             <div>
               <div>
                 <div>

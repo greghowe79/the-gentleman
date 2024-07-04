@@ -1,5 +1,5 @@
 .header {
-  position: relative;
+  position: fixed;
   z-index: 3;
   height: var(--header-height);
   flex-wrap: wrap;
@@ -7,6 +7,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
 }
 
 .logo {
