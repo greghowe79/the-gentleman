@@ -84,9 +84,8 @@ body {
 
 .sliding-container {
   overflow-y: auto;
-  height: calc(100vh - var(--header-height) - 75px);
+  height: calc(100vh - var(--header-height) - 55px);
   z-index: 2;
-  /*  position: fixed; */
   overflow-x: hidden;
 }
 

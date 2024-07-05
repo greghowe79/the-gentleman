@@ -15,9 +15,8 @@ import {
   categoryWrapper,
   categoryStyle,
   shopWrapperDetailContent,
-  // thumbnailsWrapper,
+
   // thumbnail,
-  // svgDivThumbnail,
   stickyImageContainer,
   leftWrapperDetail,
   priceDetail,
@@ -45,11 +44,7 @@ import {
   CartContext,
   IconKeyContext,
   NavbarContext,
-  //NavbarContext,
-  //NavbarContext,
   OpenPanelContext,
-  //TopbarContext,
-  //TopbarContext,
   UserSessionContext,
 } from '~/root';
 import ProductDetailImage from '~/components/product-detail-image/component/ProductDetailImage';

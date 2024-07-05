@@ -326,13 +326,6 @@ export const leftContainer = style({
   width: 'calc(100% - 456px)',
 });
 
-export const thumbnailsWrapper = style({
-  display: 'flex',
-  alignSelf: 'center',
-  flexDirection: 'column',
-  padding: '20px',
-});
-
 export const thumbnail = style({
   width: '50px',
   cursor: 'default',
@@ -370,7 +363,7 @@ export const thumbnailOverlay = style({
   transition: 'opacity 0.3s ease',
   borderRadius: '5px',
 });
-
+/* 
 export const svgDivThumbnail = style({
   position: 'absolute',
   top: '-2px',
@@ -379,7 +372,7 @@ export const svgDivThumbnail = style({
   color: 'var(--product-name-color)',
   display: 'inline-flex',
   fontSize: '0',
-});
+}); */
 
 export const cartButtonStyle = style({
   display: 'inline-flex',
