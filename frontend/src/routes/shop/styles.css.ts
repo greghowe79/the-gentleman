@@ -18,6 +18,11 @@ export const shopHeaderArea = style({
   width: 'var(--shop-container-width)',
   zIndex: '1',
   top: 'var(--header-height)',
+  transition: 'transform 150ms ease',
+});
+
+export const hidden = style({
+  transform: 'translateY(-181px)',
 });
 
 export const shopHeaderContainer = style({

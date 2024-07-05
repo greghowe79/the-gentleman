@@ -4,7 +4,7 @@ import styles from './header.module.css';
 import { Link } from '@builder.io/qwik-city';
 import { IconsMenu } from '~/components/icons-menu/component/iconsMenu';
 import { ListMenu } from '~/components/list-menu/component/listMenu';
-import { BodyContext, OpenPanelContext, UserSessionContext } from '~/root';
+import { NavbarContext, OpenPanelContext, UserSessionContext } from '~/root';
 import ButtonAddProduct from '~/components/button-add-product/component/button_add_product';
 import { isDashboardSeller } from './actions/actions';
 import type { ToggleProps } from './types/types';
@@ -12,8 +12,8 @@ import type { ToggleProps } from './types/types';
 export const Header = component$<ToggleProps>(({ location }) => {
   const userSession = useContext(UserSessionContext);
   const openPanel = useContext(OpenPanelContext);
-  const backgroundColor = useContext(BodyContext);
 
+  const isNavbarVisible = useContext(NavbarContext);
   const open = $(() => {
     openPanel.isOpen = true;
   });
@@ -24,16 +24,15 @@ export const Header = component$<ToggleProps>(({ location }) => {
 
   return (
     <header>
-      <nav class={styles.header} style={{ backgroundColor: backgroundColor.value }}>
+      <nav class={`${styles.header} ${isNavbarVisible.value ? '' : styles.hidden}`}>
         <div class={styles.logo} aria-label="Professione Corsa">
           <Link href="/" title="Professione Corsa" aria-label="Professione Corsa" style={{ display: 'flex' }}>
-            <QwikLogo height={100} width={100} />
+            <QwikLogo height={80} width={80} />
           </Link>
         </div>
         <div class={styles['button-wrap']} style={{ display: displayButton }}>
           <ButtonAddProduct />
         </div>
-
         <div class={styles['list-container']} style={{ display: displayListAndIcons }}>
           <ListMenu userSession={userSession} />
         </div>

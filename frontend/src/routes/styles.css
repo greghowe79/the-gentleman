@@ -22,6 +22,7 @@ html {
 body {
   color: var(--qwik-dark-text);
   overflow-x: hidden;
+  background: #fcfcfc !important;
 }
 
 .thumbnailsWrap::-webkit-scrollbar {
@@ -274,11 +275,11 @@ button {
   text-align: center;
 }
 
-a.button.button-dark,
+/* a.button.button-dark,
 button.button-dark {
   background: var(--link-color-hover);
 }
-
+ */
 a.button.button-small,
 button.button-small {
   padding: 15px 25px;

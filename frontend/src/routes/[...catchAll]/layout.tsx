@@ -35,10 +35,23 @@ import {
   thumbnailImage,
   divThumb,
   thumbnailOverlay,
+  hidden,
 } from '../shop/styles.css';
 import { Arrow } from '~/components/starter/icons/arrow';
 import { Link, routeLoader$, useLocation } from '@builder.io/qwik-city';
-import { BodyContext, CarouselIndexContext, CartContext, IconKeyContext, OpenPanelContext, UserSessionContext } from '~/root';
+import {
+  BodyContext,
+  CarouselIndexContext,
+  CartContext,
+  IconKeyContext,
+  NavbarContext,
+  //NavbarContext,
+  //NavbarContext,
+  OpenPanelContext,
+  //TopbarContext,
+  //TopbarContext,
+  UserSessionContext,
+} from '~/root';
 import ProductDetailImage from '~/components/product-detail-image/component/ProductDetailImage';
 import CustomSelect from '~/components/select-categories/component/customSelect';
 import { quantityOptions } from '~/components/select-categories/data/data';
@@ -65,6 +78,7 @@ const ShopDetailLayout = component$(() => {
   const openPanel = useContext(OpenPanelContext);
   const iconKey = useContext(IconKeyContext);
   const carouselIndex = useContext(CarouselIndexContext);
+  const isNavbarVisible = useContext(NavbarContext);
 
   useTask$(() => {
     carouselIndex.value = 0;
@@ -73,7 +87,7 @@ const ShopDetailLayout = component$(() => {
   return (
     <div class={shopArea}>
       <div class={shopContainer}>
-        <div class={shopHeaderArea}>
+        <div class={isNavbarVisible.value ? shopHeaderArea : hidden}>
           <div class={shopHeaderContainer}>
             <div class={shopBreadcrumb}>
               <span class={spanStyle} style={{ padding: '0 30px' }}>

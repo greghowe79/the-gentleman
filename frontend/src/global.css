@@ -76,15 +76,12 @@
   --default-text-color: rgba(46, 47, 48, 1);
   --qwik-light-purple: #ac7ff4;
   --qwik-dark-purple: #713fc2;
-  --link-color-hover: rgb(241, 196, 15);
-
-  /* rgb(248, 85, 85) */
 
   --qwik-dark-text: #ffffff;
-  --header-height: 100px;
+  --header-height: 80px;
   --loader-color: #1d2033;
   --arrow-color: #1d2033;
-  --top-bar-height: 80px;
+  --top-bar-height: 60px;
 
   --shop-container-width: 100%;
   --product-name-color: rgb(65, 119, 100);

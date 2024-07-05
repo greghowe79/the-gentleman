@@ -78,7 +78,7 @@ export const listWrap = style({
 });
 
 export const ulStyle = style({
-  background: '#000000',
+  background: 'rgb(31, 31, 33)',
   marginTop: '40px',
   height: 'calc(100vh - var(--header-height) - 40px)',
   listStyle: 'none',

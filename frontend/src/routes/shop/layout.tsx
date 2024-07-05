@@ -1,5 +1,5 @@
 import { component$, useContext } from '@builder.io/qwik';
-import { BodyContext } from '~/root';
+import { BodyContext, NavbarContext } from '~/root';
 import {
   pointStyle,
   spanStyle,
@@ -13,6 +13,7 @@ import {
   shopHeaderArea,
   shopHeaderContainer,
   shopBreadcrumb,
+  hidden,
 } from './styles.css';
 import { Arrow } from '~/components/starter/icons/arrow';
 import { Link, routeLoader$, useLocation } from '@builder.io/qwik-city';
@@ -42,15 +43,14 @@ export const useProducts = routeLoader$(async () => {
 
 const Shop = component$(() => {
   const loc = useLocation();
-
+  const isNavbarVisible = useContext(NavbarContext);
   const products = useProducts();
-
   const backgroundColor = useContext(BodyContext);
 
   return (
     <div class={shopArea}>
       <div class={shopContainer}>
-        <div class={shopHeaderArea}>
+        <div class={isNavbarVisible.value ? shopHeaderArea : hidden}>
           <div class={shopHeaderContainer}>
             <div class={shopBreadcrumb}>
               <span class={spanStyle} style={{ padding: '0 30px' }}>
