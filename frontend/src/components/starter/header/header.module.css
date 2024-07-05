@@ -8,6 +8,12 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  background-color: rgb(31, 31, 33);
+  transition: transform 150ms ease;
+}
+
+.header.hidden {
+  transform: translateY(-100%);
 }
 
 .logo {
@@ -58,10 +64,6 @@
   padding: 0 30px;
   cursor: pointer;
 }
-
-/* .icons-container li:hover {
-  color: var(--link-color-hover);
-} */
 
 @media (min-width: 450px) {
   .header li {

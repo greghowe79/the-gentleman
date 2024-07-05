@@ -1,4 +1,14 @@
-import { type Signal, component$, createContextId, useContextProvider, useSignal, useVisibleTask$, useStore, $ } from '@builder.io/qwik';
+import {
+  type Signal,
+  component$,
+  createContextId,
+  useContextProvider,
+  useSignal,
+  useVisibleTask$,
+  useStore,
+  $,
+  useOnWindow,
+} from '@builder.io/qwik';
 import { QwikCityProvider, RouterOutlet, ServiceWorkerRegister } from '@builder.io/qwik-city';
 import { RouterHead } from './components/router-head/router-head';
 
@@ -40,8 +50,27 @@ export const sellerFormContext = createContextId<Signal<boolean>>('seller-form-c
 export const HasErrorContext = createContextId<Signal<boolean>>('has-error-context');
 export const HasPhoneErrorContext = createContextId<Signal<boolean>>('has-phone-error-context');
 export const CarouselIndexContext = createContextId<Signal<number>>('carousel-index-context');
+export const NavbarContext = createContextId<Signal<boolean>>('navbar-context');
+export const TopbarContext = createContextId<Signal<HTMLElement>>('topbar-context');
 
 export default component$(() => {
+  const isNavbarVisible = useSignal(true);
+  const lastScrollTop = useSignal(0);
+
+  useOnWindow(
+    'scroll',
+    $(() => {
+      const scrollTop = window.scrollY;
+
+      if (scrollTop > lastScrollTop.value) {
+        isNavbarVisible.value = false;
+      } else {
+        isNavbarVisible.value = true;
+      }
+      lastScrollTop.value = scrollTop;
+    })
+  );
+
   const currentIndex = useSignal(0);
   const isModalVisible = useSignal(false);
   const images: Signal<any> = useSignal([]);
@@ -54,6 +83,9 @@ export default component$(() => {
   const hasError = useSignal(false);
   const hasPhoneError = useSignal(false);
   const carouselIndex = useSignal(0);
+  //const navbarRef = useSignal<HTMLElement>();
+
+  const topbarRef = useSignal<HTMLElement>();
 
   const userSession = useStore<UserSess>({
     userId: '',
@@ -172,6 +204,9 @@ export default component$(() => {
   useContextProvider(HasErrorContext, hasError);
   useContextProvider(HasPhoneErrorContext, hasPhoneError);
   useContextProvider(CarouselIndexContext, carouselIndex);
+  useContextProvider(NavbarContext, isNavbarVisible);
+  useContextProvider(TopbarContext, topbarRef);
+
   return (
     <QwikCityProvider>
       <head>
