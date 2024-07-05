@@ -22,7 +22,7 @@ export const shopHeaderArea = style({
 });
 
 export const hidden = style({
-  transform: 'translateY(-181px)',
+  transform: 'translateY(-141px)',
 });
 
 export const shopHeaderContainer = style({

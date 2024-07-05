@@ -44,10 +44,6 @@ const ProductListPage = component$(() => {
     <>
       {category.value && category.value.length > 0 && (
         <>
-          {/*  <div class={catDescWrapper}>
-            <h1 class={titleWrapper}>{category.value[0]?.category_title}</h1>
-            <p class={catDesc}>{category.value[0]?.category_description}</p>
-          </div> */}
           {category.value[0]?.products.map((product: Product) => {
             return (
               <div key={product.id} class={pdMainWrap}>
