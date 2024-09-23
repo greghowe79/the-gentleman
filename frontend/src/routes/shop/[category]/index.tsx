@@ -1,4 +1,4 @@
-import { component$ } from '@builder.io/qwik';
+import { component$, useContext } from '@builder.io/qwik';
 import { Link, routeLoader$ } from '@builder.io/qwik-city';
 import { Image } from '@unpic/qwik';
 import {
@@ -20,6 +20,7 @@ import {
   textDescription,
 } from '../styles.css';
 import { limitDescription } from '../actions/actions';
+import { CategoryCountContext } from '~/root';
 
 export const useCategory = routeLoader$(async (requestEvent) => {
   const res = await fetch(`http://localhost:3005/api_v1/shop/${requestEvent.params.category}`);
@@ -39,6 +40,8 @@ interface Product {
 
 const ProductListPage = component$(() => {
   const category: any = useCategory();
+  const categoryCount = useContext(CategoryCountContext);
+  categoryCount.value = category.value[0]?.products.length;
 
   return (
     <>

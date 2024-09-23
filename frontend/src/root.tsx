@@ -52,6 +52,8 @@ export const HasPhoneErrorContext = createContextId<Signal<boolean>>('has-phone-
 export const CarouselIndexContext = createContextId<Signal<number>>('carousel-index-context');
 export const NavbarContext = createContextId<Signal<boolean>>('navbar-context');
 export const TopbarContext = createContextId<Signal<HTMLElement>>('topbar-context');
+export const CategoryCountContext = createContextId<Signal<number>>('category-count-context');
+export const FiltersContext = createContextId<Signal<boolean>>('filter-context');
 
 export default component$(() => {
   const isNavbarVisible = useSignal(true);
@@ -83,7 +85,8 @@ export default component$(() => {
   const hasError = useSignal(false);
   const hasPhoneError = useSignal(false);
   const carouselIndex = useSignal(0);
-  //const navbarRef = useSignal<HTMLElement>();
+  const categoryCount = useSignal(0);
+  const isFiltersVisible = useSignal(false);
 
   const topbarRef = useSignal<HTMLElement>();
 
@@ -206,6 +209,8 @@ export default component$(() => {
   useContextProvider(CarouselIndexContext, carouselIndex);
   useContextProvider(NavbarContext, isNavbarVisible);
   useContextProvider(TopbarContext, topbarRef);
+  useContextProvider(CategoryCountContext, categoryCount);
+  useContextProvider(FiltersContext, isFiltersVisible);
 
   return (
     <QwikCityProvider>
