@@ -2,13 +2,10 @@ import { component$ } from '@builder.io/qwik';
 import { type DocumentHead } from '@builder.io/qwik-city';
 import { Image } from '@unpic/qwik';
 import {
-  catDesc,
   pdDesc,
   pdInnerWrap,
   pdMainWrap,
   pdName,
-  titleWrapper,
-  catDescWrapper,
   detail,
   imgWrap,
   image,
@@ -28,10 +25,6 @@ const ShopProducts = component$(({ data }: any) => {
     <>
       {data && data.length > 0 && (
         <>
-          <div class={catDescWrapper}>
-            <h1 class={titleWrapper}>{data[0]?.category_title}</h1>
-            <p class={catDesc}>{data[0]?.category_description}</p>
-          </div>
           {data[0]?.products.map((product: Product) => {
             return (
               <div key={product.id} class={pdMainWrap}>

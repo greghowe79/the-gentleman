@@ -21,10 +21,12 @@ export const Header = component$<ToggleProps>(({ location }) => {
   const isSellerDashboard = isDashboardSeller(location);
   const displayButton = isSellerDashboard ? 'block' : 'none';
   const displayListAndIcons = isSellerDashboard ? 'none' : 'block';
+  //const isFilterVisible = useContext(FiltersContext);
 
   return (
     <header>
-      <nav class={`${styles.header} ${isNavbarVisible.value ? '' : styles.hidden}`}>
+      <nav class={`${styles.header} ${isNavbarVisible.value ? '' : styles.hidden} `}>
+        {/* ${isFilterVisible.value ? '' : styles.hidden} */}
         <div class={styles.logo} aria-label="Professione Corsa">
           <Link href="/" title="Professione Corsa" aria-label="Professione Corsa" style={{ display: 'flex' }}>
             <QwikLogo height={80} width={80} />

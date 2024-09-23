@@ -101,7 +101,7 @@ const SellerForm = component$(() => {
           </label>
         </div>
         <div style={{ display: 'flex' }}>
-          <div class={prodNameInputWrap} style={{ width: '16%' }}>
+          <div class={prodNameInputWrap} style={{ width: '18%' }}>
             <label for="prefix" class={styles['label']}>
               <input
                 type="text"
