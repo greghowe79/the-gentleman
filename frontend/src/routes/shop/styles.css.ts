@@ -946,3 +946,31 @@ export const groupContent = style({
   margin: '0 -6px 0 0',
   padding: '7px 0 14px',
 });
+
+export const fieldset = style({
+  margin: '0',
+  padding: '0',
+  border: '0',
+  font: 'inherit',
+  verticalAlign: 'baseline',
+  marginBottom: '32px',
+});
+
+export const legend = style({
+  color: 'var(--description-color)',
+  display: 'flex',
+  fontFamily: 'var(--font-family-secondary)',
+  fontWeight: '600',
+  marginBottom: '8px',
+});
+
+export const gridSize = style({
+  margin: '0px auto',
+  display: 'grid',
+  gridTemplateColumns: 'repeat(5, minmax(0px, 1fr))',
+  gap: '7px',
+  maxWidth: '100%',
+  padding: '0px',
+  border: '1px solid transparent',
+  borderRadius: '4px',
+});

@@ -19,7 +19,7 @@ export const form = style({
   left: '15px',
   top: '30px',
   width: 'calc(100% - 90px)',
-  height: 'calc(100% - var(--header-height) - 35px)',
+  height: 'calc(100% - var(--header-height) + 25px)',
 });
 
 export const flexWrapper = style({
@@ -210,4 +210,9 @@ export const editDesc = style({
   wordWrap: 'break-word',
   width: '350px',
   textAlign: 'center',
+});
+
+export const radioLabel = style({
+  color: 'var(--default-text-color)',
+  fontFamily: 'var(--font-family-secondary)',
 });
