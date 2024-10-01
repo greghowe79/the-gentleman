@@ -21,6 +21,7 @@ import {
   textAreaStyle,
   buttonIcon,
   previewExtraPictures,
+  radioLabel,
 } from './style.css';
 import styles from '../../components/search-bar/styles/search-bar.module.css';
 import { supabase } from '~/utils/supabase';
@@ -41,6 +42,7 @@ import {
   uploadImgStorage,
   uploadExtraImage,
   uploadExtraPicturesStorage,
+  handleSizeTypeChange,
 } from '~/utils/helpers';
 import { Image } from '@unpic/qwik';
 import CustomSelect from '~/components/select-categories/component/customSelect';
@@ -68,6 +70,7 @@ const UploadProducts = component$(() => {
   const selectedOption = useSignal('');
   const sequence = useSignal(1);
   const productsTable = useContext(ProductsTableContext);
+  const selectedSizeType = useSignal('');
 
   useTask$(async ({ track }) => {
     track(() => userSession.userId);
@@ -241,6 +244,62 @@ const UploadProducts = component$(() => {
                   />
                 </label>
               </div>
+
+              <div class={prodNameInputWrap} style={{ marginBottom: '16px' }}>
+                <p class={radioLabel} style={{ marginBottom: '0' }}>
+                  Select the type of sizes:
+                </p>
+                <input
+                  type="radio"
+                  id="clothing"
+                  name="fav_language"
+                  value="Clothing"
+                  onChange$={(e) => handleSizeTypeChange(e, selectedSizeType)}
+                />
+                <label for="clothing" class={radioLabel}>
+                  {'Clothing (XS-XL)'}
+                </label>
+                <br />
+                <input
+                  type="radio"
+                  id="shoeseu"
+                  name="fav_language"
+                  value="ShoesEU"
+                  onChange$={(e) => handleSizeTypeChange(e, selectedSizeType)}
+                />
+                <label for="shoeseu" class={radioLabel}>
+                  {'Shoes (EU)'}
+                </label>
+                <br />
+                <input
+                  type="radio"
+                  id="shoesusa"
+                  name="fav_language"
+                  value="ShoesUSA"
+                  onChange$={(e) => handleSizeTypeChange(e, selectedSizeType)}
+                />
+                <label for="shoesusa" class={radioLabel}>
+                  {'Shoes (USA)'}
+                </label>
+              </div>
+              {selectedSizeType.value === 'Clothing' && (
+                <div>
+                  <p class={radioLabel}>Selected: Clothing (XS-XL)</p>
+                  {/* Inserisci qui il componente o i campi per Clothing */}
+                </div>
+              )}
+              {selectedSizeType.value === 'ShoesEU' && (
+                <div>
+                  <p class={radioLabel}>Selected: Shoes (EU)</p>
+                  {/* Inserisci qui il componente o i campi per Shoes (EU) */}
+                </div>
+              )}
+              {selectedSizeType.value === 'ShoesUSA' && (
+                <div>
+                  <p class={radioLabel}>Selected: Shoes (USA)</p>
+                  {/* Inserisci qui il componente o i campi per Shoes (USA) */}
+                </div>
+              )}
 
               <div class={prodNameInputWrap}>
                 <label for="price" class={styles['label']}>

@@ -35,6 +35,9 @@ import {
   divThumb,
   thumbnailOverlay,
   hidden,
+  fieldset,
+  legend,
+  gridSize,
 } from '../shop/styles.css';
 import { Arrow } from '~/components/starter/icons/arrow';
 import { Link, routeLoader$, useLocation } from '@builder.io/qwik-city';
@@ -171,6 +174,14 @@ const ShopDetailLayout = component$(() => {
                   <div>
                     <CustomSelect selectedOption={selectedOption} options={quantityOptions} exist={false} placeholder="" />
                   </div>
+                </div>
+                <div>
+                  <fieldset class={fieldset}>
+                    <legend class={legend}>
+                      <span>Select Size</span>
+                    </legend>
+                    <div class={gridSize}>TAGLIE</div>
+                  </fieldset>
                 </div>
                 <div class={cartButtonWrapper}>
                   <button

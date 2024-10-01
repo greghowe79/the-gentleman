@@ -17,6 +17,12 @@ export const validateEmail = (email: string) => {
   return false;
 };
 
+export const handleSizeTypeChange = $((e: QwikChangeEvent<HTMLInputElement>, selectedSizeType: Signal<string>) => {
+  selectedSizeType.value = e.target.value;
+  console.log('selectedSizeType ', selectedSizeType.value);
+  return selectedSizeType.value;
+});
+
 export const handleChange = $((e: QwikChangeEvent<HTMLInputElement>, input: Signal<string>, productSlug?: Signal<string>) => {
   input.value = e.target.value;
   if (productSlug) createSlug(input.value, productSlug);
